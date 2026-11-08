@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#0e1119">
-<meta name="description" content="ZorixOS 2.0 UI simulator ·  Liquid Glass、真实应用图标、设置多级导航和本地 App 交互。">
-<title>ZorixOS 2.0 · Liquid Edition</title>
+<meta name="description" content="ZorixOS 3.0 UI simulator ·  Liquid Glass、真实应用图标、设置多级导航和本地 App 交互。">
+<title>ZorixOS 3.0 · Motion Edition</title>
 <style>
 :root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue",Arial,sans-serif;font-synthesis:none;--device-scale:1;--accent:#a7d6ff}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overscroll-behavior:none}body{background:#080b11;color:#f6f7fb;overflow:hidden;-webkit-tap-highlight-color:transparent}button,input,textarea{font:inherit}button{color:inherit;cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #94caff;outline-offset:3px}button:disabled{cursor:default}.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 45% 60% at 78% 50%,rgba(54,65,108,.27),transparent 77%),radial-gradient(ellipse 35% 50% at 14% 20%,rgba(98,70,102,.18),transparent 80%),#090c12}.ambient:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at center,black,transparent 77%)}
@@ -341,6 +341,169 @@ html,body{overflow:hidden;touch-action:pan-y}
 @media (prefers-reduced-motion:reduce){.zx-boot-logo,.zx-boot-word,.zx-step-shell,.zx-hello-mark,.zx-island-bars i,.zx-sheet{animation:none!important}#island.dynamic-island,#island .zx-island-expanded-content{transition:none!important}}
 .screen.zx-motion-off *{animation-duration:.001ms!important;transition-duration:.001ms!important}
 
+</style>
+<style id="zorix-motion-3-css">
+/* ZorixOS 3.0: motion is generated with transforms and opacity rather than layout animation. */
+:root {
+  --zm-speed: 1;
+  --zm-ease: cubic-bezier(.22,1,.36,1);
+  --zm-pop: cubic-bezier(.17,1.16,.32,1);
+  --zm-blue: #6d86f4;
+}
+:root[data-zm-mode="expressive"] { --zm-speed: 1; }
+:root[data-zm-mode="balanced"] { --zm-speed: .78; }
+:root[data-zm-mode="calm"] { --zm-speed: .52; }
+:root[data-zm-mode="off"],:root[data-zm-reduced="true"] { --zm-speed: .01; }
+button,input[type="range"],.z-row,.os-cell,.app-tile,.widget,.z-hero,.z-chip,.zx-appearance-choice,.zx-locale-card{ -webkit-tap-highlight-color:transparent; }
+button:focus-visible,[role="button"]:focus-visible{outline:2px solid #8db1ff;outline-offset:3px}
+/* Tactile feedback: press and release form one small continuous gesture. */
+.screen button:not(.app-tile):not(.dynamic-island):not(.home-indicator),.screen .widget,.screen [role="button"]{
+  transition-property:transform,background-color,box-shadow,opacity,border-color;
+  transition-duration:calc(175ms * var(--zm-speed));
+  transition-timing-function:var(--zm-ease);
+}
+.screen .zm-pressed:not(.app-tile):not(.widget):not(.dynamic-island):not(.home-indicator){transform:scale(.964);}
+.screen .zm-released:not(.app-tile):not(.widget):not(.dynamic-island):not(.home-indicator){animation:zmRelease calc(290ms * var(--zm-speed)) var(--zm-pop);}
+@keyframes zmRelease {0%{transform:scale(.96)}52%{transform:scale(1.018)}100%{transform:scale(1)}}
+.screen .app-tile .app-icon{transition:transform calc(235ms * var(--zm-speed)) var(--zm-pop),box-shadow .19s ease!important;}
+.screen .app-tile.zm-pressed .app-icon{transform:scale(.81)!important;box-shadow:0 2px 5px #0003!important}
+.screen .app-tile.zm-released .app-icon{animation:zmIconRebound calc(410ms * var(--zm-speed)) var(--zm-pop);}
+@keyframes zmIconRebound{0%{transform:scale(.82)}45%{transform:scale(1.09)}75%{transform:scale(.98)}100%{transform:scale(1)}}
+.screen .widget.zm-pressed,.screen .z-hero.zm-pressed{transform:scale(.965)}
+.screen .widget.zm-released,.screen .z-hero.zm-released{animation:zmCardRebound calc(370ms * var(--zm-speed)) var(--zm-ease)}
+@keyframes zmCardRebound{0%{transform:scale(.965)}60%{transform:scale(1.017)}100%{transform:scale(1)}}
+/* Each route has a clear direction, but does not block tapping. */
+.app-layer.zm-app-motion{transition:none!important;will-change:transform,opacity,border-radius;}
+.app-layer.zm-app-motion .app-surface{backface-visibility:hidden;transform:translateZ(0)}
+.app-layer.show:not(.zm-app-motion){transition-duration:calc(360ms * var(--zm-speed)),calc(290ms * var(--zm-speed))!important;}
+.app-view>.zm-route-in{animation:zmRouteForward calc(355ms * var(--zm-speed)) var(--zm-ease) both;}
+.app-view>.zm-route-back{animation:zmRouteBack calc(340ms * var(--zm-speed)) var(--zm-ease) both;}
+.app-view>.zm-route-refresh{animation:zmRouteRefresh calc(260ms * var(--zm-speed)) ease-out both;}
+@keyframes zmRouteForward{0%{opacity:.16;transform:translate3d(25px,0,0) scale(.987)}100%{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmRouteBack{0%{opacity:.16;transform:translate3d(-25px,0,0) scale(.988)}100%{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmRouteRefresh{0%{opacity:.45;transform:translate3d(0,9px,0)}100%{opacity:1;transform:translateZ(0)}}
+.app-view .zm-stagger-target{animation:zmStaggerIn calc(390ms * var(--zm-speed)) var(--zm-ease) backwards;}
+@keyframes zmStaggerIn{from{opacity:0;transform:translate3d(0,10px,0) scale(.992)}to{opacity:1;transform:translateZ(0) scale(1)}}
+/* iOS style overlays slide on different axes. */
+#controlCenter{transform:translate3d(0,-34px,0) scale(.985);transform-origin:85% 4%;transition:opacity calc(260ms * var(--zm-speed)) ease,visibility calc(260ms * var(--zm-speed)),transform calc(390ms * var(--zm-speed)) var(--zm-pop)!important;}
+#controlCenter.show{transform:translate3d(0,0,0) scale(1)}
+#notificationCenter{transform:translate3d(0,-42px,0);transition:opacity calc(260ms * var(--zm-speed)) ease,visibility calc(260ms * var(--zm-speed)),transform calc(410ms * var(--zm-speed)) var(--zm-ease)!important;}
+#notificationCenter.show{transform:translate3d(0,0,0)}
+#searchLayer{transform:translate3d(0,28px,0) scale(.985);transform-origin:50% 80%;transition:opacity calc(230ms * var(--zm-speed)) ease,visibility calc(230ms * var(--zm-speed)),transform calc(340ms * var(--zm-speed)) var(--zm-ease)!important;}
+#searchLayer.show{transform:translate3d(0,0,0) scale(1)}
+#lockScreen{transform:translate3d(0,-11px,0) scale(1.024);transition:opacity calc(380ms * var(--zm-speed)),visibility calc(380ms * var(--zm-speed)),transform calc(560ms * var(--zm-speed)) var(--zm-ease)!important;}
+#lockScreen.show{transform:translate3d(0,0,0) scale(1)}
+#lockScreen.show .lock-time{animation:zmLockTime calc(660ms * var(--zm-speed)) var(--zm-ease) both;}
+#lockScreen.show .lock-date,.lock-screen.show .lock-widgets{animation:zmLockDetail calc(640ms * var(--zm-speed)) var(--zm-ease) both;animation-delay:calc(100ms * var(--zm-speed))}
+@keyframes zmLockTime{from{opacity:.4;transform:translate3d(0,28px,0) scale(1.045)}to{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmLockDetail{from{opacity:0;transform:translate3d(0,16px,0)}to{opacity:1;transform:translateZ(0)}}
+#homePages{transition-duration:calc(490ms * var(--zm-speed))!important;transition-timing-function:var(--zm-ease)!important}
+#pageDots button.active{transition:width calc(360ms * var(--zm-speed)) var(--zm-ease),background-color .22s!important;}
+#homePages.zm-swiped .home-page .app-grid{animation:zmGridArrive calc(460ms * var(--zm-speed)) var(--zm-ease) both;}
+@keyframes zmGridArrive{from{opacity:.7;transform:translate3d(0,8px,0)}to{opacity:1;transform:translateZ(0)}}
+#homeIndicator:active{height:7px;width:146px;}
+#appView .ios-switch{transition:background-color calc(290ms * var(--zm-speed)) ease!important}
+#appView .ios-switch::after{transition:transform calc(370ms * var(--zm-speed)) var(--zm-pop)!important}
+#appView .ios-switch.zm-switch-pulse{animation:zmSwitchPulse calc(390ms * var(--zm-speed)) ease-out}
+@keyframes zmSwitchPulse{0%{box-shadow:0 0 0 0 #778cf34c}70%{box-shadow:0 0 0 8px #778cf300}100%{box-shadow:none}}
+.z-group .z-row{position:relative;overflow:hidden;}
+.z-group .z-row::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(110deg,#aabafa00,#7d94ed0f,#aabafa00);opacity:0;transition:opacity calc(220ms * var(--zm-speed))}
+.z-group .z-row.zm-pressed::before{opacity:1;}
+.z-row>*{position:relative;z-index:1}
+.z-metric-card.zm-pressed,.z-chip.zm-pressed{transform:scale(.964)}
+.z-chip.selected{box-shadow:inset 0 0 0 1px #8e9df2aa,0 4px 10px #8598e024;}
+.z-swatch.active{transition:transform calc(230ms * var(--zm-speed)) var(--zm-ease),box-shadow calc(340ms * var(--zm-speed)) ease;transform:translateY(-3px) scale(1.025)}
+/* Slider motion and a soft value preview. */
+.z-slider{position:relative;overflow:visible}
+.z-slider input[type=range]{background:linear-gradient(90deg,#6f83ee var(--zm-fill,50%),#dce1f1 var(--zm-fill,50%))!important;transition:filter calc(150ms * var(--zm-speed)) ease;touch-action:none;}
+.z-slider input[type=range]:active{filter:brightness(1.12)}
+.zm-range-bubble{position:absolute;top:-22px;left:var(--zm-bubble-left,50%);transform:translateX(-50%) translateY(5px) scale(.9);opacity:0;z-index:7;padding:6px 9px;border-radius:11px;background:#3e52b8;color:white;font-size:11px;font-weight:730;box-shadow:0 7px 18px #566bd34a;pointer-events:none;white-space:nowrap;transition:opacity calc(170ms * var(--zm-speed)),transform calc(230ms * var(--zm-speed)) var(--zm-pop)}
+.zm-range-bubble.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+/* Dynamic Island uses its own spring and delayed inner detail appearance. */
+#island.dynamic-island{transition:width calc(430ms * var(--zm-speed)) cubic-bezier(.2,1.06,.24,1),height calc(440ms * var(--zm-speed)) cubic-bezier(.2,1.06,.24,1),border-radius calc(420ms * var(--zm-speed)) var(--zm-ease),top calc(390ms * var(--zm-speed)) var(--zm-ease),box-shadow calc(310ms * var(--zm-speed))!important;will-change:width,height;}
+#island.zx-island-expanded{box-shadow:0 20px 40px #0008,0 0 0 1px #ffffff10!important;}
+#island.zx-island-expanded .zx-island-expanded-content{animation:zmIslandContent calc(390ms * var(--zm-speed)) var(--zm-ease) both;animation-delay:calc(80ms * var(--zm-speed));}
+@keyframes zmIslandContent{from{opacity:0;transform:translate3d(0,9px,0) scale(.94)}to{opacity:1;transform:translateZ(0) scale(1)}}
+#island.zm-island-tap{animation:zmIslandTap calc(280ms * var(--zm-speed)) var(--zm-ease)}
+@keyframes zmIslandTap{50%{filter:brightness(1.24)}100%{filter:brightness(1)}}
+#island .zx-island-btn:active{transform:scale(.9)}
+#island .zx-island-bars.active i{animation-duration:calc(640ms * var(--zm-speed))!important}
+/* Sheets and action dialogs have coordinated enter/exit animations. */
+.zx-sheet-backdrop{animation:zmSheetBackdrop calc(240ms * var(--zm-speed)) ease both!important}
+.zx-sheet{animation:zmSheetIn calc(480ms * var(--zm-speed)) var(--zm-pop) both!important}
+.zx-sheet-backdrop.zm-dismiss{animation:zmSheetBackdropOut calc(220ms * var(--zm-speed)) ease both!important;pointer-events:none}
+.zx-sheet-backdrop.zm-dismiss .zx-sheet{animation:zmSheetOut calc(290ms * var(--zm-speed)) var(--zm-ease) both!important}
+@keyframes zmSheetBackdrop{from{opacity:0}to{opacity:1}}
+@keyframes zmSheetBackdropOut{to{opacity:0}}
+@keyframes zmSheetIn{from{opacity:.66;transform:translate3d(0,74px,0) scale(.975)}to{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmSheetOut{to{opacity:0;transform:translate3d(0,70px,0) scale(.97)}}
+.zx-sheet-row{transition:transform calc(170ms * var(--zm-speed)),background-color calc(200ms * var(--zm-speed))!important}
+.zx-sheet-row:active{transform:scale(.985)}
+/* Setup pages slide in context, and the logo has an intentionally short one-time reveal. */
+#zxOnboarding .zx-step-shell{animation-duration:calc(530ms * var(--zm-speed))!important}
+#zxOnboarding .zm-wizard-out{position:absolute;inset:0;z-index:4;pointer-events:none;animation:zmWizardOut calc(300ms * var(--zm-speed)) ease-in both}
+#zxOnboarding.zm-wizard-back .zm-wizard-out{animation-name:zmWizardOutBack}
+@keyframes zmWizardOut{to{opacity:0;transform:translate3d(-34px,0,0) scale(.975)}}
+@keyframes zmWizardOutBack{to{opacity:0;transform:translate3d(34px,0,0) scale(.975)}}
+#zxOnboarding .zx-locale-card.active,#zxOnboarding .zx-appearance-choice.active{box-shadow:0 9px 29px #596de638,0 0 0 1px #ffffff40!important;transform:scale(1.015)}
+#zxOnboarding .zx-step-progress i.active{transition:background-color calc(270ms * var(--zm-speed)),transform calc(300ms * var(--zm-speed)) var(--zm-pop)}
+/* Toast and system feedback are distinct from sheet motion. */
+#toast.show{animation:zmToastPop calc(360ms * var(--zm-speed)) var(--zm-pop)}
+@keyframes zmToastPop{from{opacity:0;transform:translate(-50%,16px) scale(.84)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+/* App-specific details appear when a page is visited, not in perpetual loops. */
+.os-camera-preview.zm-shutter-flash::after{content:"";position:absolute;inset:0;background:#fff;animation:zmShutter calc(340ms * var(--zm-speed)) ease-out forwards;z-index:6;pointer-events:none}
+@keyframes zmShutter{0%{opacity:0}20%{opacity:.94}100%{opacity:0}}
+.os-chat-bubble:last-child,.bubble.to:last-child{animation:zmMessageSent calc(370ms * var(--zm-speed)) var(--zm-pop) both;transform-origin:90% 90%}
+@keyframes zmMessageSent{from{opacity:.4;transform:translate3d(0,10px,0) scale(.79)}to{opacity:1;transform:translateZ(0) scale(1)}}
+.os-photo-cell:active img,.photo-item:active{transform:scale(1.07);transition:transform calc(260ms * var(--zm-speed))}
+.os-shutter:active{transform:scale(.88)}
+.os-shutter{transition:transform calc(160ms * var(--zm-speed)) var(--zm-ease)}
+#appView .z-bubble{animation:zmDeviceBubble calc(690ms * var(--zm-speed)) var(--zm-pop) both;}
+@keyframes zmDeviceBubble{from{opacity:.35;transform:rotate(-28deg) translate3d(12px,-10px,0) scale(.78)}to{opacity:1;transform:rotate(-14deg) translateZ(0) scale(1)}}
+/* Lightweight one-time shimmer in a freshly opened device detail card. */
+#appView .z-setting-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(106deg,transparent 30%,#ffffff55 49%,transparent 67%);transform:translateX(-120%);animation:zmHeroSheen calc(950ms * var(--zm-speed)) ease-out 1 both;}
+@keyframes zmHeroSheen{to{transform:translateX(120%)}}
+/* The motion lab is intentionally custom ZorixOS, without emoji artwork. */
+.zm-lab-title{font-size:12px;color:#8e92a6;margin:16px 6px 10px;text-transform:uppercase;letter-spacing:.08em;font-weight:740}
+.zm-lab-hero{height:168px;border-radius:27px;position:relative;overflow:hidden;background:linear-gradient(125deg,#dce6ff,#e0d9ff 50%,#dcefff);box-shadow:0 12px 28px #536ae91c;margin:0 0 18px;display:grid;place-items:center}
+.zm-lab-orb{width:104px;height:104px;border-radius:31px;display:grid;place-items:center;background:linear-gradient(135deg,#ffffffd9,#a7b5f3a5 45%,#667fe8aa);border:1px solid #fff;box-shadow:inset 9px 11px 16px #fff9,inset -9px -9px 18px #697dd557,0 14px 20px #6376db45;transform:rotate(-9deg);transition:transform calc(590ms * var(--zm-speed)) var(--zm-pop)}
+.zm-lab-orb svg{width:48px;height:48px;color:#4659a8;transform:rotate(9deg)}
+.zm-lab-hero.zm-previewing .zm-lab-orb{animation:zmOrbDance calc(800ms * var(--zm-speed)) var(--zm-pop)}
+@keyframes zmOrbDance{0%{transform:rotate(-9deg) scale(1)}30%{transform:rotate(12deg) scale(.79)}68%{transform:rotate(-16deg) scale(1.16)}100%{transform:rotate(-9deg) scale(1)}}
+.zm-motion-choice{display:flex;align-items:center;gap:12px;padding:14px 14px;color:#252941;border:0;border-bottom:1px solid #edf0f8;background:#fff;width:100%;text-align:left}
+.zm-motion-choice:last-child{border:0}
+.zm-motion-choice .zm-choice-marker{height:23px;width:23px;display:grid;place-items:center;border:1px solid #cdd6ec;border-radius:50%;color:#7185db;flex:none}
+.zm-motion-choice.selected .zm-choice-marker{background:#6e82ec;color:#fff;border-color:#6e82ec}
+.zm-motion-choice .zm-choice-text{flex:1;display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:650}
+.zm-motion-choice .zm-choice-text small{font-weight:400;color:#999eb0;font-size:11px}
+.zm-switch-line{display:flex;align-items:center;gap:12px;padding:15px;background:#fff;min-height:65px}
+.zm-switch-line .zm-line-label{flex:1;font-size:13px;color:#282c3b}.zm-switch-line .zm-line-label small{display:block;color:#99a0b0;font-size:11px;margin-top:4px}
+.zm-lab-quick{display:flex;gap:8px;margin:15px 0}.zm-lab-quick button{flex:1;min-height:42px;border:0;border-radius:13px;background:#e3e9ff;color:#4c5ac5;font-size:12px;font-weight:690}
+.zm-lab-quick button:last-child{background:#495dc9;color:white}
+.zm-lab-footer{font-size:11px;color:#999da9;line-height:1.7;margin:12px 5px}
+/* Pause visual work when hidden or for users who request reduced motion. */
+html.zx-suspended .screen *,html.zx-suspended #zxOnboarding *{animation-play-state:paused!important}
+html[data-zm-mode="off"] .screen *,html[data-zm-reduced="true"] .screen *,html[data-zm-mode="off"] .screen *::before,html[data-zm-reduced="true"] .screen *::before,html[data-zm-mode="off"] .screen *::after,html[data-zm-reduced="true"] .screen *::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+@media(prefers-reduced-motion:reduce){.screen *,#zxOnboarding *,#zxOnboarding *::before{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* Extra one-shot detail: wallpaper crossfade, ripple, media and Control Center. */
+.screen>.zm-wallpaper-ghost{position:absolute!important;inset:0;z-index:1!important;pointer-events:none;opacity:1;will-change:opacity;animation:zmWallpaperFade calc(760ms * var(--zm-speed)) ease-in-out forwards!important;}
+@keyframes zmWallpaperFade{0%{opacity:1}100%{opacity:0}}
+.zm-tap-ripple{position:absolute;z-index:2;width:20px;height:20px;left:var(--zm-ripple-x);top:var(--zm-ripple-y);border-radius:50%;background:#a5b9ff54;pointer-events:none;transform:translate(-50%,-50%) scale(.2);animation:zmRipple calc(580ms * var(--zm-speed)) ease-out forwards;}
+@keyframes zmRipple{0%{opacity:.9;transform:translate(-50%,-50%) scale(.1)}100%{opacity:0;transform:translate(-50%,-50%) scale(13)}}
+#controlCenter [data-toggle].on{transition:background-color calc(290ms * var(--zm-speed)) var(--zm-ease),box-shadow calc(290ms * var(--zm-speed)) ease!important}
+#controlCenter [data-toggle].zm-pressed{filter:brightness(1.16)}
+#brightnessFill,#volumeFill{transition:height calc(235ms * var(--zm-speed)) var(--zm-ease)!important;}
+#ccPlay svg,#ccPrev svg,#ccNext svg{transition:transform calc(240ms * var(--zm-speed)) var(--zm-pop)}
+#ccPlay:active svg,#ccPrev:active svg,#ccNext:active svg{transform:scale(.75)}
+.screen.zm-music-playing .music-album{box-shadow:0 18px 34px #1b09284b,0 0 0 1px #ffffff70;}
+.music-album.zm-track-change{animation:zmTrackChange calc(570ms * var(--zm-speed)) var(--zm-pop) both;}
+@keyframes zmTrackChange{0%{opacity:.45;transform:rotate(-6deg) scale(.9)}55%{opacity:1;transform:rotate(2deg) scale(1.035)}100%{transform:rotate(0) scale(1)}}
+#island.zx-island-expanded::before{content:"";position:absolute;inset:1px;border-radius:inherit;border:1px solid #ffffff23;pointer-events:none;z-index:0;background:linear-gradient(140deg,#ffffff13,transparent 45%,#ffffff09 90%);}
+#island .zx-island-expanded-content{position:relative;z-index:1}
+.zx-sheet.zm-sheet-drag{transition:none!important;touch-action:none;}
+.zx-sheet.zm-sheet-return{transition:transform calc(340ms * var(--zm-speed)) var(--zm-pop)!important}
+.zm-micro-feedback{animation:zmMicroFeedback calc(390ms * var(--zm-speed)) var(--zm-pop) both}
+@keyframes zmMicroFeedback{0%{transform:scale(.88)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
@@ -1157,7 +1320,7 @@ if(OS_PREF.iconStyle&&OS_PREF.iconStyle!==state.mode)setMode(OS_PREF.iconStyle);
  const sim=note('ZorixOS 是本地交互模拟器。网络、系统权限和设备参数仅作展示，不会改变 Android 系统。');
  function home(){return `${title('设置')}
  <label class="ios-search z-search">${icon('search',17)}<input id="osSettingsSearch" type="search" placeholder="搜索设置项" autocomplete="off" aria-label="搜索设置"></label>
- <button type="button" class="z-hero" data-os-setting="about" aria-label="进入我的设备" style="display:block;width:100%;border:0;text-align:left"><div class="z-bubble"><b>Z</b></div><div class="z-hero-content"><div class="z-hero-overline">MY DEVICE · 系统中心</div><div class="z-hero-mark">ZorixOS</div><div class="z-hero-sub">Version 2.0 · Liquid Edition</div><div class="z-hero-bottom"><span>查看设备信息与系统更新</span><span class="z-hero-pill">稳定版 ${icon('next',12)}</span></div></div></button>
+ <button type="button" class="z-hero" data-os-setting="about" aria-label="进入我的设备" style="display:block;width:100%;border:0;text-align:left"><div class="z-bubble"><b>Z</b></div><div class="z-hero-content"><div class="z-hero-overline">MY DEVICE · 系统中心</div><div class="z-hero-mark">ZorixOS</div><div class="z-hero-sub">Version 3.0 · Motion Edition</div><div class="z-hero-bottom"><span>查看设备信息与系统更新</span><span class="z-hero-pill">稳定版 ${icon('next',12)}</span></div></div></button>
  ${group(row('account','Zorix 账户','person','未登录','#edf0ff','#546ad0'))}
  ${sec('网络与连接')}
  ${group(row('wifi','WLAN','wifi',state.wifi?OS_PREF.wifiNetwork:'关闭','#e8f1ff','#3682ed')+row('bluetooth','蓝牙','bluetooth',state.bluetooth?'已开启':'已关闭','#e7f1ff','#4e8efa')+row('cellular','移动网络','signal',state.cellular?'已启用':'已关闭','#e9faef','#30ac64')+row('interconnect','设备互联','link','无线互联','#f0ebff','#8a6be4')+row('connections','更多连接方式','globe','热点、VPN','#e9f4fc','#5995cf'))}
@@ -1166,12 +1329,12 @@ if(OS_PREF.iconStyle&&OS_PREF.iconStyle!==state.mode)setMode(OS_PREF.iconStyle);
  ${sec('系统管理')}
  ${group(row('security','密码与安全','lock','','#edf1ff','#6378c8')+row('privacy','隐私保护','shield','','#eaf7f3','#45a78c')+row('battery','电量与性能','battery','87%','#e9f8eb','#58aa63')+row('apps','应用设置','apps','','#edf4ff','#4c84c9')+row('accessibility','无障碍','access','','#f2edff','#9274cc')+row('general','更多设置','gear','','#eef0f3','#858e9c'))}
  ${sec('系统服务')}
- ${group(row('ai','Zorix 智能助手','star','本地示例','#f3edfc','#9a7bc5')+row('software','系统更新','download','ZorixOS 1.0','#eaf5ff','#5894bf'))}
+ ${group(row('ai','Zorix 智能助手','star','本地示例','#f3edfc','#9a7bc5')+row('software','系统更新','download','ZorixOS 3.0','#eaf5ff','#5894bf'))}
  ${note('设置页面参考 Xiaomi HyperOS 4 的视觉层级重新设计，其余 App 保持原来的 iOS 风格。')}</div>`}
  function content(route){switch(route){
  case 'root':return home();
- case 'about':return `${block('我的设备',`<div class="z-setting-hero"><span class="z-orbit"><i>Z</i></span><span class="z-giant">ZorixOS<small>1.0 · Liquid Edition</small></span></div>${group(plain('software','系统版本','ZorixOS 1.0')+plain('about','设备名称',OS_PREF.deviceName)+plain('storage','存储空间','128 GB')+plain('about','设备型号','Zorix Phone')+plain('about','系统类型','Android 应用模拟器'))}${group(plain('software','检查更新')+plain('general','详细信息'))}${sim}`)}`;
- case 'software':return block('系统更新',`<div class="z-setting-hero"><span class="z-orbit"><i>Z</i></span><span class="z-giant">ZorixOS 1.0<small>已是最新的演示版本</small></span></div>${group(plain('about','版本信息','1.0.0')+plain('software','更新历史','首个预览版本'))}<div style="text-align:center;margin:22px 0"><button class="ios-primary-button" style="background:#6577ea;border-radius:16px" data-os-action="demo-check-update">检查更新</button></div>${sim}`);
+ case 'about':return `${block('我的设备',`<div class="z-setting-hero"><span class="z-orbit"><i>Z</i></span><span class="z-giant">ZorixOS<small>1.0 · Liquid Edition</small></span></div>${group(plain('software','系统版本','ZorixOS 3.0')+plain('about','设备名称',OS_PREF.deviceName)+plain('storage','存储空间','128 GB')+plain('about','设备型号','Zorix Phone')+plain('about','系统类型','Android 应用模拟器'))}${group(plain('software','检查更新')+plain('general','详细信息'))}${sim}`)}`;
+ case 'software':return block('系统更新',`<div class="z-setting-hero"><span class="z-orbit"><i>Z</i></span><span class="z-giant">ZorixOS 3.0<small>已是最新的演示版本</small></span></div>${group(plain('about','版本信息','3.0.0')+plain('software','更新历史','首个预览版本'))}<div style="text-align:center;margin:22px 0"><button class="ios-primary-button" style="background:#6577ea;border-radius:16px" data-os-action="demo-check-update">检查更新</button></div>${sim}`);
  case 'account':return block('Zorix 账户',`<div class="z-setting-hero"><span class="z-orbit">${icon('person',27)}</span><span class="z-giant" style="font-size:23px">欢迎使用 ZorixOS<small>当前为本地游客模式</small></span></div>${group(plain('account','个人资料','游客')+plain('privacy','隐私保护')+plain('interconnect','设备互联')+plain('account','账户与同步','演示模式'))}${note('此页面不提供实际登录，也不会索取密码。')}`);
  case 'wifi':return block('WLAN',`${group(toggle('wifi','WLAN','wifi',state.wifi?'已开启':'已关闭','#eaf2ff','#4488ed'))}${state.wifi?`${sec('已连接网络')}${group(`<button class="ios-row z-row" data-os-network="${es(OS_PREF.wifiNetwork)}"><span class="z-symbol">${icon('wifi',19)}</span><span class="z-text"><b>${es(OS_PREF.wifiNetwork)}</b><small>已连接 · 模拟</small></span><span class="z-next">${icon('check',17)}</span></button>`)}${sec('可用网络')}${group(['Zorix Studio','Home Wi-Fi','Guest 5G'].filter(n=>n!==OS_PREF.wifiNetwork).map(n=>`<button class="ios-row z-row" data-os-network="${es(n)}"><span class="z-symbol">${icon('wifi',19)}</span><span class="z-text"><b>${es(n)}</b><small>安全网络</small></span><span class="z-next">${icon('next',15)}</span></button>`).join(''))}`:''}${note('网络列表和连接状态是本地演示，不控制 Android WLAN。')}`);
  case 'bluetooth':return block('蓝牙',`${group(toggle('bluetooth','蓝牙','bluetooth',state.bluetooth?'已开启':'已关闭'))}${state.bluetooth?`${sec('已配对设备')}${group(['Zorix Buds','无线键盘'].map(n=>`<button class="ios-row z-row" data-os-bluedevice="${es(n)}"><span class="z-symbol">${icon('bluetooth',19)}</span><span class="z-text"><b>${n}</b><small>${OS_PREF.blueDevice===n?'已连接':'未连接'}</small></span><span class="z-next">${icon('next',15)}</span></button>`).join(''))}${sec('附近的设备')}${group(`<button class="ios-row z-row" data-os-bluedevice="车载音响"><span class="z-symbol">${icon('sound',18)}</span><span class="z-text"><b>车载音响</b><small>点击配对（模拟）</small></span></button>`)}`:''}${sim}`);
@@ -1578,7 +1741,13 @@ syncToggles=function(){zxOldSync();zxIslandUpdate()};
 document.addEventListener('visibilitychange',()=>{document.documentElement.classList.toggle('zx-suspended',document.hidden);if(!document.hidden)zxTranslateSoon()});
 window.addEventListener('focus',()=>zxTranslateSoon());
 if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)screen.classList.add('zx-motion-off');
-const zxObserver=new MutationObserver(()=>zxTranslateSoon());
+const zxObserver=new MutationObserver(records=>{
+ const contentChanged=records.some(r=>r.type==='characterData'||[...r.addedNodes,...r.removedNodes].some(n=>{
+  if(n.nodeType!==1)return n.nodeType===3 && !!n.textContent.trim();
+  return !n.matches?.('.zm-tap-ripple,.zm-wallpaper-ghost,.zx-sheet-backdrop.zm-dismiss,.zm-wizard-out');
+ }));
+ if(contentChanged)zxTranslateSoon();
+});
 zxObserver.observe(document.getElementById('screen'),{subtree:true,childList:true,characterData:true});
 // Also translate static desktop simulator controls once.
 zxTranslate(document.body);
@@ -1586,6 +1755,274 @@ if(!isEN())zxTranslate(document.body);
 window.ZorixV2={get setupStep(){return boot.step},get setupComplete(){return zxGet(ZX_STORE.complete,'')==='yes'},get lang(){return boot.locale},get region(){return boot.region},onboarding:zxShowSetup,setLanguage:zxLocaleSet,showIsland:zxIslandNotice,showSheet:zxOpenAppSheet,translate:zxTranslate,closeSheet:zxCloseSheet};
 })();
 
+</script>
+<script id="zorix-motion-3-js">
+/* ZorixOS 3.0 Motion Engine
+ * Motion is attached to user intent, rather than automatically animating every DOM update.
+ * All main effects use compositor-friendly transforms/opacity. The simulator never blocks Android calls.
+ */
+(function(){
+'use strict';
+const doc=document, root=doc.documentElement, screen=doc.getElementById('screen');
+if(!screen || !window.ZorixV2) return;
+const store={mode:'zorix.motion.mode.v3',haptic:'zorix.motion.haptic.v3'};
+const load=(k,v)=>{try{return localStorage.getItem(k)??v}catch(_){return v}};
+const save=(k,v)=>{try{localStorage.setItem(k,String(v))}catch(_){}};
+const locale=()=>window.ZorixV2.lang==='zh';
+const tr=(en,zh)=>locale()?zh:en;
+const glyph=(id,size=21)=>typeof osI==='function'?osI(id,size):'';
+const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches||!!OS_PREF.reduceMotion||engine.mode==='off';
+const engine={mode:load(store.mode,'expressive'),haptic:load(store.haptic,'true')!=='false',rect:null,originApp:null,stamp:0,close:null,token:0,viewKey:'',routeDepth:0};
+if(!['expressive','balanced','calm','off'].includes(engine.mode))engine.mode='expressive';
+const factor=()=>reduced()?.01:engine.mode==='calm'?.52:engine.mode==='balanced'?.78:1;
+const ms=(n)=>Math.max(1,Math.round(n*factor()));
+const isMotion=()=>!reduced()&&!doc.hidden;
+function apply(){root.dataset.zmMode=engine.mode;root.dataset.zmReduced=String(reduced());save(store.mode,engine.mode);save(store.haptic,engine.haptic);screen.classList.toggle('zm-low-power',!!OS_PREF.lowPower)}
+apply();
+function haptic(weight='light'){
+ if(!engine.haptic||reduced()||!navigator.vibrate)return;
+ try{navigator.vibrate(weight==='medium'?11:weight==='soft'?3:6)}catch(_){}
+}
+function replayClass(el,c,delay=550){if(!el||!isMotion())return;el.classList.remove(c);void el.offsetWidth;el.classList.add(c);setTimeout(()=>el?.classList.remove(c),ms(delay)+20)}
+// A single delegated pointer handler covers static buttons and controls rendered later.
+const interactive='button,.app-tile,.widget,[role="button"]';
+let pressed=null,px=0,py=0;
+function clearPress(rebound){if(!pressed)return;const node=pressed;pressed=null;node.classList.remove('zm-pressed');if(rebound&&node.isConnected)replayClass(node,'zm-released',430)}
+screen.addEventListener('pointerdown',e=>{
+ if(e.pointerType==='mouse'&&e.button!==0)return;
+ const target=e.target.closest(interactive);
+ if(!target||target.disabled)return;
+ clearPress(false);pressed=target;px=e.clientX;py=e.clientY;target.classList.add('zm-pressed');
+},{passive:true,capture:true});
+screen.addEventListener('pointermove',e=>{if(pressed&&Math.hypot(e.clientX-px,e.clientY-py)>17)clearPress(false)},{passive:true,capture:true});
+for(const ev of ['pointerup','pointercancel','pointerleave'])screen.addEventListener(ev,()=>clearPress(ev==='pointerup'),{passive:true,capture:true});
+// Origin coordinates for spatial app transitions. Capture before the existing click handler.
+screen.addEventListener('click',e=>{
+ const launch=e.target.closest('.app-tile,[data-open]');
+ if(launch){const rect=(launch.querySelector('.app-icon')||launch).getBoundingClientRect();
+  engine.rect={left:rect.left,top:rect.top,width:rect.width,height:rect.height};
+  engine.originApp=launch.dataset.app||launch.dataset.open||null;engine.stamp=performance.now();
+  haptic('soft');}
+ const toggle=e.target.closest('.ios-switch,.zx-privacy-switch,[role="switch"],.z-chip,.z-swatch');
+ if(toggle){haptic('soft');requestAnimationFrame(()=>replayClass(toggle,'zm-switch-pulse',390))}
+ const island=e.target.closest('#island');if(island)replayClass(island,'zm-island-tap',280);
+ if(e.target.closest('[data-os-setting],[data-zx-step],[data-zm-select],[data-zm-action]'))haptic('soft');
+},true);
+// Convert an icon's screen rectangle into a transform relative to the full app layer.
+function anchorFor(id){if(engine.originApp===id&&performance.now()-engine.stamp<1100&&engine.rect)return engine.rect;
+ let tile=screen.querySelector(`.home-pages [data-app="${CSS.escape(id)}"], .dock [data-app="${CSS.escape(id)}"]`);
+ if(tile){const r=(tile.querySelector('.app-icon')||tile).getBoundingClientRect();return{left:r.left,top:r.top,width:r.width,height:r.height}}
+ return null;
+}
+function zoomFrom(r){const outer=screen.getBoundingClientRect();let scale=r?Math.max(.08,Math.min(.24,r.width/outer.width)):.72;
+ const cx=r?r.left+r.width/2:outer.left+outer.width/2,cy=r?r.top+r.height/2:outer.top+outer.height*.76;
+ const x=(cx-(outer.left+outer.width/2))*(screen.clientWidth/outer.width),y=(cy-(outer.top+outer.height/2))*(screen.clientHeight/outer.height);
+ return `translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) scale(${scale.toFixed(3)})`;
+}
+const layer=doc.getElementById('appLayer');
+function stopClosing(){if(!engine.close)return;
+ const {anim,resolve}=engine.close;engine.close=null;
+ try{anim?.cancel()}catch(_){};
+ resolve?.();
+}
+const prevOpen=openApp;
+openApp=function(id,section){
+ if(!apps[id])return;
+ stopClosing();
+ const previous=state.app;
+ const rect=anchorFor(id);
+ layer.classList.add('zm-app-motion');
+ engine.token++;
+ prevOpen(id,section);
+ engine.originApp=null;
+ if(isMotion()){
+  const target=zoomFrom(rect);
+  const frames=previous?[{opacity:.54,transform:'translate3d(14px,0,0) scale(.975)',borderRadius:'28px'},{opacity:1,transform:'translateZ(0) scale(1)',borderRadius:'0px'}]
+    :[{opacity:.3,transform:target,borderRadius:'50px'},{opacity:.95,offset:.70,transform:'translate3d(0,0,0) scale(1.012)',borderRadius:'13px'},{opacity:1,transform:'translateZ(0) scale(1)',borderRadius:'0px'}];
+  const ani=layer.animate(frames,{duration:ms(previous?310:480),easing:'cubic-bezier(.22,1,.36,1)'});
+  const token=engine.token;ani.finished.catch(()=>{}).then(()=>{if(token===engine.token)layer.classList.remove('zm-app-motion')});
+ }else{layer.classList.remove('zm-app-motion')}
+};
+const prevClose=closeApp;
+closeApp=function(){
+ if(!state.app){if(engine.close)return;return prevClose()}
+ if(!isMotion()){stopClosing();return prevClose()}
+ const id=state.app,frame=anchorFor(id),target=zoomFrom(frame),token=++engine.token;
+ // Stop camera immediately when exiting; never hold a live stream for an animation.
+ if(typeof OS!=='undefined'&&OS.cameraStream){try{OS.cameraStream.getTracks().forEach(t=>t.stop())}catch(_){}OS.cameraStream=null}
+ layer.classList.add('zm-app-motion');
+ state.app=null;screen.classList.remove('app-active','dark-app');layer.style.pointerEvents='none';
+ const ani=layer.animate([{opacity:1,transform:'translateZ(0) scale(1)',borderRadius:'0px'},
+  {opacity:.8,offset:.57,transform:'translate3d(0,5px,0) scale(.93)',borderRadius:'26px'},
+  {opacity:.08,transform:target,borderRadius:'51px'}],{duration:ms(385),easing:'cubic-bezier(.32,.02,.35,1)'});
+ let settled=false;
+ function finish(){if(settled)return;settled=true;if(engine.close?.token===token)engine.close=null;
+  if(token===engine.token){prevClose();layer.classList.remove('zm-app-motion');layer.style.pointerEvents=''}}
+ engine.close={anim:ani,resolve:finish,token};
+ ani.finished.catch(()=>{}).then(finish);
+ // A browser suspended mid-frame must not leave a blocking invisible app layer.
+ setTimeout(finish,ms(410)+130);
+};
+// Let Settings navigate horizontally like a distinct OS panel; other apps keep a soft material entrance.
+const prevRender=osRenderApp;
+osRenderApp=function(){
+ const id=state.app;const depth=id==='settings'?OS.settingsStack.length:OS.view?1:0;
+ const route=id==='settings'?String(OS.settingsStack.at(-1)||'root'):id?String(OS.view?.type||'main'):'none';
+ const key=id+'|'+route;
+ const oldKey=engine.viewKey,oldDepth=engine.routeDepth;
+ const view=doc.getElementById('appView');
+ prevRender();
+ engine.viewKey=key;engine.routeDepth=depth;
+ if(!state.app||!isMotion()||!view)return;
+ const first=[...view.children].find(x=>x.nodeType===1&&x.tagName!=='STYLE');
+ if(!first)return;
+ const mode=key===oldKey?'zm-route-refresh':depth<oldDepth?'zm-route-back':'zm-route-in';
+ // One frame later guarantees a new animation even after a fast, repeated interaction.
+ first.classList.remove('zm-route-in','zm-route-back','zm-route-refresh');void first.offsetWidth;first.classList.add(mode);
+ if(key!==oldKey){
+  let i=0;view.querySelectorAll('.z-group > .z-row,.z-metric-card,.os-card,.os-chat-bubble,.message-preview,.os-photo-cell').forEach(x=>{
+   if(i>=12)return;x.classList.add('zm-stagger-target');x.style.animationDelay=`${ms(Math.min(i,9)*23+20)}ms`;i++;
+  });
+ }
+};
+const prevPage=setPage;
+setPage=function(n){const before=state.page;prevPage(n);if(before!==state.page&&isMotion())replayClass(doc.getElementById('homePages'),'zm-swiped',510)};
+const prevToast=toast;
+toast=function(msg){const el=doc.getElementById('toast');el?.classList.remove('show');if(el)void el.offsetWidth;prevToast(msg)};
+const prevAction=osAction;
+osAction=function(action,val,target){
+ if(action==='camera-capture'){
+  const preview=doc.querySelector('.os-camera-preview');if(preview)replayClass(preview,'zm-shutter-flash',340);
+ }
+ if(['chat-send','message-send','todo-add','calendar-add','phone-call','timer-start'].includes(action))haptic('medium');
+ return prevAction(action,val,target);
+};
+// Slider haptics are deliberately throttled to avoid constant vibration.
+let bubbleTimer=0;
+function rangeFill(slider,show){const min=Number(slider.min||0),max=Number(slider.max||100),value=Number(slider.value||0);
+ const ratio=Math.max(0,Math.min(1,(value-min)/(max-min||1)));
+ slider.style.setProperty('--zm-fill',(ratio*100).toFixed(1)+'%');
+ const card=slider.closest('.z-slider');if(!card)return;
+ let bubble=card.querySelector('.zm-range-bubble');if(!bubble){bubble=doc.createElement('span');bubble.className='zm-range-bubble';bubble.setAttribute('aria-hidden','true');card.appendChild(bubble)}
+ const box=slider.getBoundingClientRect(),parent=card.getBoundingClientRect();
+ const x=Math.max(30,Math.min(parent.width-30,box.left-parent.left+ratio*box.width));
+ bubble.style.setProperty('--zm-bubble-left',x+'px');bubble.textContent=Math.round(value)+'%';
+ if(show){bubble.classList.add('show');clearTimeout(bubbleTimer);bubbleTimer=setTimeout(()=>bubble.classList.remove('show'),750)}
+}
+doc.addEventListener('input',e=>{if(e.target.matches('.z-slider input[type="range"]'))rangeFill(e.target,true)},{passive:true,capture:true});
+doc.addEventListener('pointerdown',e=>{const t=e.target;if(t?.matches?.('.z-slider input[type="range"]'))rangeFill(t,true)},{passive:true,capture:true});
+// A flash follows the action-sheet exit before the underlying view animates.
+screen.addEventListener('click',e=>{
+ const sheet=e.target.closest('.zx-sheet-backdrop');if(!sheet)return;
+ if(!(e.target===sheet||e.target.closest('[data-zx-sheet-close],[data-zx-sheet-index]')))return;
+ if(!isMotion())return;
+ const clone=sheet.cloneNode(true);clone.classList.add('zm-dismiss');clone.setAttribute('aria-hidden','true');clone.style.pointerEvents='none';screen.appendChild(clone);setTimeout(()=>clone.remove(),ms(330)+25);
+},true);
+// One-time page swipe micro-feedback, no perpetual DOM observers.
+const wizard=doc.getElementById('zxOnboarding');
+if(wizard){wizard.addEventListener('click',e=>{
+ const direction=e.target.closest('[data-zx-step]');if(!direction||!isMotion())return;
+ const dir=direction.dataset.zxStep;if(dir!=='next'&&dir!=='back')return;
+ const existing=wizard.querySelector('.zx-step-shell');if(!existing)return;
+ const ghost=existing.cloneNode(true);ghost.classList.add('zm-wizard-out');ghost.setAttribute('aria-hidden','true');
+ ghost.querySelectorAll('button,input').forEach(x=>{x.disabled=true;x.tabIndex=-1});
+ queueMicrotask(()=>{if(wizard.hidden)return;wizard.classList.toggle('zm-wizard-back',dir==='back');wizard.appendChild(ghost);setTimeout(()=>ghost.remove(),ms(335)+30)});
+},true)}
+// Motion & Haptics panel, visually aligned with HyperOS-inspired Settings.
+const oldMarkup=osSettingsMarkup;
+osSettingsMarkup=function(section='root'){
+ const page=OS.settingsStack.at(-1)||section||'root';
+ if(page==='motion'){
+  const options=[['expressive',tr('Expressive','灵动'),tr('Full spring dynamics, spatial app launches, layered details.','完整弹性转场、空间启动与层叠细节。')],
+                 ['balanced',tr('Balanced','均衡'),tr('Quick and smooth, with less overshoot.','快速流畅，减少回弹幅度。')],
+                 ['calm',tr('Calm','舒缓'),tr('Gentle, shorter motion for everyday use.','轻柔简短，适合日常使用。')],
+                 ['off',tr('Off','关闭'),tr('Minimal animation and instant navigation.','减少动画，快速切换页面。')]];
+  return `<section class="ios-settings z-settings zm-motion-page" data-os-settings-route="motion">
+   <h1 class="z-heading">${tr('Motion & Haptics','动画与触感')}</h1>
+   <p class="z-page-intro">${tr('A connected motion language for ZorixOS. Designed for clarity, responsiveness, and tactile detail.','统一的 ZorixOS 动效语言，兼顾清晰、响应速度和触控质感。')}</p>
+   <div class="zm-lab-hero" id="zmLabHero"><div class="zm-lab-orb">${glyph('appearance',48)}</div></div>
+   <div class="zm-lab-title">${tr('Motion intensity','动画强度')}</div>
+   <div class="z-group">${options.map(([key,title,description])=>`<button class="zm-motion-choice ${engine.mode===key?'selected':''}" type="button" data-zm-select="${key}"><span class="zm-choice-marker">${engine.mode===key?glyph('check',17):''}</span><span class="zm-choice-text">${title}<small>${description}</small></span></button>`).join('')}</div>
+   <div class="zm-lab-title">${tr('Touch feedback','触控反馈')}</div>
+   <div class="z-group"><div class="zm-switch-line"><span class="zm-line-label">${tr('Haptic taps','按键触感')}<small>${tr('Brief response for major actions, when supported by your device.','设备支持时为关键操作提供短促反馈。')}</small></span><button type="button" role="switch" aria-checked="${engine.haptic}" aria-label="${tr('Haptics','触感')}" class="ios-switch ${engine.haptic?'on':''}" data-zm-toggle="haptic"></button></div>
+   <div class="zm-switch-line"><span class="zm-line-label">${tr('Reduce motion','减少动画')}<small>${tr('Honors your accessibility preference.','尊重你的无障碍偏好设置。')}</small></span><button role="switch" type="button" aria-checked="${!!OS_PREF.reduceMotion}" aria-label="${tr('Reduce motion','减少动画')}" class="ios-switch ${OS_PREF.reduceMotion?'on':''}" data-zm-toggle="reduce"></button></div></div>
+   <div class="zm-lab-quick"><button type="button" data-zm-action="preview">${tr('Preview motion','预览动效')}</button><button type="button" data-zm-action="island">${tr('Dynamic Island','灵动岛')}</button></div>
+   <p class="zm-lab-footer">${tr('Transforms and opacity are accelerated when possible. Android controls critical system interruptions.','尽可能使用 GPU 加速的位移和透明度动画。重要系统通知仍由 Android 管理。')}</p>
+   </section>`;
+ }
+ let html=oldMarkup(section);
+ if(page==='root'||page==='general'||page==='appearance'){
+  const row=`<div class="z-section-title">${tr('MOTION ENGINE','动画引擎')}</div><div class="z-group"><button class="ios-row z-row" type="button" data-os-setting="motion"><span class="z-symbol" style="--z-bg:#e8edff;--z-fg:#526ee7">${glyph('appearance',19)}</span><span class="z-text"><b>${tr('Motion & Haptics','动画与触感')}</b><small>${tr('Spatial animations and responsive feedback','空间动画与即时反馈')}</small></span><span class="z-next">${glyph('next',15)}</span></button></div>`;
+  html=html.replace(/<\/div>\s*$/,row+'</div>');
+ }
+ return html;
+};
+doc.addEventListener('click',e=>{
+ const option=e.target.closest('[data-zm-select]');
+ if(option){e.preventDefault();e.stopImmediatePropagation();engine.mode=option.dataset.zmSelect;apply();osRenderApp();const hero=doc.getElementById('zmLabHero');replayClass(hero,'zm-previewing',850);haptic('soft');return}
+ const toggle=e.target.closest('[data-zm-toggle]');
+ if(toggle){e.preventDefault();e.stopImmediatePropagation();
+  if(toggle.dataset.zmToggle==='haptic'){engine.haptic=!engine.haptic;apply()}
+  else {osSetPref('reduceMotion',!OS_PREF.reduceMotion);apply()}
+  osRenderApp();haptic('soft');return;
+ }
+ const action=e.target.closest('[data-zm-action]');if(action){e.preventDefault();e.stopImmediatePropagation();
+  if(action.dataset.zmAction==='preview'){replayClass(doc.getElementById('zmLabHero'),'zm-previewing',850);haptic('medium')}
+  if(action.dataset.zmAction==='island')window.ZorixV2.showIsland(tr('Motion ready','动效已就绪'),tr('ZorixOS Liquid Experience','ZorixOS 灵动体验'),1900);
+  return;
+ }
+},true);
+const prevSetPref=osSetPref;
+osSetPref=function(k,v,redraw=true){const r=prevSetPref(k,v,redraw);if(k==='reduceMotion'||k==='lowPower')apply();return r};
+// Keep reduced-motion changes in sync with system accessibility preferences.
+try{matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',apply)}catch(_){}
+
+// Crossfade a wallpaper snapshot so changing a gradient never pops abruptly.
+const prevWallpaper=setWallpaper;
+setWallpaper=function(name){
+ const old=doc.getElementById('wallpaper');
+ if(isMotion()&&old&&name!==state.wallpaper){
+  const ghost=old.cloneNode(true);ghost.removeAttribute('id');ghost.classList.add('zm-wallpaper-ghost');
+  ghost.setAttribute('aria-hidden','true');screen.appendChild(ghost);
+  ghost.addEventListener('animationend',()=>ghost.remove(),{once:true});setTimeout(()=>ghost.remove(),ms(810)+60);
+ }
+ return prevWallpaper(name);
+};
+// Keep visual music feedback tied to real play/next actions rather than a constant animation loop.
+const prevPlaying=setPlaying;
+setPlaying=function(value){const result=prevPlaying(value);screen.classList.toggle('zm-music-playing',!!state.playing);return result};
+const prevNextTrack=nextTrack;
+nextTrack=function(direction){const result=prevNextTrack(direction);const art=doc.querySelector('.music-album');replayClass(art,'zm-track-change',590);return result};
+// Contextual ripples are clipped to rows, never used over the iOS artwork.
+screen.addEventListener('pointerdown',e=>{
+ if(!isMotion())return;
+ const target=e.target.closest('.z-group .z-row,.os-cell,#controlCenter .cc-quick button,.zx-primary,.zm-motion-choice');
+ if(!target||target.matches('input')||!target.isConnected)return;
+ const rect=target.getBoundingClientRect();const ripple=doc.createElement('span');ripple.className='zm-tap-ripple';
+ ripple.style.setProperty('--zm-ripple-x',(e.clientX-rect.left)+'px');ripple.style.setProperty('--zm-ripple-y',(e.clientY-rect.top)+'px');
+ target.appendChild(ripple);setTimeout(()=>ripple.remove(),ms(610)+30);
+},{passive:true,capture:true});
+// Natural downward dismiss gesture, starting at the sheet's title so list scrolling remains usable.
+let drag=null;
+screen.addEventListener('pointerdown',e=>{
+ const header=e.target.closest('.zx-sheet h3');if(!header||!isMotion())return;
+ const sheet=header.closest('.zx-sheet');if(!sheet)return;
+ drag={sheet,y:e.clientY,dy:0};sheet.classList.add('zm-sheet-drag');
+},{passive:true,capture:true});
+screen.addEventListener('pointermove',e=>{
+ if(!drag)return;drag.dy=Math.max(0,Math.min(240,e.clientY-drag.y));drag.sheet.style.transform='translate3d(0,'+drag.dy+'px,0)';
+},{passive:true,capture:true});
+screen.addEventListener('pointerup',()=>{
+ if(!drag)return;const d=drag;drag=null;d.sheet.classList.remove('zm-sheet-drag');
+ if(d.dy>75){const backdrop=d.sheet.closest('.zx-sheet-backdrop');
+  if(backdrop){const ghost=backdrop.cloneNode(true);ghost.classList.add('zm-dismiss');ghost.style.pointerEvents='none';screen.appendChild(ghost);setTimeout(()=>ghost.remove(),ms(330)+40)}
+  window.ZorixV2.closeSheet();haptic('soft');
+ }else{d.sheet.classList.add('zm-sheet-return');d.sheet.style.transform='';setTimeout(()=>d.sheet.classList.remove('zm-sheet-return'),ms(350)+20)}
+},{passive:true,capture:true});
+screen.addEventListener('pointercancel',()=>{if(drag){drag.sheet.style.transform='';drag.sheet.classList.remove('zm-sheet-drag');drag=null}},{passive:true,capture:true});
+
+window.ZorixMotion={get mode(){return engine.mode},get haptics(){return engine.haptic},setMode(v){if(['expressive','balanced','calm','off'].includes(v)){engine.mode=v;apply()}},preview(){replayClass(doc.getElementById('zmLabHero'),'zm-previewing',850)},get reduced(){return reduced()}};
+})();
 </script>
 </body>
 </html>

@@ -36,7 +36,7 @@ public final class MainActivity extends Activity {
     prefs.setMediaPlaybackRequiresUserGesture(true);
     prefs.setAllowFileAccess(false);prefs.setAllowContentAccess(true);
     prefs.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-    prefs.setUserAgentString(prefs.getUserAgentString()+" ZorixOSAndroid/2.0");
+    prefs.setUserAgentString(prefs.getUserAgentString()+" ZorixOSAndroid/3.0");
     web.setWebViewClient(new WebViewClient(){
       @Override public WebResourceResponse shouldInterceptRequest(WebView v,WebResourceRequest r){
         return loader.shouldInterceptRequest(r.getUrl());

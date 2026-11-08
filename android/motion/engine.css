@@ -1,0 +1,162 @@
+
+/* ZorixOS 3.0: motion is generated with transforms and opacity rather than layout animation. */
+:root {
+  --zm-speed: 1;
+  --zm-ease: cubic-bezier(.22,1,.36,1);
+  --zm-pop: cubic-bezier(.17,1.16,.32,1);
+  --zm-blue: #6d86f4;
+}
+:root[data-zm-mode="expressive"] { --zm-speed: 1; }
+:root[data-zm-mode="balanced"] { --zm-speed: .78; }
+:root[data-zm-mode="calm"] { --zm-speed: .52; }
+:root[data-zm-mode="off"],:root[data-zm-reduced="true"] { --zm-speed: .01; }
+button,input[type="range"],.z-row,.os-cell,.app-tile,.widget,.z-hero,.z-chip,.zx-appearance-choice,.zx-locale-card{ -webkit-tap-highlight-color:transparent; }
+button:focus-visible,[role="button"]:focus-visible{outline:2px solid #8db1ff;outline-offset:3px}
+/* Tactile feedback: press and release form one small continuous gesture. */
+.screen button:not(.app-tile):not(.dynamic-island):not(.home-indicator),.screen .widget,.screen [role="button"]{
+  transition-property:transform,background-color,box-shadow,opacity,border-color;
+  transition-duration:calc(175ms * var(--zm-speed));
+  transition-timing-function:var(--zm-ease);
+}
+.screen .zm-pressed:not(.app-tile):not(.widget):not(.dynamic-island):not(.home-indicator){transform:scale(.964);}
+.screen .zm-released:not(.app-tile):not(.widget):not(.dynamic-island):not(.home-indicator){animation:zmRelease calc(290ms * var(--zm-speed)) var(--zm-pop);}
+@keyframes zmRelease {0%{transform:scale(.96)}52%{transform:scale(1.018)}100%{transform:scale(1)}}
+.screen .app-tile .app-icon{transition:transform calc(235ms * var(--zm-speed)) var(--zm-pop),box-shadow .19s ease!important;}
+.screen .app-tile.zm-pressed .app-icon{transform:scale(.81)!important;box-shadow:0 2px 5px #0003!important}
+.screen .app-tile.zm-released .app-icon{animation:zmIconRebound calc(410ms * var(--zm-speed)) var(--zm-pop);}
+@keyframes zmIconRebound{0%{transform:scale(.82)}45%{transform:scale(1.09)}75%{transform:scale(.98)}100%{transform:scale(1)}}
+.screen .widget.zm-pressed,.screen .z-hero.zm-pressed{transform:scale(.965)}
+.screen .widget.zm-released,.screen .z-hero.zm-released{animation:zmCardRebound calc(370ms * var(--zm-speed)) var(--zm-ease)}
+@keyframes zmCardRebound{0%{transform:scale(.965)}60%{transform:scale(1.017)}100%{transform:scale(1)}}
+/* Each route has a clear direction, but does not block tapping. */
+.app-layer.zm-app-motion{transition:none!important;will-change:transform,opacity,border-radius;}
+.app-layer.zm-app-motion .app-surface{backface-visibility:hidden;transform:translateZ(0)}
+.app-layer.show:not(.zm-app-motion){transition-duration:calc(360ms * var(--zm-speed)),calc(290ms * var(--zm-speed))!important;}
+.app-view>.zm-route-in{animation:zmRouteForward calc(355ms * var(--zm-speed)) var(--zm-ease) both;}
+.app-view>.zm-route-back{animation:zmRouteBack calc(340ms * var(--zm-speed)) var(--zm-ease) both;}
+.app-view>.zm-route-refresh{animation:zmRouteRefresh calc(260ms * var(--zm-speed)) ease-out both;}
+@keyframes zmRouteForward{0%{opacity:.16;transform:translate3d(25px,0,0) scale(.987)}100%{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmRouteBack{0%{opacity:.16;transform:translate3d(-25px,0,0) scale(.988)}100%{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmRouteRefresh{0%{opacity:.45;transform:translate3d(0,9px,0)}100%{opacity:1;transform:translateZ(0)}}
+.app-view .zm-stagger-target{animation:zmStaggerIn calc(390ms * var(--zm-speed)) var(--zm-ease) backwards;}
+@keyframes zmStaggerIn{from{opacity:0;transform:translate3d(0,10px,0) scale(.992)}to{opacity:1;transform:translateZ(0) scale(1)}}
+/* iOS style overlays slide on different axes. */
+#controlCenter{transform:translate3d(0,-34px,0) scale(.985);transform-origin:85% 4%;transition:opacity calc(260ms * var(--zm-speed)) ease,visibility calc(260ms * var(--zm-speed)),transform calc(390ms * var(--zm-speed)) var(--zm-pop)!important;}
+#controlCenter.show{transform:translate3d(0,0,0) scale(1)}
+#notificationCenter{transform:translate3d(0,-42px,0);transition:opacity calc(260ms * var(--zm-speed)) ease,visibility calc(260ms * var(--zm-speed)),transform calc(410ms * var(--zm-speed)) var(--zm-ease)!important;}
+#notificationCenter.show{transform:translate3d(0,0,0)}
+#searchLayer{transform:translate3d(0,28px,0) scale(.985);transform-origin:50% 80%;transition:opacity calc(230ms * var(--zm-speed)) ease,visibility calc(230ms * var(--zm-speed)),transform calc(340ms * var(--zm-speed)) var(--zm-ease)!important;}
+#searchLayer.show{transform:translate3d(0,0,0) scale(1)}
+#lockScreen{transform:translate3d(0,-11px,0) scale(1.024);transition:opacity calc(380ms * var(--zm-speed)),visibility calc(380ms * var(--zm-speed)),transform calc(560ms * var(--zm-speed)) var(--zm-ease)!important;}
+#lockScreen.show{transform:translate3d(0,0,0) scale(1)}
+#lockScreen.show .lock-time{animation:zmLockTime calc(660ms * var(--zm-speed)) var(--zm-ease) both;}
+#lockScreen.show .lock-date,.lock-screen.show .lock-widgets{animation:zmLockDetail calc(640ms * var(--zm-speed)) var(--zm-ease) both;animation-delay:calc(100ms * var(--zm-speed))}
+@keyframes zmLockTime{from{opacity:.4;transform:translate3d(0,28px,0) scale(1.045)}to{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmLockDetail{from{opacity:0;transform:translate3d(0,16px,0)}to{opacity:1;transform:translateZ(0)}}
+#homePages{transition-duration:calc(490ms * var(--zm-speed))!important;transition-timing-function:var(--zm-ease)!important}
+#pageDots button.active{transition:width calc(360ms * var(--zm-speed)) var(--zm-ease),background-color .22s!important;}
+#homePages.zm-swiped .home-page .app-grid{animation:zmGridArrive calc(460ms * var(--zm-speed)) var(--zm-ease) both;}
+@keyframes zmGridArrive{from{opacity:.7;transform:translate3d(0,8px,0)}to{opacity:1;transform:translateZ(0)}}
+#homeIndicator:active{height:7px;width:146px;}
+#appView .ios-switch{transition:background-color calc(290ms * var(--zm-speed)) ease!important}
+#appView .ios-switch::after{transition:transform calc(370ms * var(--zm-speed)) var(--zm-pop)!important}
+#appView .ios-switch.zm-switch-pulse{animation:zmSwitchPulse calc(390ms * var(--zm-speed)) ease-out}
+@keyframes zmSwitchPulse{0%{box-shadow:0 0 0 0 #778cf34c}70%{box-shadow:0 0 0 8px #778cf300}100%{box-shadow:none}}
+.z-group .z-row{position:relative;overflow:hidden;}
+.z-group .z-row::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(110deg,#aabafa00,#7d94ed0f,#aabafa00);opacity:0;transition:opacity calc(220ms * var(--zm-speed))}
+.z-group .z-row.zm-pressed::before{opacity:1;}
+.z-row>*{position:relative;z-index:1}
+.z-metric-card.zm-pressed,.z-chip.zm-pressed{transform:scale(.964)}
+.z-chip.selected{box-shadow:inset 0 0 0 1px #8e9df2aa,0 4px 10px #8598e024;}
+.z-swatch.active{transition:transform calc(230ms * var(--zm-speed)) var(--zm-ease),box-shadow calc(340ms * var(--zm-speed)) ease;transform:translateY(-3px) scale(1.025)}
+/* Slider motion and a soft value preview. */
+.z-slider{position:relative;overflow:visible}
+.z-slider input[type=range]{background:linear-gradient(90deg,#6f83ee var(--zm-fill,50%),#dce1f1 var(--zm-fill,50%))!important;transition:filter calc(150ms * var(--zm-speed)) ease;touch-action:none;}
+.z-slider input[type=range]:active{filter:brightness(1.12)}
+.zm-range-bubble{position:absolute;top:-22px;left:var(--zm-bubble-left,50%);transform:translateX(-50%) translateY(5px) scale(.9);opacity:0;z-index:7;padding:6px 9px;border-radius:11px;background:#3e52b8;color:white;font-size:11px;font-weight:730;box-shadow:0 7px 18px #566bd34a;pointer-events:none;white-space:nowrap;transition:opacity calc(170ms * var(--zm-speed)),transform calc(230ms * var(--zm-speed)) var(--zm-pop)}
+.zm-range-bubble.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+/* Dynamic Island uses its own spring and delayed inner detail appearance. */
+#island.dynamic-island{transition:width calc(430ms * var(--zm-speed)) cubic-bezier(.2,1.06,.24,1),height calc(440ms * var(--zm-speed)) cubic-bezier(.2,1.06,.24,1),border-radius calc(420ms * var(--zm-speed)) var(--zm-ease),top calc(390ms * var(--zm-speed)) var(--zm-ease),box-shadow calc(310ms * var(--zm-speed))!important;will-change:width,height;}
+#island.zx-island-expanded{box-shadow:0 20px 40px #0008,0 0 0 1px #ffffff10!important;}
+#island.zx-island-expanded .zx-island-expanded-content{animation:zmIslandContent calc(390ms * var(--zm-speed)) var(--zm-ease) both;animation-delay:calc(80ms * var(--zm-speed));}
+@keyframes zmIslandContent{from{opacity:0;transform:translate3d(0,9px,0) scale(.94)}to{opacity:1;transform:translateZ(0) scale(1)}}
+#island.zm-island-tap{animation:zmIslandTap calc(280ms * var(--zm-speed)) var(--zm-ease)}
+@keyframes zmIslandTap{50%{filter:brightness(1.24)}100%{filter:brightness(1)}}
+#island .zx-island-btn:active{transform:scale(.9)}
+#island .zx-island-bars.active i{animation-duration:calc(640ms * var(--zm-speed))!important}
+/* Sheets and action dialogs have coordinated enter/exit animations. */
+.zx-sheet-backdrop{animation:zmSheetBackdrop calc(240ms * var(--zm-speed)) ease both!important}
+.zx-sheet{animation:zmSheetIn calc(480ms * var(--zm-speed)) var(--zm-pop) both!important}
+.zx-sheet-backdrop.zm-dismiss{animation:zmSheetBackdropOut calc(220ms * var(--zm-speed)) ease both!important;pointer-events:none}
+.zx-sheet-backdrop.zm-dismiss .zx-sheet{animation:zmSheetOut calc(290ms * var(--zm-speed)) var(--zm-ease) both!important}
+@keyframes zmSheetBackdrop{from{opacity:0}to{opacity:1}}
+@keyframes zmSheetBackdropOut{to{opacity:0}}
+@keyframes zmSheetIn{from{opacity:.66;transform:translate3d(0,74px,0) scale(.975)}to{opacity:1;transform:translateZ(0) scale(1)}}
+@keyframes zmSheetOut{to{opacity:0;transform:translate3d(0,70px,0) scale(.97)}}
+.zx-sheet-row{transition:transform calc(170ms * var(--zm-speed)),background-color calc(200ms * var(--zm-speed))!important}
+.zx-sheet-row:active{transform:scale(.985)}
+/* Setup pages slide in context, and the logo has an intentionally short one-time reveal. */
+#zxOnboarding .zx-step-shell{animation-duration:calc(530ms * var(--zm-speed))!important}
+#zxOnboarding .zm-wizard-out{position:absolute;inset:0;z-index:4;pointer-events:none;animation:zmWizardOut calc(300ms * var(--zm-speed)) ease-in both}
+#zxOnboarding.zm-wizard-back .zm-wizard-out{animation-name:zmWizardOutBack}
+@keyframes zmWizardOut{to{opacity:0;transform:translate3d(-34px,0,0) scale(.975)}}
+@keyframes zmWizardOutBack{to{opacity:0;transform:translate3d(34px,0,0) scale(.975)}}
+#zxOnboarding .zx-locale-card.active,#zxOnboarding .zx-appearance-choice.active{box-shadow:0 9px 29px #596de638,0 0 0 1px #ffffff40!important;transform:scale(1.015)}
+#zxOnboarding .zx-step-progress i.active{transition:background-color calc(270ms * var(--zm-speed)),transform calc(300ms * var(--zm-speed)) var(--zm-pop)}
+/* Toast and system feedback are distinct from sheet motion. */
+#toast.show{animation:zmToastPop calc(360ms * var(--zm-speed)) var(--zm-pop)}
+@keyframes zmToastPop{from{opacity:0;transform:translate(-50%,16px) scale(.84)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+/* App-specific details appear when a page is visited, not in perpetual loops. */
+.os-camera-preview.zm-shutter-flash::after{content:"";position:absolute;inset:0;background:#fff;animation:zmShutter calc(340ms * var(--zm-speed)) ease-out forwards;z-index:6;pointer-events:none}
+@keyframes zmShutter{0%{opacity:0}20%{opacity:.94}100%{opacity:0}}
+.os-chat-bubble:last-child,.bubble.to:last-child{animation:zmMessageSent calc(370ms * var(--zm-speed)) var(--zm-pop) both;transform-origin:90% 90%}
+@keyframes zmMessageSent{from{opacity:.4;transform:translate3d(0,10px,0) scale(.79)}to{opacity:1;transform:translateZ(0) scale(1)}}
+.os-photo-cell:active img,.photo-item:active{transform:scale(1.07);transition:transform calc(260ms * var(--zm-speed))}
+.os-shutter:active{transform:scale(.88)}
+.os-shutter{transition:transform calc(160ms * var(--zm-speed)) var(--zm-ease)}
+#appView .z-bubble{animation:zmDeviceBubble calc(690ms * var(--zm-speed)) var(--zm-pop) both;}
+@keyframes zmDeviceBubble{from{opacity:.35;transform:rotate(-28deg) translate3d(12px,-10px,0) scale(.78)}to{opacity:1;transform:rotate(-14deg) translateZ(0) scale(1)}}
+/* Lightweight one-time shimmer in a freshly opened device detail card. */
+#appView .z-setting-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(106deg,transparent 30%,#ffffff55 49%,transparent 67%);transform:translateX(-120%);animation:zmHeroSheen calc(950ms * var(--zm-speed)) ease-out 1 both;}
+@keyframes zmHeroSheen{to{transform:translateX(120%)}}
+/* The motion lab is intentionally custom ZorixOS, without emoji artwork. */
+.zm-lab-title{font-size:12px;color:#8e92a6;margin:16px 6px 10px;text-transform:uppercase;letter-spacing:.08em;font-weight:740}
+.zm-lab-hero{height:168px;border-radius:27px;position:relative;overflow:hidden;background:linear-gradient(125deg,#dce6ff,#e0d9ff 50%,#dcefff);box-shadow:0 12px 28px #536ae91c;margin:0 0 18px;display:grid;place-items:center}
+.zm-lab-orb{width:104px;height:104px;border-radius:31px;display:grid;place-items:center;background:linear-gradient(135deg,#ffffffd9,#a7b5f3a5 45%,#667fe8aa);border:1px solid #fff;box-shadow:inset 9px 11px 16px #fff9,inset -9px -9px 18px #697dd557,0 14px 20px #6376db45;transform:rotate(-9deg);transition:transform calc(590ms * var(--zm-speed)) var(--zm-pop)}
+.zm-lab-orb svg{width:48px;height:48px;color:#4659a8;transform:rotate(9deg)}
+.zm-lab-hero.zm-previewing .zm-lab-orb{animation:zmOrbDance calc(800ms * var(--zm-speed)) var(--zm-pop)}
+@keyframes zmOrbDance{0%{transform:rotate(-9deg) scale(1)}30%{transform:rotate(12deg) scale(.79)}68%{transform:rotate(-16deg) scale(1.16)}100%{transform:rotate(-9deg) scale(1)}}
+.zm-motion-choice{display:flex;align-items:center;gap:12px;padding:14px 14px;color:#252941;border:0;border-bottom:1px solid #edf0f8;background:#fff;width:100%;text-align:left}
+.zm-motion-choice:last-child{border:0}
+.zm-motion-choice .zm-choice-marker{height:23px;width:23px;display:grid;place-items:center;border:1px solid #cdd6ec;border-radius:50%;color:#7185db;flex:none}
+.zm-motion-choice.selected .zm-choice-marker{background:#6e82ec;color:#fff;border-color:#6e82ec}
+.zm-motion-choice .zm-choice-text{flex:1;display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:650}
+.zm-motion-choice .zm-choice-text small{font-weight:400;color:#999eb0;font-size:11px}
+.zm-switch-line{display:flex;align-items:center;gap:12px;padding:15px;background:#fff;min-height:65px}
+.zm-switch-line .zm-line-label{flex:1;font-size:13px;color:#282c3b}.zm-switch-line .zm-line-label small{display:block;color:#99a0b0;font-size:11px;margin-top:4px}
+.zm-lab-quick{display:flex;gap:8px;margin:15px 0}.zm-lab-quick button{flex:1;min-height:42px;border:0;border-radius:13px;background:#e3e9ff;color:#4c5ac5;font-size:12px;font-weight:690}
+.zm-lab-quick button:last-child{background:#495dc9;color:white}
+.zm-lab-footer{font-size:11px;color:#999da9;line-height:1.7;margin:12px 5px}
+/* Pause visual work when hidden or for users who request reduced motion. */
+html.zx-suspended .screen *,html.zx-suspended #zxOnboarding *{animation-play-state:paused!important}
+html[data-zm-mode="off"] .screen *,html[data-zm-reduced="true"] .screen *,html[data-zm-mode="off"] .screen *::before,html[data-zm-reduced="true"] .screen *::before,html[data-zm-mode="off"] .screen *::after,html[data-zm-reduced="true"] .screen *::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+@media(prefers-reduced-motion:reduce){.screen *,#zxOnboarding *,#zxOnboarding *::before{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* Extra one-shot detail: wallpaper crossfade, ripple, media and Control Center. */
+.screen>.zm-wallpaper-ghost{position:absolute!important;inset:0;z-index:1!important;pointer-events:none;opacity:1;will-change:opacity;animation:zmWallpaperFade calc(760ms * var(--zm-speed)) ease-in-out forwards!important;}
+@keyframes zmWallpaperFade{0%{opacity:1}100%{opacity:0}}
+.zm-tap-ripple{position:absolute;z-index:2;width:20px;height:20px;left:var(--zm-ripple-x);top:var(--zm-ripple-y);border-radius:50%;background:#a5b9ff54;pointer-events:none;transform:translate(-50%,-50%) scale(.2);animation:zmRipple calc(580ms * var(--zm-speed)) ease-out forwards;}
+@keyframes zmRipple{0%{opacity:.9;transform:translate(-50%,-50%) scale(.1)}100%{opacity:0;transform:translate(-50%,-50%) scale(13)}}
+#controlCenter [data-toggle].on{transition:background-color calc(290ms * var(--zm-speed)) var(--zm-ease),box-shadow calc(290ms * var(--zm-speed)) ease!important}
+#controlCenter [data-toggle].zm-pressed{filter:brightness(1.16)}
+#brightnessFill,#volumeFill{transition:height calc(235ms * var(--zm-speed)) var(--zm-ease)!important;}
+#ccPlay svg,#ccPrev svg,#ccNext svg{transition:transform calc(240ms * var(--zm-speed)) var(--zm-pop)}
+#ccPlay:active svg,#ccPrev:active svg,#ccNext:active svg{transform:scale(.75)}
+.screen.zm-music-playing .music-album{box-shadow:0 18px 34px #1b09284b,0 0 0 1px #ffffff70;}
+.music-album.zm-track-change{animation:zmTrackChange calc(570ms * var(--zm-speed)) var(--zm-pop) both;}
+@keyframes zmTrackChange{0%{opacity:.45;transform:rotate(-6deg) scale(.9)}55%{opacity:1;transform:rotate(2deg) scale(1.035)}100%{transform:rotate(0) scale(1)}}
+#island.zx-island-expanded::before{content:"";position:absolute;inset:1px;border-radius:inherit;border:1px solid #ffffff23;pointer-events:none;z-index:0;background:linear-gradient(140deg,#ffffff13,transparent 45%,#ffffff09 90%);}
+#island .zx-island-expanded-content{position:relative;z-index:1}
+.zx-sheet.zm-sheet-drag{transition:none!important;touch-action:none;}
+.zx-sheet.zm-sheet-return{transition:transform calc(340ms * var(--zm-speed)) var(--zm-pop)!important}
+.zm-micro-feedback{animation:zmMicroFeedback calc(390ms * var(--zm-speed)) var(--zm-pop) both}
+@keyframes zmMicroFeedback{0%{transform:scale(.88)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
