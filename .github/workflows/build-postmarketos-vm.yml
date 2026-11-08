@@ -1,0 +1,92 @@
+name: Build postmarketOS mobile VM image
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/build-postmarketos-vm.yml
+      - mobile/**
+
+permissions:
+  contents: read
+
+concurrency:
+  group: postmarketos-vm
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Phosh x86_64 UEFI image
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - name: Check out workflow repository
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            git python3 openssl procps tar parted e2fsprogs \
+            xz-utils qemu-utils qemu-user-static file rsync
+          df -h
+
+      - name: Fetch official postmarketOS sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth=1 --branch v26.06 \
+            https://gitlab.postmarketos.org/postmarketOS/pmaports.git \
+            "$RUNNER_TEMP/pmaports"
+          git clone --depth=1 \
+            https://gitlab.postmarketos.org/postmarketOS/pmbootstrap.git \
+            "$RUNNER_TEMP/pmbootstrap"
+          python3 "$RUNNER_TEMP/pmbootstrap/pmbootstrap.py" --version
+
+      - name: Build generic x86_64 image with Phosh
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/pmbootstrap.cfg" <<EOF
+          [pmbootstrap]
+          work = $RUNNER_TEMP/pmb-work
+          aports = $RUNNER_TEMP/pmaports
+          device = generic-x86_64
+          ui = phosh
+          user = user
+          timezone = UTC
+          jobs = 2
+          EOF
+          python3 "$RUNNER_TEMP/pmbootstrap/pmbootstrap.py" \
+            --config "$RUNNER_TEMP/pmbootstrap.cfg" \
+            --assume-yes --details-to-stdout \
+            install --password 147147
+          python3 "$RUNNER_TEMP/pmbootstrap/pmbootstrap.py" \
+            --config "$RUNNER_TEMP/pmbootstrap.cfg" \
+            --assume-yes export "$RUNNER_TEMP/pmos-export"
+
+      - name: Check and compress disk image
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_image="$RUNNER_TEMP/pmos-export/generic-x86_64.img"
+          if [[ ! -f "$source_image" ]]; then
+            echo "Expected full-disk image not found. Export contents:"
+            ls -alh "$RUNNER_TEMP/pmos-export"
+            exit 1
+          fi
+          qemu-img info -f raw "$source_image"
+          mkdir -p dist
+          xz -T2 -3 -c "$source_image" > dist/postmarketos-v26.06-phosh-x86_64.img.xz
+          (cd dist && sha256sum postmarketos-v26.06-phosh-x86_64.img.xz > SHA256SUMS)
+          ls -lah dist
+
+      - name: Upload boot image as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: postmarketos-v26.06-phosh-x86_64
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 7
