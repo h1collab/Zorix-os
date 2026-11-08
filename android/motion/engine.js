@@ -1,4 +1,3 @@
-
 /* ZorixOS 3.0 Motion Engine
  * Motion is attached to user intent, rather than automatically animating every DOM update.
  * All main effects use compositor-friendly transforms/opacity. The simulator never blocks Android calls.

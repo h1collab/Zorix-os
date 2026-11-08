@@ -1,8 +1,32 @@
-plugins { id 'com.android.application' }
-android {
-  namespace 'com.zorix.os'
-  compileSdk 35
-  defaultConfig { applicationId 'com.zorix.os'; minSdk 26; targetSdk 35; versionCode 3; versionName '3.0.0' }
-  compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+plugins {
+    id 'com.android.application'
 }
-dependencies { implementation 'androidx.webkit:webkit:1.12.1' }
+
+android {
+    namespace 'com.zorix.os'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.zorix.os'
+        minSdk 26
+        targetSdk 35
+        versionCode 4
+        versionName '4.0.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            // Sign the final release with your own keystore before distribution.
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}

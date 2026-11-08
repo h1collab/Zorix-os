@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#0e1119">
-<meta name="description" content="ZorixOS 3.0 UI simulator ·  Liquid Glass、真实应用图标、设置多级导航和本地 App 交互。">
-<title>ZorixOS 3.0 · Motion Edition</title>
+<meta name="description" content="ZorixOS 4.0 Android interface simulator with live connectivity and Apple-inspired interaction design">
+<title>ZorixOS 4.0 · Fluent Edition</title>
 <style>
 :root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue",Arial,sans-serif;font-synthesis:none;--device-scale:1;--accent:#a7d6ff}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overscroll-behavior:none}body{background:#080b11;color:#f6f7fb;overflow:hidden;-webkit-tap-highlight-color:transparent}button,input,textarea{font:inherit}button{color:inherit;cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #94caff;outline-offset:3px}button:disabled{cursor:default}.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 45% 60% at 78% 50%,rgba(54,65,108,.27),transparent 77%),radial-gradient(ellipse 35% 50% at 14% 20%,rgba(98,70,102,.18),transparent 80%),#090c12}.ambient:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at center,black,transparent 77%)}
@@ -504,6 +504,156 @@ html[data-zm-mode="off"] .screen *,html[data-zm-reduced="true"] .screen *,html[d
 .zx-sheet.zm-sheet-return{transition:transform calc(340ms * var(--zm-speed)) var(--zm-pop)!important}
 .zm-micro-feedback{animation:zmMicroFeedback calc(390ms * var(--zm-speed)) var(--zm-pop) both}
 @keyframes zmMicroFeedback{0%{transform:scale(.88)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
+</style>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; object-src 'none'; frame-src 'none'; base-uri 'self'">
+<style id="zorix-v4-css">
+/* ZorixOS 4.0: coherent Apple-inspired motion, brand and panels. */
+:root{--v4-spring:cubic-bezier(.2,1.18,.31,1);--v4-exit:cubic-bezier(.3,0,.62,1);--v4-blue:#0a84ff;--v4-panel:rgba(98,113,137,.42)}
+#zxOnboarding:not(.zx-stage-boot){background:#fafbff!important;color:#151922!important}
+#zxOnboarding:not(.zx-stage-boot)::before{display:none!important}
+#zxOnboarding.zx-stage-boot{background:#020203!important;color:#fff!important}
+#zxOnboarding.zx-stage-boot::before{display:none}
+.zx-boot-logo{background:transparent!important;box-shadow:none!important;border-radius:0!important;width:133px!important;height:133px!important;animation:v4BootMark 1.15s cubic-bezier(.18,.85,.25,1) both!important}
+.zx-boot-logo svg{width:124px;height:124px;filter:grayscale(1) brightness(2);animation:v4LogoColor 1.15s ease .34s both}
+.zx-boot-word{font-size:26px!important;font-weight:680!important;letter-spacing:.22em!important;margin-top:14px!important;animation:v4BootWord 1.15s .12s both!important}
+.zx-boot-line{width:81px!important;height:2px!important;background:rgba(255,255,255,.12)!important;margin-top:25px!important}
+.zx-boot-line:before{background:#fff!important;animation-duration:1.2s!important}
+@keyframes v4BootMark{0%{opacity:0;transform:scale(.65);filter:blur(17px)}55%{opacity:1;transform:scale(1.05);filter:blur(0)}100%{opacity:1;transform:scale(1)}}
+@keyframes v4LogoColor{0%,32%{filter:grayscale(1) brightness(2)}100%{filter:grayscale(0) brightness(1)}}
+@keyframes v4BootWord{0%{opacity:0;transform:translateY(13px);letter-spacing:.45em}100%{opacity:1;transform:none;letter-spacing:.22em}}
+#zxOnboarding .zx-step-shell{padding:58px 28px max(24px,env(safe-area-inset-bottom));color:#131722}
+#zxOnboarding .zx-step-top{color:#7a8291;font-size:10px}
+#zxOnboarding .zx-back{color:#087eff;background:#f0f3fa}
+#zxOnboarding .zx-step-progress i{background:#dfe2ec}
+#zxOnboarding .zx-step-progress i.active{background:#2785ff}
+#zxOnboarding .zx-step-title{font-size:31px;letter-spacing:-1px;color:#161923}
+#zxOnboarding .zx-step-detail,#zxOnboarding .zx-step-fineprint{color:#777e8c}
+#zxOnboarding .zx-primary{border-radius:17px;background:#117eff!important;color:#fff!important;box-shadow:0 10px 20px #0b7eff26;font-weight:650}
+#zxOnboarding .zx-secondary{color:#2a7ed4}
+#zxOnboarding .zx-locale-list{gap:0;max-height:53vh;border-radius:16px;overflow:auto;border:1px solid #f0f1f6;background:#f5f6fa}
+#zxOnboarding .zx-locale-card{border:0;border-radius:0;color:#1d2230;min-height:49px;padding:8px 17px;background:transparent;position:relative}
+#zxOnboarding .zx-locale-card+.zx-locale-card::before{content:'';height:1px;position:absolute;left:18px;right:0;top:0;background:#e4e7ee}
+#zxOnboarding .zx-locale-card.active{background:#e8f2ff}
+#zxOnboarding .zx-locale-card small{font-size:10px;color:#8c93a0}
+#zxOnboarding .zx-locale-card svg{color:#157aff}
+#zxOnboarding .zx-appearance-choice{background:#eef1f8;color:#252b35;border:1.5px solid #e0e5f1}
+#zxOnboarding .zx-appearance-choice.active{border-color:#147eff;box-shadow:0 0 0 2px #c1d9ff}
+#zxOnboarding .zx-privacy-row{background:#f1f3f9;border-color:#e8eaf2}
+#zxOnboarding .zx-privacy-row small{color:#7e8593}
+#zxOnboarding .zx-privacy-switch{background:#ccd1dc}
+#zxOnboarding .zx-privacy-switch.on{background:#1582ff}
+.zx-apple-hello{height:100%;width:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;background:linear-gradient(168deg,#fff 0%,#fdfdff 49%,#f1f8ff 100%);color:#151c29}
+.zx-apple-hello::before{content:'';position:absolute;top:16%;left:18%;width:230px;height:230px;background:radial-gradient(circle,#b8c9ff63,transparent 70%);filter:blur(18px);pointer-events:none;animation:v4HelloGlow 4.5s ease-in-out infinite alternate}
+.zx-hello-word{font-weight:500;font-size:78px;letter-spacing:-5px;min-height:104px;line-height:104px;display:flex;align-items:center;position:relative;animation:v4HelloEnter 1s var(--v4-spring) both}
+.zx-hello-brand{position:absolute;top:66px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:7px;color:#767d8b;font-size:11px;letter-spacing:.14em}
+.zx-hello-brand svg{width:52px;height:52px}
+.zx-hello-prompt{position:absolute;bottom:55px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:18px;font-size:13px;color:#737c8a}
+.zx-hello-prompt button{font-size:14px;color:#1282ff;border:0;background:#eaf3ff;border-radius:99px;min-height:51px;padding:0 35px}
+.zx-hello-line{height:4px;width:104px;border-radius:4px;background:#182637;animation:v4HelloSwipe 2.8s ease-in-out infinite}
+@keyframes v4HelloEnter{from{transform:translateY(25px) scale(.93);opacity:0;filter:blur(15px)}to{transform:translateY(0) scale(1);opacity:1;filter:blur(0)}}
+@keyframes v4HelloGlow{to{transform:translate3d(38px,-30px,0);opacity:.4}}
+@keyframes v4HelloSwipe{0%,70%,100%{transform:translateY(0)}82%{transform:translateY(-9px)}}
+.v4-globe{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin:0 auto 19px;background:#e8f2ff;color:#087dff}
+.v4-globe svg{height:33px;width:33px}
+#zxOnboarding.zx-stage-language .zx-screen-middle{justify-content:flex-start;padding-top:19px}
+#zxOnboarding.zx-stage-language .zx-step-title{text-align:center;font-size:25px}
+#zxOnboarding.zx-stage-language .zx-step-detail{text-align:center;font-size:12px;margin-left:auto;margin-right:auto}
+#zxOnboarding.zx-stage-language .zx-step-shell{padding-top:50px}
+/* Control Center: frosted editable modular groups, vertical brightness/volume and pages */
+#controlCenter.v4-cc{padding:47px 16px 18px!important;background:rgba(14,21,37,.49)!important;backdrop-filter:blur(33px) saturate(155%)!important;-webkit-backdrop-filter:blur(33px) saturate(155%)!important;display:flex;flex-direction:column;overflow:hidden}
+#controlCenter.v4-cc::before{background:radial-gradient(ellipse at 20% 12%,#8b9ed02b,transparent 55%),linear-gradient(165deg,#121929bb,#2536538a)!important}
+.v4-cc-header{height:42px;display:flex;align-items:center;justify-content:space-between;margin:0 0 10px;color:white;z-index:2}
+.v4-cc-headbuttons{display:flex;align-items:center;gap:9px}
+.v4-cc-headbuttons button{width:30px;height:30px;display:grid;place-items:center;border:0;background:#ffffff21;color:white;border-radius:50%;font-size:19px}
+.v4-cc-net-status{font-size:10px;color:#eef6ff;opacity:.83;letter-spacing:.015em;margin-left:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:210px}
+.v4-cc-pager{height:15px;position:absolute;right:8px;top:48%;display:flex;flex-direction:column;gap:10px;z-index:3;align-items:center}
+.v4-cc-pager button{background:#ffffff15;border:0;border-radius:50%;width:16px;height:16px;color:#e7f3ff;display:grid;place-items:center;padding:0;opacity:.7}
+.v4-cc-pager button.active{background:#ffffff63;opacity:1}
+.v4-cc-scroll{overflow:auto;overscroll-behavior:contain;scrollbar-width:none;flex:1;padding-right:12px;padding-bottom:8px;touch-action:pan-y}
+.v4-cc-scroll::-webkit-scrollbar{display:none}
+.v4-cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.v4-cc-card{border-radius:24px;background:rgba(100,117,146,.46);box-shadow:inset 0 1px 1px #ffffff40,0 4px 17px #0002;border:1px solid #ffffff1d;backdrop-filter:blur(17px);-webkit-backdrop-filter:blur(17px);color:#fff}
+.v4-net-grid{height:158px;padding:12px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:repeat(3,1fr);gap:8px;align-items:center;justify-items:center}
+.v4-net-grid button{border:0;min-width:0;min-height:0}
+.v4-net-grid .cc-round{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;color:white;background:#ffffff39;transition:transform .26s var(--v4-spring),background .22s ease}
+.v4-net-grid .cc-round.on{background:#087dfa}
+.v4-net-grid .cc-round.green.on{background:#30ca66}
+.v4-net-grid .cc-round:active{transform:scale(.84)}
+.v4-net-grid [data-toggle=airplane]{grid-area:1/1/2/2}
+.v4-net-grid [data-toggle=wifi]{grid-area:1/2/2/4;width:49px;height:49px}
+.v4-net-grid [data-toggle=cellular]{grid-area:2/1/3/2}
+.v4-net-grid [data-toggle=bluetooth]{grid-area:2/2/3/4}
+.v4-net-grid .v4-net-more{grid-area:3/1/4/4;justify-self:stretch;background:#ffffff15;border-radius:15px;color:#fff;font-size:10px;padding:4px 8px;display:flex;justify-content:space-between;align-items:center}
+.v4-media-card{height:158px;position:relative;padding:16px 12px 12px;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.v4-media-top{display:flex;align-items:center;gap:7px;min-width:0}
+.v4-media-art{width:43px;height:43px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(137deg,#9ca8be,#5a6274);flex:none}
+.v4-media-info{min-width:0}.v4-media-info b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v4-media-info span{display:block;font-size:10px;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
+.v4-media-airplay{position:absolute;right:12px;top:12px;background:#ffffff20;border:0;color:#fff;border-radius:50%;height:23px;width:23px}
+.v4-media-controls{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.v4-media-controls button{border:0;color:#fff;background:transparent;width:39px;height:40px;display:grid;place-items:center}
+.v4-media-controls .play-toggle{width:45px;height:45px}
+.v4-cc-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:11px}
+.v4-cc-pill{background:rgba(121,132,156,.53);border:1px solid #ffffff2a;min-height:53px;border-radius:20px;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;padding:6px;transition:transform .2s var(--v4-spring)}
+.v4-cc-pill:active{transform:scale(.92)}
+.v4-cc-pill.on{background:#ffffffeb;color:#13243c}
+.v4-cc-pill.focus{grid-column:span 2;justify-content:flex-start;padding-left:15px}
+.v4-cc-slider-wrap{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:11px;min-height:165px}
+.v4-cc .cc-slider{height:165px;width:100%;max-width:none;min-width:0;border-radius:27px;border:1px solid #ffffff47;background:#7d89a17c;position:relative;overflow:hidden;touch-action:none}
+.v4-cc .cc-slider-fill{bottom:0;left:0;right:0;border-radius:0;background:linear-gradient(0deg,#f9faff,#e6eaf2);z-index:0;transition:height 110ms ease-out}
+.v4-cc .cc-slider svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:28px;height:28px;z-index:1;color:#2e374b;mix-blend-mode:normal}
+.v4-cc .cc-slider:active{box-shadow:0 0 0 2px #ffffff8d,inset 0 0 25px #ffffff25}
+.v4-cc-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:11px}
+.v4-cc-quick button{aspect-ratio:1;border-radius:50%;border:1px solid #ffffff34;background:#ffffff3d;color:#fff;display:grid;place-items:center;transition:transform .25s var(--v4-spring)}
+.v4-cc-quick button:active{transform:scale(.84)}
+.v4-cc-details{margin-top:12px;display:flex;flex-direction:column;gap:5px;align-items:flex-start;padding:10px 13px;font-size:10px;line-height:1.4;opacity:.89;min-height:53px}
+.v4-cc-details b{font-size:11px}
+.v4-cc-dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.v4-cc-dots i{height:5px;width:5px;border-radius:50%;background:#fff8}.v4-cc-dots i:first-child{width:17px;border-radius:9px;background:white}
+/* Notification Center uses stacked surfaces, date, actions and swipe-to-dismiss. */
+#notificationCenter.v4-nc{padding:62px 16px 20px!important;background:linear-gradient(180deg,rgba(17,23,40,.49),rgba(15,24,46,.64))!important;backdrop-filter:blur(40px) saturate(145%)!important;-webkit-backdrop-filter:blur(40px) saturate(145%)!important;display:flex;flex-direction:column}
+.v4-nc-heading{padding:4px 12px 4px;text-align:center;color:#fff}
+.v4-nc-heading .notif-date{font-size:18px;margin:0;font-weight:560}
+.v4-nc-heading .notif-title{font-size:64px;line-height:1.18;margin:5px 0 13px;font-weight:350;letter-spacing:-3px}
+.v4-nc-titlebar{display:flex;align-items:center;justify-content:space-between;margin:22px 6px 9px;color:#fff;font-size:16px;font-weight:650}
+.v4-nc-titlebar button{width:32px;height:32px;background:#ffffff36;border:1px solid #ffffff33;border-radius:50%;color:#fff;display:grid;place-items:center}
+#noticeList{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;padding:0 4px 10px;scrollbar-width:none;touch-action:pan-y}
+#noticeList::-webkit-scrollbar{display:none}
+.v4-notice{position:relative;margin-bottom:9px;overflow:hidden;border-radius:19px;min-height:68px;animation:v4CardIn 360ms var(--v4-spring) both;transform-origin:top}
+.v4-notice-inner{background:rgba(244,247,253,.89);backdrop-filter:blur(23px);border:1px solid #ffffff8a;padding:13px 14px;display:flex;gap:11px;border-radius:19px;min-height:68px;position:relative;z-index:1;touch-action:pan-y;transition:transform 220ms var(--v4-spring)}
+.v4-notice.expanded .v4-notice-inner{min-height:104px}
+.v4-notice-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;flex:none;background:#17c65f;color:white}
+.v4-notice-icon.calendar{background:#fff;color:#f04a54}
+.v4-notice-icon.system{background:#557af6}
+.v4-notice-copy{flex:1;min-width:0;color:#212936}
+.v4-notice-head{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.v4-notice-head b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v4-notice-head small{font-size:10px;color:#89909c;flex:none}
+.v4-notice-copy p{margin:5px 0 0;color:#424b5e;font-size:12px;line-height:1.42;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.v4-notice.expanded p{-webkit-line-clamp:unset}
+.v4-notice-action{position:absolute;right:0;top:0;bottom:0;background:#fa4a48;border:0;border-radius:0 19px 19px 0;color:white;width:76px;font-weight:650;font-size:12px}
+.v4-notice.swiped .v4-notice-inner{transform:translate3d(-77px,0,0)}
+.v4-nc-footer{font-size:10px;text-align:center;color:#ffffffb5;padding:9px 0 2px}
+.v4-nc-empty{padding:55px 14px;text-align:center;color:#fff9;font-size:14px}
+@keyframes v4CardIn{from{opacity:0;transform:translateY(17px) scale(.96)}to{opacity:1;transform:none}}
+/* Press and spring responses for new control surfaces. */
+.v4-cc button,.v4-nc button,#zxOnboarding button{transition:filter .19s,transform .22s var(--v4-spring),background-color .22s,box-shadow .22s}
+.v4-cc button:active,.v4-nc button:active,#zxOnboarding button:active{transform:scale(.94)}
+#screen .v4-cc .cc-round.on svg{animation:v4Toggle 310ms var(--v4-spring)}
+@keyframes v4Toggle{0%{transform:scale(.75)}65%{transform:scale(1.16)}100%{transform:scale(1)}}
+@media(max-height:780px){.v4-cc-grid .v4-net-grid,.v4-media-card{height:139px}.v4-cc-slider-wrap,.v4-cc .cc-slider{height:128px;min-height:128px}.v4-cc-quick button{aspect-ratio:1.14}}
+@media(max-width:410px){#controlCenter.v4-cc{padding-left:13px!important;padding-right:12px!important}.v4-cc-grid{gap:9px}.v4-cc-row{gap:7px}.v4-net-grid{padding:8px}}
+@media(prefers-reduced-motion:reduce){.zx-hello-word,.zx-hello-line,.zx-boot-logo,.zx-boot-logo svg,.zx-boot-word,.v4-notice{animation:none!important}.v4-cc button,.v4-nc button,#zxOnboarding button{transition:none!important}}
+:root[data-zm-mode=off] .zx-hello-word,:root[data-zm-mode=off] .zx-hello-line,:root[data-zm-mode=off] .v4-notice{animation:none!important}
+
+/* Keep brightness and volume in the intended two-column layout, overriding legacy grid coordinates. */
+#controlCenter.v4-cc .v4-cc-slider-wrap .cc-slider{grid-row:auto!important;grid-column:auto!important;display:block!important;align-self:stretch!important;justify-self:stretch!important;width:100%!important}
+.v4-notice{background:#e8edf6}
+.v4-notice-action{opacity:0;transition:opacity 220ms ease}
+.v4-notice.swiped .v4-notice-action{opacity:1}
+.v4-nc-heading{min-height:146px!important;display:flex;flex-direction:column;justify-content:center;align-items:center}
+#notificationCenter.v4-nc .notif-title{display:block!important;visibility:visible!important;margin:4px 0 5px!important;font-size:65px!important;color:#fff}
+#notificationCenter.v4-nc .notif-date{display:block!important;visibility:visible!important;color:#fff}
+
 </style>
 </head>
 <body>
@@ -1393,12 +1543,35 @@ if(OS_PREF.iconStyle&&OS_PREF.iconStyle!==state.mode)setMode(OS_PREF.iconStyle);
 (function(){
 'use strict';
 const ZX_STORE={complete:'zorix.setup.v2',lang:'zorix.language',region:'zorix.region',onlineIcons:'zorix.onlineIcons'};
+const ZX_LANGUAGES=[
+ ['en','English','English'],['zh','\u7b80\u4f53\u4e2d\u6587','Chinese (Simplified)'],['zh-TW','\u7e41\u9ad4\u4e2d\u6587','Chinese (Traditional)'],
+ ['es','Espa\u00f1ol','Spanish'],['fr','Fran\u00e7ais','French'],['de','Deutsch','German'],['it','Italiano','Italian'],
+ ['pt','Portugu\u00eas','Portuguese'],['ja','\u65e5\u672c\u8a9e','Japanese'],['ko','\ud55c\uad6d\uc5b4','Korean'],
+ ['ru','\u0420\u0443\u0441\u0441\u043a\u0438\u0439','Russian'],['ar','\u0627\u0644\u0639\u0631\u0628\u064a\u0629','Arabic'],
+ ['hi','\u0939\u093f\u0928\u094d\u0926\u0940','Hindi'],['tr','T\u00fcrk\u00e7e','Turkish']
+];
+const zxBrandSVG="<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"> <defs>  <linearGradient id=\"zorixCore\" x1=\"32\" y1=\"24\" x2=\"130\" y2=\"136\" gradientUnits=\"userSpaceOnUse\">   <stop offset=\"0%\" stop-color=\"#2563EB\"/>   <stop offset=\"45%\" stop-color=\"#06B6D4\"/>   <stop offset=\"100%\" stop-color=\"#22C55E\"/>  </linearGradient>  <linearGradient id=\"zorixZ\" x1=\"45\" y1=\"42\" x2=\"115\" y2=\"118\" gradientUnits=\"userSpaceOnUse\">   <stop offset=\"0%\" stop-color=\"#FFFFFF\"/>   <stop offset=\"100%\" stop-color=\"#E0F2FE\"/>  </linearGradient> </defs> <rect x=\"20\" y=\"20\" width=\"120\" height=\"120\" rx=\"34\" fill=\"url(#zorixCore)\"/> <path d=\"M48 50H112L92 73H108L55 112L76 86H52L72 63H48Z\" fill=\"url(#zorixZ)\"/> <path d=\"M38 92C52 118 91 128 120 96\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"8\" stroke-linecap=\"round\" opacity=\"0.35\"/> <circle cx=\"116\" cy=\"42\" r=\"7\" fill=\"#FFFFFF\" opacity=\"0.9\"/> <circle cx=\"42\" cy=\"118\" r=\"5\" fill=\"#FFFFFF\" opacity=\"0.65\"/></svg>";
+
 const zxGet=(key,fallback)=>{try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(e){return fallback}};
 const zxPut=(key,v)=>{try{localStorage.setItem(key,String(v))}catch(e){}};
 const boot= {step:'boot',locale:zxGet(ZX_STORE.lang,'en'),region:zxGet(ZX_STORE.region,'US'),appearance:OS_PREF.appearance||'light',online:zxGet(ZX_STORE.onlineIcons,'true')!=='false',timer:null};
 const rfmt=(v)=>String(v??'');
 const isEN=()=>boot.locale!=='zh';
-const zxTxt=(en,zh)=>isEN()?en:zh;
+const ZX_SETUP_DICT={
+ es:{'Get Started':'Comenzar','Continue':'Continuar','Back':'Atras','Swipe up to begin':'Desliza hacia arriba para empezar','Choose Your Language':'Elige tu idioma','Select your region':'Selecciona tu region','Privacy & Performance':'Privacidad y rendimiento','Choose an appearance':'Elige una apariencia','Light':'Claro','Dark':'Oscuro','Enter ZorixOS':'Entrar a ZorixOS'},
+ fr:{'Get Started':'Commencer','Continue':'Continuer','Back':'Retour','Swipe up to begin':'Balayez vers le haut','Choose Your Language':'Choisissez votre langue','Select your region':'Choisissez votre region','Privacy & Performance':'Confidentialite et performance','Choose an appearance':'Choisissez une apparence','Light':'Clair','Dark':'Sombre','Enter ZorixOS':'Entrer dans ZorixOS'},
+ de:{'Get Started':'Starten','Continue':'Weiter','Back':'Zuruck','Swipe up to begin':'Nach oben wischen','Choose Your Language':'Sprache wahlen','Select your region':'Region auswahlen','Privacy & Performance':'Datenschutz und Leistung','Choose an appearance':'Darstellung wahlen','Light':'Hell','Dark':'Dunkel','Enter ZorixOS':'ZorixOS starten'},
+ it:{'Get Started':'Inizia','Continue':'Continua','Back':'Indietro','Swipe up to begin':'Scorri verso alto per iniziare','Choose Your Language':'Scegli la lingua','Select your region':'Scegli il Paese','Privacy & Performance':'Privacy e prestazioni','Choose an appearance':'Scegli aspetto','Light':'Chiaro','Dark':'Scuro','Enter ZorixOS':'Entra in ZorixOS'},
+ pt:{'Get Started':'Comecar','Continue':'Continuar','Back':'Voltar','Swipe up to begin':'Deslize para cima para comecar','Choose Your Language':'Escolha seu idioma','Select your region':'Selecione sua regiao','Privacy & Performance':'Privacidade e desempenho','Choose an appearance':'Escolha a aparencia','Light':'Claro','Dark':'Escuro','Enter ZorixOS':'Entrar no ZorixOS'},
+ ja:{'Get Started':'\u59cb\u3081\u308b','Continue':'\u7d9a\u3051\u308b','Back':'\u623b\u308b','Swipe up to begin':'\u4e0a\u306b\u30b9\u30ef\u30a4\u30d7\u3057\u3066\u958b\u59cb','Choose Your Language':'\u8a00\u8a9e\u3092\u9078\u629e','Select your region':'\u56fd\u307e\u305f\u306f\u5730\u57df\u3092\u9078\u629e','Privacy & Performance':'\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc','Choose an appearance':'\u5916\u89b3\u3092\u9078\u629e','Light':'\u30e9\u30a4\u30c8','Dark':'\u30c0\u30fc\u30af','Enter ZorixOS':'ZorixOS \u3092\u958b\u304f'},
+ ko:{'Get Started':'\uc2dc\uc791','Continue':'\uacc4\uc18d','Back':'\ub4a4\ub85c','Choose Your Language':'\uc5b8\uc5b4 \uc120\ud0dd','Select your region':'\uc9c0\uc5ed \uc120\ud0dd','Privacy & Performance':'\uac1c\uc778\uc815\ubcf4 \ubc0f \uc131\ub2a5','Choose an appearance':'\ud654\uba74 \ubaa8\uc591 \uc120\ud0dd','Light':'\ub77c\uc774\ud2b8','Dark':'\ub2e4\ud06c','Enter ZorixOS':'ZorixOS \uc5f4\uae30'},
+ ru:{'Get Started':'\u041d\u0430\u0447\u0430\u0442\u044c','Continue':'\u0414\u0430\u043b\u0435\u0435','Back':'\u041d\u0430\u0437\u0430\u0434','Choose Your Language':'\u0412\u044b\u0431\u043e\u0440 \u044f\u0437\u044b\u043a\u0430','Select your region':'\u0412\u044b\u0431\u043e\u0440 \u0440\u0435\u0433\u0438\u043e\u043d\u0430','Privacy & Performance':'\u041a\u043e\u043d\u0444\u0438\u0434\u0435\u043d\u0446\u0438\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c','Choose an appearance':'\u0412\u043d\u0435\u0448\u043d\u0438\u0439 \u0432\u0438\u0434','Light':'\u0421\u0432\u0435\u0442\u043b\u0430\u044f','Dark':'\u0422\u0435\u043c\u043d\u0430\u044f','Enter ZorixOS':'\u041e\u0442\u043a\u0440\u044b\u0442\u044c ZorixOS'},
+ ar:{'Get Started':'\u0628\u062f\u0621','Continue':'\u0645\u062a\u0627\u0628\u0639\u0629','Back':'\u0631\u062c\u0648\u0639','Choose Your Language':'\u0627\u062e\u062a\u0631 \u0627\u0644\u0644\u063a\u0629','Select your region':'\u0627\u062e\u062a\u0631 \u0627\u0644\u0645\u0646\u0637\u0642\u0629','Privacy & Performance':'\u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629','Choose an appearance':'\u0627\u062e\u062a\u0631 \u0627\u0644\u0645\u0638\u0647\u0631','Light':'\u0641\u0627\u062a\u062d','Dark':'\u062f\u0627\u0643\u0646','Enter ZorixOS':'ZorixOS'},
+ hi:{'Get Started':'\u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902','Continue':'\u0906\u0917\u0947','Back':'\u092a\u0940\u091b\u0947','Choose Your Language':'\u092d\u093e\u0937\u093e \u091a\u0941\u0928\u0947\u0902','Select your region':'\u0915\u094d\u0937\u0947\u0924\u094d\u0930 \u091a\u0941\u0928\u0947\u0902','Privacy & Performance':'\u0917\u094b\u092a\u0928\u0940\u092f\u0924\u093e','Choose an appearance':'\u0930\u0942\u092a \u091a\u0941\u0928\u0947\u0902','Light':'\u0939\u0932\u094d\u0915\u093e','Dark':'\u0917\u0939\u0930\u093e','Enter ZorixOS':'ZorixOS'},
+ tr:{'Get Started':'Basla','Continue':'Devam','Back':'Geri','Swipe up to begin':'Baslamak icin yukari kaydir','Choose Your Language':'Dilini Sec','Select your region':'Bolge Sec','Privacy & Performance':'Gizlilik ve Performans','Choose an appearance':'Gorunum Sec','Light':'Acik','Dark':'Koyu','Enter ZorixOS':'ZorixOS a gir'},
+ 'zh-TW':{'Get Started':'\u958b\u59cb','Continue':'\u7e7c\u7e8c','Back':'\u8fd4\u56de','Swipe up to begin':'\u5411\u4e0a\u6ed1\u52d5\u4ee5\u958b\u59cb','Choose Your Language':'\u9078\u64c7\u8a9e\u8a00','Select your region':'\u9078\u64c7\u5730\u5340','Privacy & Performance':'\u96b1\u79c1\u8207\u6548\u80fd','Choose an appearance':'\u9078\u64c7\u5916\u89c0','Light':'\u6dfa\u8272','Dark':'\u6df1\u8272','Enter ZorixOS':'\u9032\u5165 ZorixOS'}
+};
+const zxTxt=(en,zh)=>boot.locale==='zh'?zh:(ZX_SETUP_DICT[boot.locale]?.[en]||en);
 const zxIcon=(n,size=20)=>typeof osI==='function'?osI(n,size):'';
 const zy=(str)=>String(str).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
@@ -1509,11 +1682,12 @@ const ZX_POST={
  '此页面为原创网页仿真，不代表应用官方界面或实际服务数据。':'Original user interface simulation. No official app, account or live service is provided.',
 };
 
+Object.assign(EN,{'\u57ce\u5e02\u5ef6\u65f6\u6444\u5f71':'City Timelapse','\u539f\u521bDemo\u6761\u76ee':'Original Demo Items','\u4ea4\u4e92\u8bbe\u8ba1\u5165\u95e8':'Introduction to Interaction Design','\u672c\u5730Video\u5217\u8868':'Local Video List'});
 const zxKeys=Object.keys(EN).sort((a,b)=>b.length-a.length);
 const zxRegex=new RegExp(zxKeys.map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
 const zxLiteral=(s)=>{const raw=String(s);if(/^\s*\d{1,2}\s*时\s*$/.test(raw)){let h=Number(raw.trim().replace(/时/g,''));return (h%12||12)+' '+(h<12?'AM':'PM')}if(/^\s*[一二三四五六日]\s*$/.test(raw))return {一:'M',二:'T',三:'W',四:'T',五:'F',六:'S',日:'S'}[raw.trim()];let x=raw.replace(zxRegex,k=>EN[k]||k).replace(/(\d{1,2})月(\d{1,2})日/g,(_m,a,b)=>new Date(2026,Number(a)-1,Number(b)).toLocaleDateString('en-US',{month:'short',day:'numeric'})).replace(/(\d{1,2})时/g,(_m,a)=>a+':00');for(const [from,to] of Object.entries(ZX_POST))x=x.replaceAll(from,to);return x.replace(/(\d{1,2})\s*时(?=\d+°)/g,'$1:00 ').replace(/^\s*时(?=\d+°)/,':00 ')};
 const zxNodeOriginal=new WeakMap();const zxAttrOriginal=new WeakMap();
-function zxExcluded(node){const el=node.parentElement;return !el||!!el.closest('script,style,textarea,[contenteditable="true"],#zxOnboarding,.zx-sheet-backdrop,.zx-island-expanded-content,.zx-island-small,.os-chat-bubble,#osChatBubbles,#osNoteBody,#osNoteTitle,#osMessageDraft');}
+function zxExcluded(node){const el=node.parentElement;return !el||!!el.closest('script,style,textarea,[contenteditable="true"],#zxOnboarding,.zx-locale-list,.zx-sheet-backdrop,.zx-island-expanded-content,.zx-island-small,.os-chat-bubble,#osChatBubbles,#osNoteBody,#osNoteTitle,#osMessageDraft');}
 function zxTranslate(root=document){if(!root)return;
  if(!isEN()) { // The app is generated from the original Chinese templates. Restore any static elements.
    const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
@@ -1539,7 +1713,7 @@ function zxTranslate(root=document){if(!root)return;
 }
 let zxTranslatePending=false;
 const zxTranslateSoon=()=>{if(zxTranslatePending)return;zxTranslatePending=true;requestAnimationFrame(()=>{zxTranslatePending=false;zxTranslate(document.body)})};
-function zxLocaleSet(locale){boot.locale=locale==='zh'?'zh':'en';zxPut(ZX_STORE.lang,boot.locale);document.documentElement.lang=boot.locale==='zh'?'zh-CN':'en';document.documentElement.dataset.zxLocale=boot.locale;
+function zxLocaleSet(locale){boot.locale=ZX_LANGUAGES.some(x=>x[0]===locale)?locale:'en';zxPut(ZX_STORE.lang,boot.locale);document.documentElement.lang=boot.locale==='zh'?'zh-CN':boot.locale;document.documentElement.dataset.zxLocale=boot.locale;document.dispatchEvent(new CustomEvent('zorix-language-change',{detail:{lang:boot.locale}}));
   // Full app re-render regenerates localized source strings before translation.
   if(state.app)osRenderApp();zxTranslateSoon();zxTranslate(document.body);
 }
@@ -1550,10 +1724,10 @@ function zxStepBase(step,body,primary,back=true,secondary=''){
 }
 function zxWizardMarkup(){const t=zxTxt;
  switch(boot.step){
- case 'boot':return `<div class="zx-boot-logo" aria-label="ZorixOS logo"><span>Z</span></div><div class="zx-boot-word">ZorixOS</div><div class="zx-boot-line" aria-hidden="true"></div>`;
- case 'welcome':return zxStepBase('welcome',`<div class="zx-hello-mark">${t('Hello.','你好。')}</div><h1 class="zx-step-title">ZorixOS</h1><p class="zx-step-detail">${t('A beautiful new way to interact. Your device, your language, your style.','以全新方式探索界面。由你选择语言、地区和外观风格。')}</p><p class="zx-step-fineprint">${t('iOS-inspired home and apps · HyperOS-inspired Settings. This is a UI simulator.','iOS 风格桌面与应用 · HyperOS 风格设置。本应用为界面模拟器。')}</p>`,t('Get Started','开始设置'),false);
- case 'language':return zxStepBase('language',`<div class="zx-step-title">${t('Choose your language','选择你的语言')}</div><p class="zx-step-detail">${t('Your system interface will use this language. You can change it later in Settings.','系统界面将使用所选语言，之后可在设置中修改。')}</p><div class="zx-locale-list">${[['en','English','English · Default'],['zh','简体中文','Simplified Chinese · 简体中文']].map(([id,label,sub])=>`<button type="button" class="zx-locale-card ${boot.locale===id?'active':''}" data-zx-language="${id}"><span>${label}<small>${sub}</small></span>${boot.locale===id?zxIcon('check',21):zxIcon('globe',21)}</button>`).join('')}</div>`,t('Continue','继续'));
- case 'region':return zxStepBase('region',`<div class="zx-step-title">${t('Select your region','选择国家或地区')}</div><p class="zx-step-detail">${t('This helps format dates and regional preferences. It does not access your location.','用于设置日期等格式，不会读取设备定位。')}</p><div class="zx-locale-list">${[['US',t('United States','美国'),'United States'],['CN',t('Mainland China','中国大陆'),'China'],['IT',t('Italy','意大利'),'Italy'],['GB',t('United Kingdom','英国'),'United Kingdom']].map(([id,label,sub])=>`<button class="zx-locale-card ${boot.region===id?'active':''}" data-zx-region="${id}"><span>${label}<small>${sub}</small></span>${boot.region===id?zxIcon('check',21):zxIcon('globe',21)}</button>`).join('')}</div>`,t('Continue','继续'));
+ case 'boot':return `<div class="zx-boot-logo" aria-label="ZorixOS mark">${zxBrandSVG}</div><div class="zx-boot-word">ZORIX</div><div class="zx-boot-line" aria-hidden="true"></div>`;
+ case 'welcome':return `<div class="zx-apple-hello"><div class="zx-hello-brand">${zxBrandSVG}<span>ZORIXOS</span></div><div class="zx-hello-word" id="zxHelloText">${({en:'Hello',zh:'\u4f60\u597d',es:'Hola',fr:'Bonjour',de:'Hallo',it:'Ciao',pt:'Ol\u00e1',ja:'\u3053\u3093\u306b\u3061\u306f',ko:'\uc548\ub155\ud558\uc138\uc694',ru:'\u041f\u0440\u0438\u0432\u0435\u0442',ar:'\u0645\u0631\u062d\u0628\u0627'}[boot.locale]||'Hello')}</div><div class="zx-hello-prompt"><span>${zxTxt('Swipe up to begin','\u4e0a\u6ed1\u4ee5\u5f00\u59cb')}</span><button type="button" data-zx-step="next">${zxTxt('Get Started','\u5f00\u59cb\u8bbe\u7f6e')} ${zxIcon('next',16)}</button><span class="zx-hello-line"></span></div></div>`;
+ case 'language':return zxStepBase('language',`<div class="v4-globe">${zxIcon('globe',34)}</div><div class="zx-step-title">${zxTxt('Choose Your Language','\u9009\u62e9\u8bed\u8a00')}</div><p class="zx-step-detail">${zxTxt('Select a language for ZorixOS. You can change it in Settings.','\u9009\u62e9 ZorixOS \u7684\u7cfb\u7edf\u8bed\u8a00\uff0c\u4e4b\u540e\u53ef\u5728\u8bbe\u7f6e\u4e2d\u66f4\u6539\u3002')}</p><div class="zx-locale-list" role="listbox">${ZX_LANGUAGES.map(([id,label,sub])=>`<button type="button" class="zx-locale-card ${boot.locale===id?'active':''}" data-zx-language="${id}" role="option" aria-selected="${boot.locale===id}"><span>${label}<small>${sub}</small></span>${boot.locale===id?zxIcon('check',19):zxIcon('next',15)}</button>`).join('')}</div>`,zxTxt('Continue','\u7ee7\u7eed'));
+ case 'region':return zxStepBase('region',`<div class="zx-step-title">${t('Select your region','选择国家或地区')}</div><p class="zx-step-detail">${t('This helps format dates and regional preferences. It does not access your location.','用于设置日期等格式，不会读取设备定位。')}</p><div class="zx-locale-list">${[['US','United States','United States'],['CN','China','Mainland China'],['IT','Italia','Italy'],['GB','United Kingdom','United Kingdom'],['FR','France','France'],['DE','Deutschland','Germany'],['JP','Japan','Japan'],['ES','Espa\u00f1a','Spain'],['BR','Brasil','Brazil'],['IN','India','India']].map(([id,label,sub])=>`<button class="zx-locale-card ${boot.region===id?'active':''}" data-zx-region="${id}"><span>${label}<small>${sub}</small></span>${boot.region===id?zxIcon('check',21):zxIcon('globe',21)}</button>`).join('')}</div>`,t('Continue','继续'));
  case 'privacy':return zxStepBase('privacy',`<div class="zx-step-title">${t('Privacy & Performance','隐私与性能')}</div><p class="zx-step-detail">${t('ZorixOS stores your sample notes, preferences and messages on your device. It does not request an account.','ZorixOS 在本机保存演示备忘录、偏好和信息，无需登录账户。')}</p><div class="zx-privacy-row"><span>${t('Load genuine app artwork','加载真实应用图标')}<small>${t('Optional internet access to retrieve app icons. Other content is bundled offline.','可选联网获取应用图标，其余界面可离线使用。')}</small></span><button class="zx-privacy-switch ${boot.online?'on':''}" type="button" role="switch" aria-checked="${boot.online}" data-zx-online="toggle" aria-label="${t('Load app icon artwork','加载应用图标')}"></button></div><p class="zx-step-fineprint">${t('Camera and microphone ask for permission only when you open their functions. Device-level settings are demonstrations.','摄像头和麦克风仅在使用对应功能时申请权限。设备设置为模拟操作。')}</p>`,t('Continue','继续'));
  case 'appearance':return zxStepBase('appearance',`<div class="zx-step-title">${t('Choose an appearance','选择外观')}</div><p class="zx-step-detail">${t('Soft light or deep dark. You can change this any time in Personalization.','浅色或深色外观，之后可在个性化设置中调整。')}</p><div class="zx-appearance-grid">${[['light',t('Light','浅色')],['dark',t('Dark','深色')]].map(([id,name])=>`<button type="button" data-zx-theme="${id}" class="zx-appearance-choice ${boot.appearance===id?'active':''}"><span class="zx-appearance-preview ${id==='dark'?'dark':''}"></span>${name} ${boot.appearance===id?zxIcon('check',15):''}</button>`).join('')}</div><p class="zx-step-fineprint">${t('The home screen, widgets and apps retain their iOS-inspired look. Settings uses a HyperOS-inspired layout.','桌面、组件和应用保持 iOS 风格，设置使用 HyperOS 风格。')}</p>`,t('Enter ZorixOS','进入 ZorixOS'));
  default:return '';
@@ -1565,7 +1739,7 @@ function zxRenderWizard(){wizard.className='zx-wizard zx-stage-'+boot.step;wizar
 function zxShowBoot(replay=false){
  clearTimeout(boot.timer);boot.step='boot';wizard.hidden=false;zxRenderWizard();
  // Motion follows accessibility preferences. No continuous boot animation or network wait.
- const duration=OS_PREF.reduceMotion||matchMedia('(prefers-reduced-motion: reduce)').matches?250:1150;
+ const duration=OS_PREF.reduceMotion||matchMedia('(prefers-reduced-motion: reduce)').matches?320:1580;
  boot.timer=setTimeout(()=>{boot.step='welcome';zxRenderWizard()},duration);
 }
 function zxShowSetup(replay=false){if(replay){if(state.app)goHome();zxShowBoot(true)}else zxShowBoot()}
@@ -1591,7 +1765,7 @@ const urlOpts=new URLSearchParams(location.search);
 const zxSkip=urlOpts.get('zxSkip')==='1';
 if(zxSkip){wizard.hidden=true;wizard.classList.add('hidden');zxLocaleSet(boot.locale)}
 else if(zxGet(ZX_STORE.complete,'')!=='yes'||urlOpts.get('zxSetup')==='1')zxShowBoot();
-else{zxRenderWizard();boot.step='boot';wizard.className='zx-wizard zx-stage-boot';wizard.innerHTML=zxWizardMarkup();boot.timer=setTimeout(()=>{wizard.hidden=true;wizard.classList.add('hidden');zxLocaleSet(boot.locale);zxStartIcons()},OS_PREF.reduceMotion?160:530)}
+else{zxRenderWizard();boot.step='boot';wizard.className='zx-wizard zx-stage-boot';wizard.innerHTML=zxWizardMarkup();boot.timer=setTimeout(()=>{wizard.hidden=true;wizard.classList.add('hidden');zxLocaleSet(boot.locale);zxStartIcons()},OS_PREF.reduceMotion?220:1140)}
 /* App artwork: draw embedded vector fallbacks immediately, ask the store later; cache vetted icon URLs. */
 let zxIconsStarted=false;
 const zxOldChangeIcon=changeIconArtwork;
@@ -1672,7 +1846,7 @@ island.addEventListener('pointercancel',()=>clearTimeout(zxIsland.hold));
 const zxPriorSettingsMarkup=osSettingsMarkup;
 osSettingsMarkup=function(section='root'){
  const route=OS.settingsStack.at(-1)||section||'root';const t=zxTxt;
- if(route==='language')return `<div class="ios-settings z-settings" data-os-settings-route="language"><h1 class="z-heading">${t('Language & Region','语言与地区')}</h1><p class="z-page-intro">${t('Choose your preferred language and region for the ZorixOS interface.','选择 ZorixOS 界面使用的语言和地区。')}</p><div class="z-section-title">${t('SYSTEM LANGUAGE','系统语言')}</div><div class="z-group">${[['en','English','English'],['zh','简体中文','Chinese (Simplified)']].map(([id,label,detail])=>`<button class="ios-row z-row" type="button" data-zx-setting-lang="${id}"><span class="z-symbol">${zxIcon('globe',18)}</span><span class="z-text"><b>${label}</b><small>${detail}</small></span><span class="z-next">${boot.locale===id?zxIcon('check',18):zxIcon('next',15)}</span></button>`).join('')}</div><div class="z-section-title">${t('REGION','地区')}</div><div class="z-group">${[['US','United States'],['CN','Mainland China'],['IT','Italy'],['GB','United Kingdom']].map(([id,name])=>`<button class="ios-row z-row" type="button" data-zx-setting-region="${id}"><span class="z-symbol">${zxIcon('globe',18)}</span><span class="z-text"><b>${name}</b></span><span class="z-next">${boot.region===id?zxIcon('check',18):zxIcon('next',15)}</span></button>`).join('')}</div><p class="z-inset-note">${t('Changes are saved locally. Your notes and app data are preserved.','更改保存在本机，不会删除备忘录与应用数据。')}</p></div>`;
+ if(route==='language')return `<div class="ios-settings z-settings" data-os-settings-route="language"><h1 class="z-heading">${t('Language & Region','语言与地区')}</h1><p class="z-page-intro">${t('Choose your preferred language and region for the ZorixOS interface.','选择 ZorixOS 界面使用的语言和地区。')}</p><div class="z-section-title">${t('SYSTEM LANGUAGE','系统语言')}</div><div class="z-group">${ZX_LANGUAGES.map(([id,label,detail])=>`<button class="ios-row z-row" type="button" data-zx-setting-lang="${id}"><span class="z-symbol">${zxIcon('globe',18)}</span><span class="z-text"><b>${label}</b><small>${detail}</small></span><span class="z-next">${boot.locale===id?zxIcon('check',18):zxIcon('next',15)}</span></button>`).join('')}</div><div class="z-section-title">${t('REGION','地区')}</div><div class="z-group">${[['US','United States'],['CN','Mainland China'],['IT','Italy'],['GB','United Kingdom']].map(([id,name])=>`<button class="ios-row z-row" type="button" data-zx-setting-region="${id}"><span class="z-symbol">${zxIcon('globe',18)}</span><span class="z-text"><b>${name}</b></span><span class="z-next">${boot.region===id?zxIcon('check',18):zxIcon('next',15)}</span></button>`).join('')}</div><p class="z-inset-note">${t('Changes are saved locally. Your notes and app data are preserved.','更改保存在本机，不会删除备忘录与应用数据。')}</p></div>`;
  let html=zxPriorSettingsMarkup(section);
  if(route==='root'||route==='general'){
  const extra=`<div class="z-section-title">${t('ZORIXOS EXPERIENCE','ZORIXOS 体验')}</div><div class="z-group"><button class="ios-row z-row" data-os-setting="language" type="button"><span class="z-symbol" style="--z-bg:#e6edff;--z-fg:#4a76d7">${zxIcon('globe',19)}</span><span class="z-text"><b>${t('Language & Region','语言与地区')}</b><small>${boot.locale==='zh'?'简体中文':'English'}</small></span><span class="z-next">${zxIcon('next',15)}</span></button><button class="ios-row z-row" type="button" data-zx-settings-action="preview-start"><span class="z-symbol" style="--z-bg:#e8f3ff;--z-fg:#5795d5">${zxIcon('repeat',19)}</span><span class="z-text"><b>${t('Replay First-Time Setup','重放首次开机引导')}</b><small>${t('Boot animation and language selection','开机动画与语言选择')}</small></span><span class="z-next">${zxIcon('next',15)}</span></button><button class="ios-row z-row" type="button" data-zx-settings-action="export-data"><span class="z-symbol" style="--z-bg:#eaf9f1;--z-fg:#45a780">${zxIcon('download',19)}</span><span class="z-text"><b>${t('Export Demo Data','导出演示数据')}</b><small>${t('Download local content as JSON','将本地内容下载为 JSON')}</small></span><span class="z-next">${zxIcon('next',15)}</span></button></div>`;
@@ -1689,6 +1863,8 @@ osRenderApp=function(){zxOldRender();zxTranslateSoon();screen.classList.toggle('
 const zxOldPref=osSetPref;
 osSetPref=function(k,v,redraw=true){zxOldPref(k,v,redraw);if(k==='reduceMotion')screen.classList.toggle('zx-motion-off',!!v);if(k==='focus')zxIslandUpdate();if(k==='language')zxLocaleSet(v)};
 const zxOldClock=updateClock;
+// Preserve base date update behavior, then localize visible date and weekday fields.
+
 updateClock=function(){zxOldClock();zxTranslateSoon()};
 // Explicit interactions only: never intercept system-level notifications or phone calls.
 let zxSheetEl=null;
@@ -2023,6 +2199,243 @@ screen.addEventListener('pointercancel',()=>{if(drag){drag.sheet.style.transform
 
 window.ZorixMotion={get mode(){return engine.mode},get haptics(){return engine.haptic},setMode(v){if(['expressive','balanced','calm','off'].includes(v)){engine.mode=v;apply()}},preview(){replayClass(doc.getElementById('zmLabHero'),'zm-previewing',850)},get reduced(){return reduced()}};
 })();
+</script>
+<script id="zorix-v4-js">
+/* ZorixOS 4.0 -- system panels, native connectivity bridge and precision UI feedback. */
+(function(){
+'use strict';
+const S=document.getElementById('screen');
+if(!S||typeof osI!=='function'||!window.ZorixV2)return;
+const $=(q,r=document)=>r.querySelector(q);
+const icon=(k,size=20)=>osI(k,size);
+const escapeText=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const locale=()=>localStorage.getItem('zorix.language')||'en';
+const lang=()=>locale()==='zh'?'zh':'en';
+const phrases={
+ en:{preview:'Demo',wifi:'Wi-Fi',connected:'Connected',notConnected:'Not connected',online:'Internet available',offline:'No internet connection',metered:'Metered network',unmetered:'Unmetered network',unknown:'Connection type unavailable',browser:'Browser connectivity estimate',native:'Live Android connectivity',opening:'Opening Android Internet settings',readonly:'Android network data is read-only here. Change connections in the Android panel.',refresh:'Refresh',network:'Network',networkStatus:'Network status',connection:'Connection',type:'Transport',speed:'Estimated link speed',clear:'Clear',notifications:'Notifications',noNotifications:'No notifications',recent:'Recent',now:'now',snooze:'Mute',settings:'Settings',preview:'Demo notification',openNetwork:'Open Internet Settings',add:'Add a Control',close:'Close',focused:'Focus',airplane:'Airplane Mode',mobile:'Mobile Data',bluetooth:'Bluetooth',music:'Music',brightness:'Brightness',volume:'Volume',flashlight:'Flashlight',timer:'Timer',calculator:'Calculator',camera:'Camera',screenRecording:'Screen Recording',screenMirror:'Screen Mirroring',controlCenter:'Control Center',home:'Home',favorite:'Favorites',connectivity:'Connectivity',pageMusic:'Media',tapExpand:'Tap to expand',swipeClose:'Swipe up to close',noticeDemo:'These notifications belong to ZorixOS, not the Android system notification shade.',networkChanged:'Network changed',limited:'Limited connectivity',wifiSettings:'Wi-Fi settings',learn:'More details'},
+ zh:{preview:'演示',wifi:'Wi-Fi',connected:'已连接',notConnected:'未连接',online:'互联网连接正常',offline:'无互联网连接',metered:'计费网络',unmetered:'非计费网络',unknown:'无法识别连接类型',browser:'浏览器网络状态估计',native:'Android 真实网络状态',opening:'正在打开 Android 网络设置',readonly:'这里显示 Android 的真实网络数据。切换网络请使用 Android 系统面板。',refresh:'刷新',network:'网络',networkStatus:'网络状态',connection:'连接情况',type:'连接类型',speed:'估计链路速度',clear:'清除',notifications:'通知',noNotifications:'暂无通知',recent:'最近',now:'现在',snooze:'静音',settings:'设置',preview:'演示通知',openNetwork:'打开网络设置',add:'添加控制项',close:'关闭',focused:'专注',airplane:'飞行模式',mobile:'移动数据',bluetooth:'蓝牙',music:'音乐',brightness:'亮度',volume:'音量',flashlight:'手电筒',timer:'计时器',calculator:'计算器',camera:'相机',screenRecording:'屏幕录制',screenMirror:'屏幕镜像',controlCenter:'控制中心',home:'主页',favorite:'收藏',connectivity:'连接',pageMusic:'媒体',tapExpand:'轻点展开',swipeClose:'向上轻扫关闭',noticeDemo:'这些是 ZorixOS 应用内通知，不是 Android 系统通知。',networkChanged:'网络状态已变化',limited:'连接受限',wifiSettings:'Wi-Fi 设置',learn:'更多详情'}
+};
+const t=k=>(phrases[lang()][k]||phrases.en[k]||k);
+const glyph=(name,size=22)=>icon(name,size);
+const net={source:'browser',connected:navigator.onLine,validated:navigator.onLine,wifi:null,cellular:null,ethernet:null,vpn:null,metered:null,downKbps:0,upKbps:0,transport:'Unknown',last:null};
+let netSignature=null;
+function formatNetType(){if(net.source==='android'){if(net.vpn)return 'VPN / '+(net.transport||'');return net.transport||'Unknown'}return 'Browser'}
+function netStateLabel(){return (net.connected?(net.validated?t('online'):t('limited')):t('offline'))+' \u00b7 '+formatNetType()}
+function readNetwork(){try{
+ const bridge=window.ZorixNetwork;
+ if(bridge&&typeof bridge.getState==='function'){const raw=bridge.getState();if(raw){window.ZorixNativeNetwork(raw);return}}
+ }catch(e){/* no native bridge on the stand-alone HTML */}
+ net.source='browser';net.connected=navigator.onLine;net.validated=navigator.onLine;
+ net.transport='Browser';net.wifi=null;net.cellular=null;net.metered=null;
+ net.last=Date.now();renderNetwork();
+}
+window.ZorixNativeNetwork=function(raw){try{
+ const next=typeof raw==='string'?JSON.parse(raw):raw;if(!next||typeof next!=='object')return;
+ Object.assign(net,{source:'android',connected:!!next.connected,validated:!!next.validated,wifi:!!next.wifi,cellular:!!next.cellular,ethernet:!!next.ethernet,vpn:!!next.vpn,metered:next.metered===null?null:!!next.metered,downKbps:Number(next.downKbps)||0,upKbps:Number(next.upKbps)||0,transport:String(next.transport||'Unknown'),last:Date.now()});
+ const signature=[net.connected,net.validated,net.transport].join(':');
+ if(netSignature!==null&&netSignature!==signature)addNotice({kind:'system',title:t('networkChanged'),body:netStateLabel()});
+ netSignature=signature;renderNetwork();
+ }catch(e){/* malformed bridge payload is never allowed to break the UI */}};
+function renderNetwork(){
+ const status=$('#v4CcNetStatus');if(status){status.textContent=netStateLabel();status.title=net.source==='android'?t('native'):t('browser')}
+ const info=$('#v4CcNetDetail');if(info){info.textContent=(net.source==='android'?t('native'):t('browser'))+' \u00b7 '+(net.metered===null?t('unknown'):(net.metered?t('metered'):t('unmetered')))}
+ const sig=$('.status-signals .wifi-icon');if(sig&&net.source==='android')sig.style.opacity=net.wifi?1:.3;
+ const cellular=$('.status-signals .signal-icon');if(cellular&&net.source==='android')cellular.style.opacity=net.cellular?1:.4;
+ const wifiBtn=$('[data-toggle="wifi"]',CC);if(wifiBtn&&net.source==='android')wifiBtn.classList.toggle('on',!!net.wifi);
+ const cellBtn=$('[data-toggle="cellular"]',CC);if(cellBtn&&net.source==='android')cellBtn.classList.toggle('on',!!net.cellular);
+ // Keep local simulation state honest when the network is being observed by Android.
+ if(net.source==='android'){state.wifi=!!net.wifi;state.cellular=!!net.cellular}
+ $('#v4NetworkStatus')?.replaceChildren(document.createTextNode(netStateLabel()));
+ $('#v4NetworkSource')?.replaceChildren(document.createTextNode(net.source==='android'?t('native'):t('browser')));
+ $('#v4NetworkType')?.replaceChildren(document.createTextNode(formatNetType()));
+ $('#v4NetworkCost')?.replaceChildren(document.createTextNode(net.metered===null?'--':net.metered?t('metered'):t('unmetered')));
+ $('#v4NetworkSpeed')?.replaceChildren(document.createTextNode(net.source==='android'?`${(net.downKbps/1000).toFixed(1)} / ${(net.upKbps/1000).toFixed(1)} Mbps`:'--'));
+}
+function openNativeNetwork(){try{if(window.ZorixNetwork?.openInternetSettings){window.ZorixNetwork.openInternetSettings();return}}
+ catch(e){}toast(t('readonly'))}
+window.addEventListener('online',readNetwork);window.addEventListener('offline',readNetwork);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)readNetwork()});
+const CC=$('#controlCenter');
+if(CC){
+ CC.classList.add('v4-cc');
+ CC.innerHTML=`<div class="v4-cc-header"><div class="v4-cc-headbuttons"><button type="button" id="ccAdd" aria-label="${t('add')}">${glyph('plus',21)}</button></div><div class="v4-cc-net-status" id="v4CcNetStatus" aria-live="polite">${t('networkStatus')}</div><div class="v4-cc-headbuttons"><button type="button" id="ccPower" aria-label="${t('close')}">${glyph('power',18)}</button></div></div>
+ <div class="v4-cc-pager" aria-label="Control Center sections"><button type="button" class="active" data-v4-page="0" title="${t('favorite')}">${glyph('home',12)}</button><button type="button" data-v4-page="1" title="${t('connectivity')}">${glyph('wifi',12)}</button><button type="button" data-v4-page="2" title="${t('pageMusic')}">${glyph('music',12)}</button></div>
+ <div class="v4-cc-scroll" id="v4CcScroll">
+  <div class="v4-cc-grid" id="v4CcFavorites">
+   <div class="v4-cc-card v4-net-grid" id="networkButtons">
+    <button type="button" class="cc-round" data-toggle="airplane" aria-label="${t('airplane')}">${glyph('airplane',23)}</button>
+    <button type="button" class="cc-round on" data-toggle="wifi" aria-label="${t('wifi')}">${glyph('wifi',24)}</button>
+    <button type="button" class="cc-round green" data-toggle="cellular" aria-label="${t('mobile')}">${glyph('signal',22)}</button>
+    <button type="button" class="cc-round on" data-toggle="bluetooth" aria-label="${t('bluetooth')}">${glyph('bluetooth',22)}</button>
+    <button type="button" class="v4-net-more" data-v4-network-open>${t('network')} ${glyph('next',15)}</button>
+   </div>
+   <div class="v4-cc-card v4-media-card" id="v4MediaCard">
+    <div class="v4-media-top"><div class="v4-media-art">${glyph('music',26)}</div><div class="v4-media-info"><b id="ccSongTitle">Not Playing</b><span id="ccSongArtist">${t('music')}</span></div></div>
+    <button type="button" class="v4-media-airplay" data-v4-action="airplay" aria-label="AirPlay">${glyph('control',14)}</button>
+    <div class="v4-media-controls"><button type="button" id="ccPrev" aria-label="Previous">${glyph('skip-back',22)}</button><button type="button" id="ccPlay" class="play-toggle" aria-label="Play or Pause">${glyph('play',26)}</button><button type="button" id="ccNext" aria-label="Next">${glyph('skip-next',22)}</button></div>
+   </div>
+  </div>
+  <div class="v4-cc-row" id="v4CcQuickModes">
+   <button class="v4-cc-pill" type="button" id="rotationButton" title="Rotation Lock">${glyph('lock',20)}</button>
+   <button class="v4-cc-pill" type="button" id="silentButton" title="Silent Mode">${glyph('sound',20)}</button>
+   <button class="v4-cc-pill focus" type="button" id="focusButton">${glyph('moon',21)}<span>${t('focused')}</span></button>
+  </div>
+  <div class="v4-cc-slider-wrap" id="v4CcSliders"><div class="cc-slider brightness" data-slider="brightness" role="slider" aria-label="${t('brightness')}" aria-valuemin="0" aria-valuemax="100"><div class="cc-slider-fill" id="brightnessFill"></div>${glyph('sun',30)}</div><div class="cc-slider volume" data-slider="volume" role="slider" aria-label="${t('volume')}" aria-valuemin="0" aria-valuemax="100"><div class="cc-slider-fill" id="volumeFill"></div>${glyph('sound',28)}</div></div>
+  <div class="v4-cc-quick" id="v4CcExtras"><button type="button" id="flashControl" aria-label="${t('flashlight')}">${glyph('flash',23)}</button><button type="button" id="timerControl" aria-label="${t('timer')}">${glyph('clock',23)}</button><button type="button" id="calcControl" aria-label="${t('calculator')}">${glyph('calculator',23)}</button><button type="button" id="cameraControl" aria-label="${t('camera')}">${glyph('camera',23)}</button><button type="button" data-v4-action="screen" aria-label="${t('screenRecording')}">${glyph('record',23)}</button><button type="button" data-v4-action="mirror" aria-label="${t('screenMirror')}">${glyph('control',23)}</button><button type="button" data-v4-action="alarm" aria-label="Alarm">${glyph('bell',23)}</button><button type="button" data-v4-action="network" aria-label="${t('openNetwork')}">${glyph('wifi',23)}</button></div>
+  <div class="v4-cc-card v4-cc-details" id="v4CcConnectivity"><b>${t('networkStatus')}</b><span id="v4CcNetDetail">${t('unknown')}</span></div><div class="v4-cc-dots"><i></i><i></i><i></i></div>
+  </div>`;
+}
+// Base control handlers are attached before this enhancement loads. Rebind the new DOM nodes to the original actions.
+$('#ccPlay')?.addEventListener('click',()=>setPlaying(!state.playing));
+$('#ccPrev')?.addEventListener('click',()=>nextTrack(-1));
+$('#ccNext')?.addEventListener('click',()=>nextTrack(1));
+$('#ccPower')?.addEventListener('click',()=>closeControl());
+$('#flashControl')?.addEventListener('click',()=>toast(t('flashlight')+' \u00b7 '+t('preview')));
+$('#timerControl')?.addEventListener('click',()=>{closeControl();openApp('clock')});
+$('#calcControl')?.addEventListener('click',()=>{closeControl();openApp('calculator')});
+$('#cameraControl')?.addEventListener('click',()=>{closeControl();openApp('camera')});
+$('#rotationButton')?.addEventListener('click',()=>{state.rotation=!state.rotation;syncToggles()});
+$('#silentButton')?.addEventListener('click',()=>{state.silent=!state.silent;syncToggles()});
+$('#focusButton')?.addEventListener('click',()=>{state.focus=!state.focus;syncToggles();window.ZorixV2.showIsland(t('focused'),state.focus?'On':'Off',1700)});
+$('#networkButtons')?.querySelectorAll('[data-toggle]').forEach(b=>b.addEventListener('click',()=>{const key=b.dataset.toggle;if(net.source==='android'&&['wifi','cellular','airplane'].includes(key)){openNativeNetwork();return}
+ state[key]=!state[key];if(key==='airplane'){state.wifi=!state.airplane;state.cellular=!state.airplane}syncToggles()}));
+function syncNewControls(){
+ $('#focusButton')?.classList.toggle('on',state.focus);$('#silentButton')?.classList.toggle('on',state.silent);$('#rotationButton')?.classList.toggle('on',state.rotation);
+ $('#ccPlay')?.replaceChildren();if($('#ccPlay'))$('#ccPlay').innerHTML=icon(state.playing?'pause':'play',26);
+ $('#ccSongTitle')?.replaceChildren(document.createTextNode(state.playing?(tracks[state.track]?.[0]||'Now Playing'):'Not Playing'));
+ $('#ccSongArtist')?.replaceChildren(document.createTextNode(state.playing?(tracks[state.track]?.[1]||'Music'):t('music')));
+ const bright=$('#brightnessFill'),vol=$('#volumeFill');if(bright)bright.style.height=state.brightness+'%';if(vol)vol.style.height=state.volume+'%';
+ if(net.source==='android')renderNetwork();
+}
+const oldSync=syncToggles;syncToggles=function(){oldSync();syncNewControls()};
+const oldPlaying=setPlaying;setPlaying=function(v){oldPlaying(v);syncNewControls()};
+const oldTrack=nextTrack;nextTrack=function(n){oldTrack(n);syncNewControls()};
+const oldOpenCtrl=openControl;openControl=function(){oldOpenCtrl();syncNewControls();readNetwork()};
+const panel=$('#v4CcScroll');
+function scrollToPage(n){const a=['v4CcFavorites','v4CcConnectivity','v4CcExtras'];const target=$('#'+a[n]);if(!target||!panel)return;
+ const y=target.getBoundingClientRect().top-panel.getBoundingClientRect().top+panel.scrollTop-2;panel.scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+ CC.querySelectorAll('[data-v4-page]').forEach(b=>b.classList.toggle('active',Number(b.dataset.v4Page)===n))}
+CC?.addEventListener('click',e=>{
+ const pager=e.target.closest('[data-v4-page]');if(pager){scrollToPage(Number(pager.dataset.v4Page));return}
+ if(e.target.closest('[data-v4-network-open]')){openNativeNetwork();return}
+ const extra=e.target.closest('[data-v4-action]');if(extra){const key=extra.dataset.v4Action;
+  if(key==='network'){openNativeNetwork();return}
+  if(key==='screen')toast(t('screenRecording')+' \u00b7 '+t('preview'));
+  if(key==='mirror')toast(t('screenMirror')+' \u00b7 '+t('preview'));
+  if(key==='airplay')toast('AirPlay \u00b7 '+t('preview'));
+  if(key==='alarm'){closeControl();openApp('clock')}
+ }
+},true);
+function sliderUpdate(node,event){const r=node.getBoundingClientRect();let fraction=Math.max(0,Math.min(1,(r.bottom-event.clientY)/r.height));const kind=node.dataset.slider;if(kind==='brightness')setBrightness(Math.round(fraction*100));else setVolume(Math.round(fraction*100));syncNewControls()}
+CC?.querySelectorAll('[data-slider]').forEach(el=>{
+ el.addEventListener('pointerdown',e=>{e.stopPropagation();el.setPointerCapture?.(e.pointerId);sliderUpdate(el,e)});
+ el.addEventListener('pointermove',e=>{if(el.hasPointerCapture?.(e.pointerId)){e.stopPropagation();sliderUpdate(el,e)}});
+ el.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();const s=e.key==='ArrowUp'||e.key==='ArrowRight'?5:-5;if(el.dataset.slider==='brightness')setBrightness(Math.max(0,Math.min(100,state.brightness+s)));else setVolume(Math.max(0,Math.min(100,state.volume+s)));syncNewControls()});
+ el.tabIndex=0;
+});
+// Rebuild local-only Notification Center, preserving system privacy boundaries.
+const NC=$('#notificationCenter');
+let notices;
+try{const saved=JSON.parse(localStorage.getItem('zorix.notifications.v4')||'null');notices=Array.isArray(saved)?saved:[]}
+catch(e){notices=[]}
+const seeded=localStorage.getItem('zorix.notif.seed.v4');
+if(!seeded){
+ notices=[{id:'intro',kind:'system',title:'Welcome to ZorixOS',body:'Your experience is ready. Explore the Home Screen and Control Center.',time:Date.now()},
+ {id:'calendar-intro',kind:'calendar',title:'Calendar',body:'No events scheduled for today.',time:Date.now()-3600e3}];
+ localStorage.setItem('zorix.notif.seed.v4','yes');
+}
+const saveNotice=()=>{try{localStorage.setItem('zorix.notifications.v4',JSON.stringify(notices.slice(0,60)))}catch(_){}};
+function addNotice(n){const obj={id:n.id||'n'+Date.now()+Math.round(Math.random()*10000),kind:n.kind||'system',title:String(n.title||'ZorixOS'),body:String(n.body||''),time:n.time||Date.now()};notices.unshift(obj);saveNotice();renderNotices();}
+function timeAgo(v){let m=Math.max(0,Math.floor((Date.now()-v)/60000));return m<1?t('now'):m<60?m+'m':m<1440?Math.floor(m/60)+'h':Math.floor(m/1440)+'d'}
+function renderNotices(){const list=$('#noticeList');if(!list)return;
+ if(!notices.length){list.innerHTML=`<div class="v4-nc-empty">${t('noNotifications')}</div>`;return}
+ list.innerHTML=notices.map((n,i)=>`<article class="v4-notice" data-v4-notice="${escapeText(n.id)}" style="animation-delay:${Math.min(i,9)*30}ms"><button type="button" class="v4-notice-action" data-v4-dismiss="${escapeText(n.id)}">${t('clear')}</button><div class="v4-notice-inner" role="button" tabindex="0"><span class="v4-notice-icon ${n.kind==='calendar'?'calendar':'system'}">${icon(n.kind==='calendar'?'calendar':n.kind==='messages'?'message':'bell',21)}</span><span class="v4-notice-copy"><span class="v4-notice-head"><b>${escapeText(n.title)}</b><small>${timeAgo(n.time)}</small></span><p>${escapeText(n.body)}</p></span></div></article>`).join('')}
+if(NC){
+ NC.classList.add('v4-nc');
+ NC.innerHTML=`<div class="v4-nc-heading"><div class="notif-date" id="notifDate"></div><div class="notif-title" id="notifTime"></div></div><div class="v4-nc-titlebar"><span>${t('notifications')}</span><button type="button" id="clearNotices" aria-label="${t('clear')}">${glyph('close',17)}</button></div><div id="noticeList" aria-label="${t('notifications')}"></div><div class="v4-nc-footer">${t('noticeDemo')}<br>${t('swipeClose')}</div>`;
+ renderNotices();
+}
+const oldClock=updateClock;updateClock=function(){oldClock();const d=new Date();const fmt=locale()==='zh'?'zh-CN':locale();const opts={weekday:'long',month:'long',day:'numeric'};
+ try{if($('#notifDate'))$('#notifDate').textContent=new Intl.DateTimeFormat(fmt,opts).format(d)}catch(e){}
+};updateClock();
+const oldOpenNotifs=openNotifications;openNotifications=function(){if(state.locked){closeControl();closeSearch();NC?.classList.add('show')}else oldOpenNotifs();renderNotices()};
+const oldCloseNotifs=closeNotifications;closeNotifications=function(){oldCloseNotifs();NC?.querySelectorAll('.v4-notice.swiped').forEach(x=>x.classList.remove('swiped'))};
+NC?.addEventListener('click',e=>{
+ const clear=e.target.closest('#clearNotices');if(clear){notices=[];saveNotice();renderNotices();return}
+ const dismiss=e.target.closest('[data-v4-dismiss]');if(dismiss){notices=notices.filter(x=>x.id!==dismiss.dataset.v4Dismiss);saveNotice();renderNotices();return}
+ const card=e.target.closest('.v4-notice');if(card){if(card.classList.contains('swiped')){card.classList.remove('swiped');return}card.classList.toggle('expanded')}
+},true);
+let dragNotice=null;
+NC?.addEventListener('pointerdown',e=>{const item=e.target.closest('.v4-notice');if(!item)return;dragNotice={x:e.clientX,y:e.clientY,el:item}},true);
+NC?.addEventListener('pointerup',e=>{if(!dragNotice)return;const dx=e.clientX-dragNotice.x,dy=e.clientY-dragNotice.y;
+ if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.5){dragNotice.el.classList.toggle('swiped',dx<0)}dragNotice=null},true);
+// Settings show REAL Android network metadata, not fake SSIDs or toggles.
+const oldSettingsMarkup=osSettingsMarkup;
+function networkSettings(){return `<section class="ios-settings z-settings" data-os-settings-route="networkDetails"><h1 class="z-heading">${t('networkStatus')}</h1><p class="z-page-intro">${t('readonly')}</p><div class="z-section-title">${t('connection')}</div><div class="z-group">${[
+ [t('networkStatus'),'v4NetworkStatus'],[t('type'),'v4NetworkType'],[t('speed'),'v4NetworkSpeed'],[t('connection'),'v4NetworkCost'],[t('network'),'v4NetworkSource']
+ ].map(([label,id])=>`<div class="ios-row z-row"><span class="z-symbol">${glyph('wifi',19)}</span><span class="z-text"><b>${label}</b></span><span class="z-next" id="${id}">--</span></div>`).join('')}
+ <button type="button" class="ios-row z-row" data-v4-net-refresh><span class="z-symbol">${glyph('repeat',18)}</span><span class="z-text"><b>${t('refresh')}</b></span><span class="z-next">${glyph('next',18)}</span></button><button type="button" class="ios-row z-row" data-v4-network-open><span class="z-symbol">${glyph('gear',18)}</span><span class="z-text"><b>${t('openNetwork')}</b></span><span class="z-next">${glyph('next',18)}</span></button></div><p class="z-inset-note">${t('noticeDemo')}</p></section>`}
+osSettingsMarkup=function(section='root'){
+ const route=OS.settingsStack.at(-1)||section||'root';
+ if(['wifi','cellular','networkDetails'].includes(route))return networkSettings();
+ let markup=oldSettingsMarkup(section);
+ if(route==='root'||route==='general'){
+ const row=`<div class="z-section-title">${t('networkStatus').toUpperCase()}</div><div class="z-group"><button type="button" class="ios-row z-row" data-os-setting="networkDetails"><span class="z-symbol" style="--z-bg:#e9f0ff;--z-fg:#397af1">${glyph('wifi',18)}</span><span class="z-text"><b>${t('networkStatus')}</b><small>${net.source==='android'?t('native'):t('browser')}</small></span><span class="z-next">${glyph('next',16)}</span></button></div>`;
+ markup=markup.replace(/<\/div>\s*$/,row+'</div>');
+ }
+ return markup;
+};
+// On Android, connectivity settings open the platform internet panel. In a browser, never claim to control a real radio.
+document.addEventListener('click',e=>{
+ if(e.target.closest('[data-v4-net-refresh]')){e.preventDefault();e.stopImmediatePropagation();readNetwork();return}
+ if(e.target.closest('[data-v4-network-open]')){e.preventDefault();e.stopImmediatePropagation();openNativeNetwork();return}
+ if(net.source==='android'&&e.target.closest('[data-os-network],[data-os-toggle="wifi"],[data-os-toggle="cellular"]')){
+  e.preventDefault();e.stopImmediatePropagation();openNativeNetwork();return;
+ }
+},true);
+// Demo media metadata stays in the chosen interface language, not a Chinese/English mix.
+const originalOsAppMarkup=osAppMarkup;
+osAppMarkup=function(id){let markup=originalOsAppMarkup(id);if(id==='youtube'&&lang()!=='zh')markup=markup.replaceAll('\u539f\u521bDemo\u6761\u76ee','Original Demo Items').replaceAll('\u672c\u5730Video\u5217\u8868','Local Video List');return markup};
+const originalRenderApp=osRenderApp;
+function localizeAppMicrocopy(){
+ if(lang()==='zh')return;
+ const root=document.querySelector('#appView');if(!root)return;
+ const aliases={'原创Demo条目':'Original Demo Items','本地Video列表':'Local Video List'};
+ root.querySelectorAll('small').forEach(el=>{const val=el.textContent.trim();if(aliases[val])el.textContent=aliases[val]});
+}
+osRenderApp=function(){originalRenderApp();localizeAppMicrocopy();if(state.app==='settings'&&['wifi','cellular','networkDetails'].includes(OS.settingsStack.at(-1)))readNetwork()};
+const originalOpenApp=openApp;openApp=function(id,section){originalOpenApp(id,section);localizeAppMicrocopy();setTimeout(localizeAppMicrocopy,80);if(id==='settings'&&['wifi','cellular','networkDetails'].includes(section))readNetwork()};
+
+const appMicrocopyRoot=document.querySelector('#appView');
+if(appMicrocopyRoot){const microcopyWatcher=new MutationObserver(localizeAppMicrocopy);microcopyWatcher.observe(appMicrocopyRoot,{childList:true,subtree:true});}
+// The Apple-style Hello welcome cycles greetings only while the Hello page is visible.
+let helloIndex=0;
+const helloGreetings=['Hello','Bonjour','Hola','Ciao','Hallo','Ol\u00e1','\u3053\u3093\u306b\u3061\u306f','\u4f60\u597d'];
+setInterval(()=>{
+ const w=$('#zxOnboarding');const h=$('#zxHelloText');
+ if(!w||!h||w.hidden||!w.classList.contains('zx-stage-welcome')||document.hidden)return;
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.zmMode==='off')return;
+ const text=helloGreetings[(++helloIndex)%helloGreetings.length];
+ try{h.animate([{opacity:1,filter:'blur(0)',transform:'translateY(0)'},{opacity:0,filter:'blur(9px)',transform:'translateY(-16px)'}],{duration:230,easing:'ease-in'}).finished.then(()=>{
+ if(!h.isConnected||w.hidden)return;h.textContent=text;h.animate([{opacity:0,filter:'blur(9px)',transform:'translateY(15px)'},{opacity:1,filter:'blur(0)',transform:'translateY(0)'}],{duration:430,easing:'cubic-bezier(.22,1,.36,1)'})
+ }).catch(()=>{});}catch(e){h.textContent=text}
+},2300);
+// High-visibility panel labels follow language changes without recreating native button listeners.
+document.addEventListener('zorix-language-change',()=>{
+ const focus=$('#focusButton span');if(focus)focus.textContent=t('focused');
+ const group=$('#v4CcConnectivity b');if(group)group.textContent=t('networkStatus');
+ const header=$('.v4-nc-titlebar span');if(header)header.textContent=t('notifications');
+ const footer=$('.v4-nc-footer');if(footer)footer.innerHTML=t('noticeDemo')+'<br>'+t('swipeClose');
+ renderNotices();readNetwork();updateClock();
+});
+
+const date=$('#notifDate');if(date)date.style.whiteSpace='nowrap';
+// Screens are intentionally conservative about accessibility and system interruptions.
+setTimeout(()=>{readNetwork();syncNewControls();},60);
+setInterval(()=>{if(!document.hidden)readNetwork()},9000);
+window.ZorixV4={get network(){return {...net}},addNotice,openNetworkSettings:openNativeNetwork,refreshNetwork:readNetwork,noticeCount:()=>notices.length,renderNotices,control:()=>openControl(),notifications:()=>openNotifications()};
+})();
+
 </script>
 </body>
 </html>
