@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#0e1119">
-<meta name="description" content="ZorixOS 网页仿真，提供 Liquid Glass、真实应用图标、设置多级导航和本地 App 交互。">
-<title>ZorixOS · Liquid Edition</title>
+<meta name="description" content="ZorixOS 2.0 UI simulator ·  Liquid Glass、真实应用图标、设置多级导航和本地 App 交互。">
+<title>ZorixOS 2.0 · Liquid Edition</title>
 <style>
 :root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue",Arial,sans-serif;font-synthesis:none;--device-scale:1;--accent:#a7d6ff}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overscroll-behavior:none}body{background:#080b11;color:#f6f7fb;overflow:hidden;-webkit-tap-highlight-color:transparent}button,input,textarea{font:inherit}button{color:inherit;cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #94caff;outline-offset:3px}button:disabled{cursor:default}.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 45% 60% at 78% 50%,rgba(54,65,108,.27),transparent 77%),radial-gradient(ellipse 35% 50% at 14% 20%,rgba(98,70,102,.18),transparent 80%),#090c12}.ambient:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at center,black,transparent 77%)}
@@ -220,6 +220,128 @@ html.zorix-native,html.zorix-native body{height:100%;width:100%;background:#1117
 .zorix-native .status-bar{padding-top:max(16px,env(safe-area-inset-top))!important}
 
 </style>
+<style id="zorix-experience-2-css">
+/* ZorixOS 2 — performant native-feeling simulator, intentionally no emoji assets */
+:root { --zx-ease: cubic-bezier(.22,1,.36,1); --zx-ink:#17203a; }
+html,body{overflow:hidden;touch-action:pan-y}
+#screen{touch-action:pan-y;}
+#screen .home-pages{will-change:transform;}
+#screen .app-grid .app-tile,#screen .dock .app-tile{contain:layout style;}
+#screen button:not(.dynamic-island){-webkit-tap-highlight-color:transparent;}
+#screen button:active:not([disabled]):not(.dynamic-island){filter:brightness(.96);}
+#screen .app-tile:active{transform:scale(.92);transition:transform .17s var(--zx-ease)}
+#screen .z-group .z-row{transition:background-color .12s ease;}
+#screen .z-group .z-row:active{background-color:#e7eaf4!important;}
+#screen .wallpaper{will-change:auto;}
+#screen .glass{backdrop-filter:blur(min(var(--glass-blur),16px)) saturate(135%);-webkit-backdrop-filter:blur(min(var(--glass-blur),16px)) saturate(135%)}
+#screen .app-view{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.zorix-native .screen{touch-action:pan-y;}
+.zorix-native .app-view{touch-action:pan-y;}
+.zorix-native .home-pages{touch-action:pan-y;}
+.zorix-native .app-layer{touch-action:pan-y;}
+.zorix-native .status-bar{padding-top:max(14px,env(safe-area-inset-top))!important}
+.zorix-native .home-indicator{bottom:max(8px,env(safe-area-inset-bottom))!important}
+/* Deliberately use no decorative continuously rotating background effects. */
+/* Dynamic Island: inactive, compact live activity, expanded content. */
+#island.dynamic-island{min-width:126px;width:126px;height:36px;top:11px!important;padding:0;display:block;transform:translateX(-50%) translateZ(0);border:1px solid rgba(255,255,255,.075);background:#050608;overflow:hidden;border-radius:24px;box-shadow:0 1px 1px #ffffff1a,0 7px 25px #05060844;transition:width .47s var(--zx-ease),height .47s var(--zx-ease),border-radius .47s var(--zx-ease),box-shadow .26s,opacity .18s;contain:layout paint style;user-select:none;-webkit-user-select:none;isolation:isolate}
+#island.dynamic-island:after{z-index:2;pointer-events:none;transition:opacity .18s;right:15px;top:11px}
+#island.dynamic-island.zx-island-compact{width:177px;height:39px;border-radius:22px}
+#island.dynamic-island.zx-island-expanded,#island.dynamic-island.expanded{width:min(338px,calc(100% - 34px));height:154px;border-radius:35px;top:10px!important;padding:0!important;box-shadow:0 10px 36px #0007}
+#island.dynamic-island.zx-island-expanded:after,#island.dynamic-island.zx-island-compact:after,#island.dynamic-island.expanded:after{opacity:0;display:block!important}
+#island .island-live{display:none!important}
+.zx-island-ui{position:absolute;inset:0;color:white;display:flex;align-items:center;justify-content:center;transition:opacity .2s ease;pointer-events:none}
+.zx-island-ui.zx-island-small{justify-content:space-between;gap:10px;padding:0 13px;opacity:0}
+#island.zx-island-compact .zx-island-small{opacity:1}
+#island.zx-island-expanded .zx-island-small{opacity:0}
+.zx-island-mini-art{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:8px;background:linear-gradient(135deg,#f484ae,#60449b 90%);color:#fff}
+.zx-island-mini-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;text-align:left}
+.zx-island-mini-copy strong{font-size:11px;font-weight:670;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zx-island-mini-copy small{font-size:9px;color:#9aa8b6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zx-island-bars{width:16px;height:15px;display:flex;align-items:center;gap:2px}
+.zx-island-bars i{width:3px;height:35%;border-radius:99px;background:#6de0b5;animation:zxWave 700ms ease-in-out infinite alternate}
+.zx-island-bars i:nth-child(2){height:90%;animation-delay:.17s}.zx-island-bars i:nth-child(3){height:55%;animation-delay:.33s}
+.zx-island-bars:not(.active) i{height:4px;animation:none}
+@keyframes zxWave{to{height:14px}}
+.zx-island-expanded-content{position:absolute;inset:0;padding:24px 19px 15px;opacity:0;transform:translateY(-8px) scale(.97);transition:opacity .22s ease .03s,transform .38s var(--zx-ease);pointer-events:none;text-align:left;color:white;display:flex;flex-direction:column;gap:12px}
+#island.zx-island-expanded .zx-island-expanded-content{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.zx-island-topline{display:flex;gap:13px;align-items:center;min-height:48px}
+.zx-island-large-art{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#a24c98,#424cad);flex:none}
+.zx-island-main{flex:1;min-width:0}
+.zx-island-main strong{font-size:15px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.2px}
+.zx-island-main small{display:block;font-size:11px;color:#acafbb;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zx-island-progress{height:4px;background:#54545a;border-radius:12px;overflow:hidden;margin-top:1px}
+.zx-island-progress i{display:block;background:#d6d9e5;width:35%;height:100%;border-radius:inherit;transition:width .5s linear}
+.zx-island-bottom{display:flex;justify-content:center;align-items:center;gap:27px;min-height:23px;margin-top:-3px}
+.zx-island-btn{pointer-events:auto;background:transparent!important;border:0!important;padding:2px 10px!important;color:white!important;line-height:1;display:grid;place-items:center;box-shadow:none!important}
+.zx-island-btn:active{transform:scale(.86)}
+.zx-island-system-hint{font-size:10px;color:#9ea6ba;text-align:center;margin:0}
+/* First-launch flow: always drawn inside the device screen, completely offline. */
+.zx-wizard{position:absolute;inset:0;z-index:190;background:#0a0e1c;color:#fff;display:flex;flex-direction:column;overflow:hidden;isolation:isolate;contain:layout paint style;touch-action:pan-y}
+.zx-wizard.hidden{display:none!important}
+.zx-wizard:before{content:'';position:absolute;inset:-15%;pointer-events:none;background:radial-gradient(ellipse 58% 35% at 72% 20%,#8172d83e,transparent 85%),radial-gradient(ellipse 65% 60% at 18% 83%,#4174b93a,transparent 84%);opacity:.82}
+.zx-wizard.zx-stage-boot{background:#070b14;justify-content:center;align-items:center}
+.zx-boot-logo{position:relative;width:120px;height:120px;border-radius:39px;display:grid;place-items:center;background:linear-gradient(140deg,#829eff,#384597 65%,#222453);box-shadow:0 18px 65px #294cc76b,inset 0 1px 1px #fff8,0 0 0 1px #ffffff40;animation:zxBootRise .85s var(--zx-ease) both}
+.zx-boot-logo span{font-size:82px;font-weight:820;line-height:1;letter-spacing:-8px;color:#fff;transform:translateX(-3px)}
+.zx-boot-word{font-size:17px;font-weight:700;letter-spacing:.13em;margin-top:30px;animation:zxBootRise .85s var(--zx-ease) .15s both}
+.zx-boot-line{width:105px;height:2px;margin:25px auto 0;border-radius:20px;background:#ffffff22;overflow:hidden}
+.zx-boot-line:before{content:'';height:100%;width:100%;display:block;background:linear-gradient(90deg,#75c6ff,#d9e1ff);transform:translateX(-100%);animation:zxBootProgress 1.05s ease-out forwards}
+@keyframes zxBootProgress{to{transform:translateX(0)}}
+@keyframes zxBootRise{from{opacity:0;transform:scale(.88) translateY(17px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.zx-step-shell{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;padding:76px 27px 31px;animation:zxSlideUp .5s var(--zx-ease) both}
+@keyframes zxSlideUp{from{opacity:0;transform:translateY(17px)}to{opacity:1;transform:translateY(0)}}
+.zx-step-top{font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#b9c6e4}
+.zx-step-top span{letter-spacing:.13em;font-weight:740}
+.zx-back{border:0;background:#ffffff17;color:#fff;border-radius:50%;width:37px;height:37px;display:grid;place-items:center}
+.zx-step-progress{display:flex;gap:5px;justify-content:center;margin:18px auto 0}
+.zx-step-progress i{height:3px;width:22px;border-radius:10px;background:#ffffff36}
+.zx-step-progress i.active{background:#adbcff}
+.zx-screen-middle{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:25px 0 15px}
+.zx-hello-mark{font-size:clamp(64px,15vw,95px);font-weight:620;letter-spacing:-5px;line-height:1.1;background:linear-gradient(115deg,#fff 25%,#e2ceff 57%,#83b5fa);background-clip:text;-webkit-background-clip:text;color:transparent;animation:zxHello .9s var(--zx-ease) both}
+@keyframes zxHello{from{filter:blur(10px);transform:translateY(15px);opacity:0}to{filter:blur(0);transform:none;opacity:1}}
+.zx-step-title{font-size:31px;line-height:1.15;font-weight:710;letter-spacing:-1.2px;margin:10px 0 11px}
+.zx-step-detail{font-size:13px;line-height:1.65;color:#b1bad3;margin:0 0 24px;max-width:305px}
+.zx-wizard .zx-locale-list{display:flex;flex-direction:column;gap:9px;max-height:47vh;overflow-y:auto;padding:3px 1px}
+.zx-locale-card{border:1px solid #ffffff1e;border-radius:17px;background:#ffffff13;color:#fff;text-align:left;min-height:66px;display:flex;align-items:center;padding:13px 15px;gap:12px}
+.zx-locale-card.active{background:#8799ff23;border-color:#a2b6ffb5}
+.zx-locale-card span{flex:1;display:flex;flex-direction:column;gap:4px;font-size:15px;font-weight:580}
+.zx-locale-card small{font-size:10px;color:#a8b8d0;font-weight:450}
+.zx-locale-card svg{color:#bbceff;flex:none}
+.zx-step-footer{margin-top:auto;padding-top:8px;display:flex;flex-direction:column;gap:11px}
+.zx-primary{height:55px;background:linear-gradient(115deg,#d6e1ff,#9ab1ff);color:#16254f!important;border:0;border-radius:18px;font-size:15px;font-weight:750;box-shadow:0 9px 27px #344ea93b}
+.zx-secondary{height:40px;border:0;background:transparent;color:#bec5dc;font-size:12px}
+.zx-appearance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:17px 0}
+.zx-appearance-choice{height:181px;border:1.5px solid #ffffff21;border-radius:23px;background:#1d2640;padding:12px 14px;text-align:center;display:flex;flex-direction:column;gap:10px;color:#fff;font-size:13px;align-items:center}
+.zx-appearance-choice.active{border-color:#adc2ff;box-shadow:0 0 0 2px #9baeff32}
+.zx-appearance-preview{flex:1;width:100%;max-width:90px;border-radius:15px;border:1px solid #aaa2;display:flex;flex-direction:column;padding:13px 10px;gap:9px;background:#f4f5f8;box-shadow:0 4px 13px #0005}
+.zx-appearance-preview.dark{background:#222939}
+.zx-appearance-preview:before{content:'';width:65%;height:9px;border-radius:99px;background:#9c9fd5}
+.zx-appearance-preview:after{content:'';height:57px;border-radius:12px;background:linear-gradient(140deg,#ced7ff,#aabbdf)}
+.zx-appearance-preview.dark:after{background:linear-gradient(140deg,#455480,#3d385d)}
+.zx-privacy-row{border:1px solid #ffffff22;background:#ffffff12;border-radius:21px;padding:16px;display:flex;align-items:center;gap:13px;min-height:75px}
+.zx-privacy-row span{flex:1;font-size:13px;line-height:1.5}
+.zx-privacy-row small{font-size:11px;color:#adb7d0;display:block;margin-top:4px}
+.zx-privacy-switch{width:51px;height:30px;border-radius:20px;background:#445169;border:0;position:relative;flex:none}
+.zx-privacy-switch:after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;background:white;border-radius:100%;transition:transform .2s}
+.zx-privacy-switch.on{background:#748cff}.zx-privacy-switch.on:after{transform:translateX(21px)}
+.zx-step-fineprint{font-size:11px;line-height:1.6;color:#a3acc8;margin-top:14px}
+.zx-wizard-status{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:10px;color:#a1acd2}
+.zx-wizard:focus-within .zx-step-shell{overscroll-behavior:contain}
+/* Native-feeling action sheet instead of dead controls */
+.zx-sheet-backdrop{position:absolute;inset:0;z-index:151;background:#0409159e;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:flex;align-items:flex-end;justify-content:center;animation:zxFade .17s ease both}
+@keyframes zxFade{from{opacity:0}to{opacity:1}}
+.zx-sheet{width:calc(100% - 22px);background:#f6f7fc;border-radius:30px 30px 21px 21px;color:#191f35;margin:0 11px 23px;padding:18px 14px 12px;box-shadow:0 15px 45px #0007;animation:zxSheetRise .28s var(--zx-ease) both}
+@keyframes zxSheetRise{from{transform:translateY(90%)}to{transform:translateY(0)}}
+.zx-sheet h3{font-size:18px;font-weight:750;margin:5px 8px 14px}
+.zx-sheet-row{display:flex;align-items:center;gap:10px;width:100%;height:51px;border:0;background:white;color:#293047;border-radius:14px;margin:6px 0;padding:0 12px;text-align:left;font-size:14px}
+.zx-sheet-row svg{color:#657be3}
+.zx-sheet-cancel{display:block;width:100%;height:48px;background:#e7eaf1;color:#3a445f;border:0;border-radius:16px;margin-top:11px;font-weight:650}
+/* Compact layout should not jump when keyboard opens. */
+@media(max-width:900px){.zx-step-shell{padding:65px 27px max(26px,env(safe-area-inset-bottom));}}
+@media(max-height:650px){.zx-step-shell{padding-top:45px;padding-bottom:16px}.zx-step-title{font-size:24px}.zx-step-detail{margin-bottom:10px}.zx-screen-middle{padding-top:5px}.zx-appearance-choice{height:126px}}
+@media (prefers-reduced-motion:reduce){.zx-boot-logo,.zx-boot-word,.zx-step-shell,.zx-hello-mark,.zx-island-bars i,.zx-sheet{animation:none!important}#island.dynamic-island,#island .zx-island-expanded-content{transition:none!important}}
+.screen.zx-motion-off *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+
+</style>
 </head>
 <body>
 <div class="ambient" aria-hidden="true"></div>
@@ -395,7 +517,7 @@ const iOS26PNG={
  home:'com.apple.Home-large.png',books:'com.apple.iBooks-large.png',translate:'com.apple.Translate-large.png',voice:'com.apple.VoiceMemos-large.png'
 };
 const archiveURL=id=>iOS26PNG[id]?'https://raw.githubusercontent.com/kkkik/iOS26/main/'+encodeURIComponent(iOS26PNG[id]):'';
-for(const id of Object.keys(apps)){apps[id].realURL=archiveURL(id);apps[id].iconOrigin='archived-ios26'}
+for(const id of Object.keys(apps)){apps[id].realURL='';apps[id].iconOrigin='bundled-vector-fallback'}
 // A version created with the Export control may include actual image bytes in this same HTML.
 let embeddedIconImages={};
 try{embeddedIconImages=JSON.parse(document.getElementById('embeddedIconData')?.textContent||'{}')||{}}catch(e){}
@@ -501,7 +623,7 @@ $('#mainApps').innerHTML=page1.map(id=>makeTile(id)).join('');
 $('#secondApps').innerHTML=page2.map(id=>makeTile(id)).join('');
 $('#dockApps').innerHTML=dock.map(id=>makeTile(id,true)).join('');
 $$('.app-tile').forEach(tile=>tile.style.cssText += ';border:none;background:none;padding:0;');
-updateRealStatus();loadRealAppIcons();
+updateRealStatus();
 
 // Save a second single HTML with the downloaded genuine raster artwork encoded as data URIs.
 // The initial HTML can use its official source URLs directly; this user-initiated export
@@ -982,7 +1104,7 @@ async function osToggleVoiceRecording(){const b=$('#osVoiceButton');if(osVoiceRe
 // Handle the simulated OS controls before the original app demo event delegates.
 document.addEventListener('click',e=>{
  const back=e.target.closest('#backHome');if(back){e.preventDefault();e.stopImmediatePropagation();osBack();return}
- const toolbar=e.target.closest('#appToolbarAction');if(toolbar&&state.app){e.preventDefault();e.stopImmediatePropagation();if(state.app==='messages'||state.app==='wechat')osAction('chat-new','',toolbar);else if(state.app==='notes')osAction('note-new','',toolbar);else if(state.app==='mail')osAction('mail-compose','',toolbar);else if(state.app==='calendar')toast('点击日期后可添加日程');else toast('更多选项');return}
+ const toolbar=e.target.closest('#appToolbarAction');if(toolbar&&state.app){e.preventDefault();e.stopImmediatePropagation();if(state.app==='messages'||state.app==='wechat')osAction('chat-new','',toolbar);else if(state.app==='notes')osAction('note-new','',toolbar);else if(state.app==='mail')osAction('mail-compose','',toolbar);else if(state.app==='calendar')toast('点击日期后可添加日程');else window.zxOpenAppSheet?.(state.app);return}
  if(!state.app)return;
  const s=e.target.closest('[data-os-setting]');if(s&&state.app==='settings'){e.preventDefault();e.stopPropagation();const route=s.dataset.osSetting;if(route==='about'&&OS.settingsStack.at(-1)==='about'){toast('设备信息为演示数据');return}osNavigateSetting(route);return}
  const toggle=e.target.closest('[data-os-toggle]');if(toggle&&state.app==='settings'){e.preventDefault();e.stopPropagation();osSetPref(toggle.dataset.osToggle,!osPref(toggle.dataset.osToggle));return}
@@ -997,7 +1119,8 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{
  const el=e.target;if(!state.app)return;
  if(el.id==='osNoteBody'||el.id==='osNoteTitle'){if(OS.view?.type==='note'){let n=OS.notes[Number(OS.view.id)];if(n){n.title=$('#osNoteTitle')?.value||'新备忘录';n.body=$('#osNoteBody')?.value||'';n.time=Date.now();osSave('ios27-demo-notes',OS.notes)}}return}
- if(el.id==='osSettingsSearch'){let q=el.value.trim().toLowerCase();$$('.ios-settings .ios-row[data-os-setting]').forEach(x=>x.style.display=!q||x.textContent.toLowerCase().includes(q)?'':'none');return} if(el.dataset.osRange){let k=el.dataset.osRange,n=Number(el.value);if(k==='glass')setGlass(n);else if(k==='brightness')setBrightness(n);else osSetPref(k,n,false);const val=$('#os-range-value-'+k);if(val)val.textContent=n+(k==='textScale'?'%':'');return}
+ if(el.id==='osSettingsSearch'){let q=el.value.trim().toLowerCase();$$('.ios-settings .ios-row[data-os-setting]').forEach(x=>x.style.display=!q||x.textContent.toLowerCase().includes(q)?'':'none');return}
+ if(el.dataset.osRange){let k=el.dataset.osRange,n=Number(el.value);if(k==='glass')setGlass(n);else if(k==='brightness')setBrightness(n);else osSetPref(k,n,false);const val=$('#os-range-value-'+k);if(val)val.textContent=n+(k==='textScale'?'%':'');return}
  if(el.id==='osNoteFilter'){const q=el.value.toLowerCase();$$('#appView .os-cell[data-os-action="note-open"]').forEach(node=>node.style.display=node.textContent.toLowerCase().includes(q)?'':'none');return}
  if(el.id==='osStoreSearch'){const q=el.value.toLowerCase();$$('#appView [data-os-action="store-open"]').forEach(b=>b.parentElement.style.display=b.parentElement.textContent.toLowerCase().includes(q)?'':'none');return}
  if(el.hasAttribute('data-os-message-search')){const q=el.value.toLowerCase();$$('#appView [data-os-action="chat-open"]').forEach(node=>node.style.display=node.textContent.toLowerCase().includes(q)?'':'none');return}
@@ -1034,7 +1157,7 @@ if(OS_PREF.iconStyle&&OS_PREF.iconStyle!==state.mode)setMode(OS_PREF.iconStyle);
  const sim=note('ZorixOS 是本地交互模拟器。网络、系统权限和设备参数仅作展示，不会改变 Android 系统。');
  function home(){return `${title('设置')}
  <label class="ios-search z-search">${icon('search',17)}<input id="osSettingsSearch" type="search" placeholder="搜索设置项" autocomplete="off" aria-label="搜索设置"></label>
- <button type="button" class="z-hero" data-os-setting="about" aria-label="进入我的设备" style="display:block;width:100%;border:0;text-align:left"><div class="z-bubble"><b>Z</b></div><div class="z-hero-content"><div class="z-hero-overline">MY DEVICE · 系统中心</div><div class="z-hero-mark">ZorixOS</div><div class="z-hero-sub">Version 1.0 · Liquid Edition</div><div class="z-hero-bottom"><span>查看设备信息与系统更新</span><span class="z-hero-pill">稳定版 ${icon('next',12)}</span></div></div></button>
+ <button type="button" class="z-hero" data-os-setting="about" aria-label="进入我的设备" style="display:block;width:100%;border:0;text-align:left"><div class="z-bubble"><b>Z</b></div><div class="z-hero-content"><div class="z-hero-overline">MY DEVICE · 系统中心</div><div class="z-hero-mark">ZorixOS</div><div class="z-hero-sub">Version 2.0 · Liquid Edition</div><div class="z-hero-bottom"><span>查看设备信息与系统更新</span><span class="z-hero-pill">稳定版 ${icon('next',12)}</span></div></div></button>
  ${group(row('account','Zorix 账户','person','未登录','#edf0ff','#546ad0'))}
  ${sec('网络与连接')}
  ${group(row('wifi','WLAN','wifi',state.wifi?OS_PREF.wifiNetwork:'关闭','#e8f1ff','#3682ed')+row('bluetooth','蓝牙','bluetooth',state.bluetooth?'已开启':'已关闭','#e7f1ff','#4e8efa')+row('cellular','移动网络','signal',state.cellular?'已启用':'已关闭','#e9faef','#30ac64')+row('interconnect','设备互联','link','无线互联','#f0ebff','#8a6be4')+row('connections','更多连接方式','globe','热点、VPN','#e9f4fc','#5995cf'))}
@@ -1099,6 +1222,368 @@ if(OS_PREF.iconStyle&&OS_PREF.iconStyle!==state.mode)setMode(OS_PREF.iconStyle);
  const welcome=document.querySelector('.lock-msg strong');if(welcome)welcome.textContent='欢迎使用 ZorixOS';
  const notice=document.querySelector('#noticeList .notice p');if(notice)notice.textContent='欢迎体验 ZorixOS。';
  try{const meta=document.querySelector('meta[name="description"]');if(meta)meta.setAttribute('content','ZorixOS Android 界面模拟器：iOS 风格桌面与 App、HyperOS 4 灵感设置。');}catch(e){}
+})();
+
+</script>
+<script id="zorix-experience-2-js">
+/* ZorixOS 2: first run, English localization, natural Dynamic Island, interactive utilities. No Emoji. */
+(function(){
+'use strict';
+const ZX_STORE={complete:'zorix.setup.v2',lang:'zorix.language',region:'zorix.region',onlineIcons:'zorix.onlineIcons'};
+const zxGet=(key,fallback)=>{try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(e){return fallback}};
+const zxPut=(key,v)=>{try{localStorage.setItem(key,String(v))}catch(e){}};
+const boot= {step:'boot',locale:zxGet(ZX_STORE.lang,'en'),region:zxGet(ZX_STORE.region,'US'),appearance:OS_PREF.appearance||'light',online:zxGet(ZX_STORE.onlineIcons,'true')!=='false',timer:null};
+const rfmt=(v)=>String(v??'');
+const isEN=()=>boot.locale!=='zh';
+const zxTxt=(en,zh)=>isEN()?en:zh;
+const zxIcon=(n,size=20)=>typeof osI==='function'?osI(n,size):'';
+const zy=(str)=>String(str).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+
+/* Plain translations are only applied to chrome and demonstration copy, never user-entered fields. */
+const EN={
+ '设置':'Settings','照片':'Photos','日历':'Calendar','相机':'Camera','邮件':'Mail','备忘录':'Notes','提醒事项':'Reminders','时钟':'Clock','新闻':'News','播客':'Podcasts','地图':'Maps','健康':'Health','钱包':'Wallet','电话':'Phone','Safari浏览器':'Safari','信息':'Messages','音乐':'Music','天气':'Weather','查找':'Find My','文件':'Files','快捷指令':'Shortcuts','微信':'WeChat','支付宝':'Alipay','抖音':'TikTok','哔哩哔哩':'bilibili','小红书':'REDnote','计算器':'Calculator','家庭':'Home','图书':'Books','翻译':'Translate','语音备忘录':'Voice Memos',
+ '主屏幕':'Home Screen','主屏幕与 App 资源库':'Home Screen & App Library','主屏幕与':'Home Screen &','资源库':'App Library','完成':'Done','自定':'Customize','搜索':'Search','搜索设置':'Search settings','搜索应用':'Search apps','搜索或输入网站名称':'Search or enter website name','返回主屏幕':'Home','上一页':'Back','下一页':'Next','打开':'On','关闭':'Off','已关闭':'Off','已开启':'On','已启用':'Enabled','未启用':'Disabled','已连接':'Connected','未连接':'Not Connected','未登录':'Not signed in','连接':'Connect','安全网络':'Secured network','添加':'Add','删除':'Delete','更多':'More','继续':'Continue','退出':'Exit','取消':'Cancel','保存':'Save','编辑':'Edit','前往':'Go','最近':'Recent','复制':'Copy','分享':'Share','浏览':'Browse','首页':'Home','发现':'Discover','推荐':'For You','我的':'Me','其他':'Other','全部':'All','最近项目':'Recents','今天':'Today','昨天':'Yesterday','现在':'Now','分钟':'min','小时':'hr','秒':'sec','今日无日程':'No events today','今天没有日程':'No events today','今天的天气适合外出散步。':'A nice day to take a walk.','局部多云':'Partly cloudy','最高':'High','最低':'Low','多云':'Cloudy','晴':'Sunny','云':'Clouds','库比蒂诺':'Cupertino','东京':'Tokyo',
+ '星期日':'Sunday','星期一':'Monday','星期二':'Tuesday','星期三':'Wednesday','星期四':'Thursday','星期五':'Friday','星期六':'Saturday',
+ '周日':'SUN','周一':'MON','周二':'TUE','周三':'WED','周四':'THU','周五':'FRI','周六':'SAT',
+ '灵动岛':'Dynamic Island','正在播放':'Now Playing','未在播放':'Not Playing','播放':'Play','暂停':'Pause','上一首':'Previous','下一首':'Next','播放控制':'Media Controls','音乐播放':'Music Playback','音量':'Volume','静音':'Silent','静音模式':'Silent Mode','亮度':'Brightness','音量加':'Volume Up','音量减':'Volume Down','静音键':'Silent Switch','锁屏按钮':'Side Button','解锁':'Unlock','轻扫以解锁':'Swipe up to unlock','向上轻扫以解锁':'Swipe up to unlock','从屏幕底部向上滑动以解锁。':'Swipe up from the bottom to unlock.','欢迎体验 ZorixOS':'Welcome to ZorixOS','欢迎使用 ZorixOS':'Welcome to ZorixOS','欢迎来到 ZorixOS':'Welcome to ZorixOS','ZorixOS 系统':'ZorixOS System',
+ '控制中心':'Control Center','添加控制':'Add a Control','关闭控制中心':'Dismiss Control Center','飞行模式':'Airplane Mode','移动数据':'Mobile Data','移动网络':'Mobile Networks','蓝牙':'Bluetooth','无线局域网':'Wi-Fi','隔空投送':'AirDrop','允许锁屏访问':'Access on Lock Screen','专注模式':'Focus','勿扰模式':'Do Not Disturb','屏幕旋转':'Rotation','手电筒':'Flashlight','计时器':'Timer','相机预览':'Camera Preview',
+ '我的设备':'My Device','系统更新':'System Update','检查更新':'Check for Updates','设备名称':'Device Name','设备型号':'Model Name','系统类型':'System Type','系统版本':'OS Version','存储空间':'Storage','设备信息':'Device Info','查看设备信息与系统更新':'View device details and updates','稳定版':'Stable','当前是最新版本':'Up to Date','已是最新的演示版本':'The latest demo version','首个预览版本':'First preview','详细信息':'Details','更新历史':'Update History','系统中心':'System Center','Zorix 账户':'Zorix Account','个人资料':'Profile','游客':'Guest','当前为本地游客模式':'Signed in as Guest','账户与同步':'Account & Sync','智能助手':'Assistant','Zorix 智能助手':'Zorix AI','本地示例':'Local Demo','本地演示':'Local Demo','演示模式':'Demo Mode','演示':'Demo','示意':'Preview','演示数据':'Sample Data',
+ '网络与连接':'Network & Connectivity','网络与':'Network &','无线互联':'Wireless connections','设备互联':'Interconnectivity','更多连接方式':'More Connectivity Options','个人热点':'Portable Hotspot','启用便携式热点':'Use Portable Hotspot','热点名称':'Hotspot Name','热点密码':'Hotspot Password','数据漫游':'Data Roaming','SIM 卡与移动网络':'SIM Cards & Mobile Networks','跨设备协同':'Cross-device Collaboration','允许被发现':'Discoverable','已配对设备':'Paired Devices','附近的设备':'Nearby Devices','可用网络':'Available Networks','已连接网络':'Connected Network','Zorix Buds':'Zorix Buds','无线键盘':'Wireless Keyboard','车载音响':'Car Audio','点击配对（模拟）':'Tap to pair (demo)','网络详情':'Network Details','应用设置':'Apps','连接状态':'Connection Status',
+ '个性化与显示':'Personalization & Display','壁纸与个性化':'Wallpaper & Personalization','个性化':'Personalization','柔光玻璃':'Soft Light Glass','图标风格':'Icon Style','图标样式':'Icon Style','桌面图标':'Home Screen Icons','自定义壁纸':'Customize Wallpaper','选择适合 ZorixOS 的桌面外观':'Select a wallpaper for your ZorixOS home screen','玻璃染色程度':'Glass Tint','动态层次与通透效果':'Depth and Translucency','图标、柔光玻璃':'Icons & Soft Light Glass','更多外观设置':'More Appearance Options','外观':'Appearance','浅色':'Light','深色':'Dark','深色模式':'Dark Mode','浅色模式':'Light Mode','显示主题':'Display Theme','跟随浅色':'System Light','跟随系统外观':'Match System Appearance','自动切换深色模式':'Automatic Dark Mode','护眼模式':'Eye Comfort','自适应色温':'Adaptive Color','减少动画':'Reduce Motion','减弱动态效果':'Reduce Motion','降低透明度':'Reduce Transparency','完全染色':'Fully Tinted','超清透':'Clear','透明':'Clear','彩色':'Color','染色':'Tinted','显示与亮度':'Display & Brightness','文字大小':'Text Size','字体大小':'Font Size','文字缩放':'Text Scaling','粗体字体':'Bold Text','粗体文字':'Bold Text','让每个字都清晰可见':'Make every word easy to read','显示缩放':'Display Zoom','显示大小':'Display Size','自动锁屏':'Auto-Lock','自动锁定':'Auto-Lock','始终显示':'Always On','高':'High','低':'Low','壁纸':'Wallpaper','墙纸':'Wallpaper','桌面':'Home Screen',
+ '系统管理':'System Management','密码与安全':'Passwords & Security','隐私保护':'Privacy Protection','隐私与安全性':'Privacy & Security','电量与性能':'Battery & Performance','电池':'Battery','电池百分比':'Battery Percentage','当前电量':'Current Battery','当前电量 · 模拟值':'Current Battery · Demo','智能省电':'Adaptive Power','省电模式':'Battery Saver','低电量模式':'Low Power Mode','显示电量百分比':'Battery Percentage','无障碍':'Accessibility','辅助功能':'Accessibility','更多设置':'Additional Settings','通用':'General','通知与状态栏':'Notifications & Status Bar','通知':'Notifications','声音与触感':'Sound & Haptics','声音':'Sound','键盘反馈':'Keyboard Feedback','键盘设置':'Keyboard Settings','语音控制':'Voice Control','系统服务':'System Services','Zorix AI':'Zorix AI','电量':'Battery Level','电量与':'Battery &',
+ '自动添加新应用':'Add New Apps Automatically','桌面搜索':'Home Search','快捷开关布局':'Quick Controls Layout','标准':'Standard','智能建议':'Smart Suggestions','设备助手':'Device Assistant','暂未接入云服务':'Cloud Services Unavailable','通知预览':'Notification Preview','显示通知预览':'Show Notification Previews','锁屏通知':'Lock Screen Notifications','诊断与改进':'Analytics & Improvements','应用跟踪':'App Tracking','位置服务':'Location Services','位置权限':'Location Access','锁屏密码':'Screen Lock','未设置':'Not Set','指纹与面部识别':'Biometrics','设备保护':'Device Protection','屏幕使用时间':'Screen Time',
+ '相机设置':'Camera Settings','镜像前置画面':'Mirror Front Camera','镜像前置镜头':'Mirror Front Camera','水平仪':'Level','相机网格':'Grid','网格':'Grid','屏幕亮度':'Screen Brightness','跟随系统':'Match System','铃声音量':'Ringtone Volume','闹钟音量':'Alarm Volume','通知音量':'Notification Volume','触感反馈':'Haptic Feedback','按键音':'Key Clicks','声音与触感':'Sound & Haptics','键盘':'Keyboard','语言与地区':'Language & Region','语言与输入法':'Language & Input','系统语言':'System Language','地区':'Region','中国大陆':'Mainland China','美国':'United States','意大利':'Italy','日期与时间':'Date & Time','日历':'Calendar','输入法':'Input Methods','系统默认':'System Default','预测文本':'Predictive Text','预测':'Predictive','照片与视频':'Photos & Videos','系统数据':'System Data','其他设备':'Other Devices','屏幕与系统':'Screen & System','过去 24 小时':'Past 24 Hours','使用情况':'Usage','更多精彩内容':'Discover More',
+ '阅读推荐':'Recommended Reading','个人收藏':'Favorites','新信息':'New Message','新邮件':'New Mail','新备忘录':'New Note','最近通话':'Recents','所有消息':'All Messages','模拟联系人':'Demo Contact','通讯录':'Contacts','最近使用':'Recently Used','铃声':'Ringtone','语音与数据':'Voice & Data','开始计时':'Start Timer','计时结束':'Timer Finished','秒表':'Stopwatch','世界时钟':'World Clock','本地时间':'Local Time','闹钟':'Alarm','照片图库':'Photo Library','图库':'Library','相簿':'Albums','张照片':'photos','来自':'From','收件箱':'Inbox','草稿':'Drafts','草稿箱':'Drafts','主题':'Subject','新建':'New','回复':'Reply','新建邮件':'New Mail','最近照片':'Recent Photos','最近照片和视频':'Recent Photos & Videos','空相簿':'Empty Album','文件夹':'Folder','选择':'Select','发布':'Publish','关注':'Following','朋友圈':'Moments','视频号':'Channels','小程序':'Mini Programs','扫一扫':'Scan','收付款':'Payments','转账':'Transfer','卡包':'Cards','账单':'Bills','搜索框':'Search Box','更多选项':'More Options','最近通话记录':'Recent Calls','点击这里':'Tap Here',
+ '欢迎体验':'Welcome','发现更多':'Explore More','关于 App':'About App','功能预览':'Feature Preview','交互演示':'Interactive Demo','网页':'Web','模型':'Model','示例':'Sample','模拟地图':'Demo Map','示意地图':'Illustrative Map','在线功能不可用':'Online Feature Unavailable','没有消息':'No Messages','加载中':'Loading','加载':'Loading','已完成':'Completed','允许':'Allow','不允许':'Don’t Allow','下一步':'Next','跳过':'Skip','信息通知':'Message Notifications','日历通知':'Calendar Notifications',
+ '早上好':'Good Morning','晚上好':'Good Evening','你好':'Hello','谢谢':'Thank you','晚安':'Good Night','再见':'Goodbye','我爱你':'I Love You',
+ '后台满载':'Under Load','微小图标':'Small Icons','玻璃效果':'Glass Effect','屏幕':'Screen','已选择':'Selected','已保存':'Saved','输入':'Enter',
+ '这不是真实设备信息，不包含序列号、IMEI 或硬件数据。':'This screen uses demo information. No device identifiers are collected.',
+ 'ZorixOS 是本地交互模拟器。网络、系统权限和设备参数仅作展示，不会改变 Android 系统。':'ZorixOS is a local UI simulator. These controls do not change Android system settings.',
+ '设置页面参考 Xiaomi HyperOS 4 的视觉层级重新设计，其余 App 保持原来的 iOS 风格。':'Settings takes visual inspiration from Xiaomi HyperOS 4. Other screens keep their iOS-inspired design.',
+ '此页面不提供实际登录，也不会索取密码。':'This demo never asks for real account credentials.',
+ '网络列表和连接状态是本地演示，不控制 Android WLAN。':'Network connections are simulated and do not control Android Wi-Fi.',
+ '设备列表和连接状态均为模拟数据。':'Paired devices and connection states are simulated.',
+ '网络列表和连接状态是本地演示':'Network connections are simulated.',
+ '此版本不提供真实 AI 账户连接或后台推理。':'AI services are not connected in this preview.',
+ '演示应用不读取系统位置、通讯录或敏感账户数据。':'This demo does not access location, contacts or sensitive account data.',
+ '这些入口仅调整本地演示参数。':'These entries adjust local demonstration preferences.',
+ '桌面 Dock、组件和控制中心保留 iOS 风格；此处调整它们的外观参数。':'Home Screen, Dock, widgets and Control Center keep their iOS-inspired styling.',
+ '主屏幕的图标布局、Dock 和多页滑动采用原来的 iOS 风格。':'Home Screen icons, Dock and swipe pages retain the original iOS-inspired style.',
+ '滑块实时影响 iOS 风格的桌面、Dock 和控制中心。':'This slider adjusts the Home Screen, Dock and Control Center in real time.',
+ '通过彩色、透明和深色选项更换桌面图标效果。':'Choose between colored, clear and dark home screen icons.',
+ '当前浏览器不支持摄像头 API':'Camera API is unavailable on this device',
+ '无法打开相机：请检查权限或安全连接':'Cannot start camera: check permissions',
+ '请先开启相机并允许访问权限':'Start the camera and grant access first',
+ '照片已保存到模拟图库':'Photo saved to the demo library',
+ '网页不会发起真实音视频通话':'This demo cannot place real calls',
+ '网页不会修改真实系统设置':'This demo does not modify device settings',
+ '此功能为演示内容':'This feature is a local demo',
+ '此项目为本地演示':'This is a local demo',
+ '请先输入电话号码':'Enter a phone number first',
+ '请填写模拟联系人名称':'Enter a contact name',
+ '已连接模拟网络':'Connected to demo network',
+ '模拟设备已连接':'Demo device connected',
+ '请填写主题或正文':'Enter a subject or message',
+ '草稿已保存到浏览器':'Draft saved locally',
+ '已选择文件':'File selected',
+ '欢迎使用':'Welcome',
+ '所有消息只保存在当前浏览器。':'Messages stay on this device.',
+ '新的 Liquid Glass 让界面更加通透。':'Liquid Glass adds depth and translucency.',
+ '体验新版 ZorixOS 设置':'Explore ZorixOS Settings',
+ '从右上角打开控制中心':'Swipe down from the top right for Control Center',
+};
+Object.assign(EN,{
+ '搜索设置项':'Search settings', '热点、VPN':'Hotspot, VPN','系统演示':'System Demo','设计灵感':'Design Inspiration',
+ '网页内演示应用':'Demo Apps','网页内演示':'Web Demo','演示笔记':'Demo Notes','照片和视频':'Photos and Videos',
+ '示例图像':'Sample images','12 项 · 包含演示图像':'12 items · Including sample images','示例图像由内嵌 SVG 生成；真实拍摄的照片会显示在最前面，仅保存在当前浏览器。':'Sample images are generated with SVG. Your photos appear first and are saved on this device.',
+ '允许访问相机后可在页面中拍照':'Allow camera access to take photos inside ZorixOS.', '开启相机':'Open Camera','视频':'Video',
+ '添加日程':'Add Event','的日程':' events','年':'year','月':'month','日':'day',
+ '项未完成':'incomplete items','项':'items','我的列表':'My Lists','仅用于版式示例':'Sample layout only',
+ '日本标准时间':'Japan Standard Time','原创虚构曲目；播放状态与灵动岛联动，不包含音乐音频。':'Fictional tracks. Playback state is reflected in the Dynamic Island; no licensed audio is included.',
+ '逐小时预报':'Hourly Forecast','未来 7 天':'Next 7 Days','天气数据为演示值，不代表实时情况。':'Weather data is illustrative, not live.',
+ 'Safari 浏览器':'Safari Browser','ZorixOS 浏览器交互预览':'ZorixOS Browser Preview','输入网址并点击“前往”，将在浏览器新标签页中打开。':'Enter a URL and tap Go to open it in a new tab.',
+ 'iCloud 云盘':'iCloud Drive','演示位置':'Demo location','在我的 iPhone 上':'On My iPhone','本地演示目录':'Local demo folder','用户手册':'User Guide','设计规范':'Design Guide','选取本机文件':'Choose Local File','选取本机文件不会自动上传至任何服务器。':'Selected files are not uploaded to a server.',
+ '每周精选':'Weekly Picks','发现精彩 App':'Explore Amazing Apps','App Store 界面演示':'App Store Preview','你可能喜欢':'You Might Like','此页面不会下载、安装应用或要求 Apple 账户登录。':'This preview cannot install apps or request Apple Account login.',
+ '氛围感桌面':'Atmospheric Home Screen','周末灵感':'Weekend Inspiration','旅行备忘':'Travel Notes','原创视觉演示第':'Original visual demo #','不包含在线短视频':'No live video content','原创预览内容':'Original preview content','喜欢':'Like','评论':'Comments','上一条':'Previous','下一条':'Next','切换内容':'Switch Content',
+ '生活服务':'Life Services','演示服务':'Demo Services','不会发起真实付款':'No real payment is made','仅展示界面':'Display only','不包含交易记录':'No transaction history',
+ '附近位置':'Nearby Places','此地图是内嵌绘制的预览图，不提供真实导航与定位。':'This illustration does not provide navigation or location.',
+ '撰写':'Compose','设计团队':'Design Team','欢迎探索 iPhone':'Welcome to iPhone','Liquid Glass 体验':'Liquid Glass Experience','桌面设置已准备好':'Home Screen is ready','仅本地邮件示例，不连接邮箱账户。':'Local sample emails; no mail account connected.',
+ '摘要':'Summary','活动':'Activity','步':'steps','睡眠':'Sleep','浏览健康类别':'Explore Health Categories','不连接 Apple Health 记录':'Not connected to Apple Health records',
+ 'Android 应用模拟器':'Android UI Simulator','版本信息':'Version Information','模拟联系人':'Demo Contact','模拟聊天记录只保存在本地浏览器，不会发送短信或微信消息。':'Chats are stored locally. No SMS or WeChat messages are sent.',
+ '局域网设备':'Local Network Devices','蓝牙设备':'Bluetooth Devices','显示设置':'Display Settings','从右上角向下滑动，可打开 iOS 风格的控制中心。':'Swipe down from the top-right corner for Control Center.',
+ '过去 24 小时的示意使用情况':'Illustrative usage for the last 24 hours','应用和数据':'Apps & Data','减少动画效果':'Reduce Motion','跨设备共享':'Share Across Devices','今日使用示意':'Sample Usage Today','智能服务示意':'Intelligent Services Preview',
+ '无线键盘':'Wireless Keyboard','每周':'Weekly','详情':'Details','空':'Empty','相片':'Photo',
+});
+const ZX_POST={
+ '此页面为原创Web仿真，不代表应用官方界面或实际服务数据。':'Original UI simulation; not an official app or live service.',
+ 'Original visual demo # 1 则，No live video content。':'Original visual demo 1 · No live video.',
+ 'Web内Demo应用':'Web Demo Apps','Demo笔记':'Demo Notes','系统Demo':'System Demo',
+ '模拟聊天记录只Save在本地Browse器，不会发送短信或WeChat消息。':'Demo chats stay on this device; they never send actual SMS or WeChat messages.',
+ '12 项 · 包含Demo图像':'12 items · Includes sample images',
+ 'Sample图像由内嵌 SVG 生成；真实拍摄的Photos会显示在最前面，仅Save在当前Browse器。':'Sample images use embedded SVG. Captured photos appear first and remain on your device.',
+ 'Allow访问Camera后可在页面中拍照':'Allow camera access to take photos in this app.',
+ '2026 年 11 月':'November 2026','Add日程':'Add Event','1 项未Done':'1 incomplete item','1 项':'1 item','Me列表':'My Lists',
+ '仅用于版式Sample · 09:41':'Illustrative layout · 09:41','日本Standard时间':'Japan Standard Time',
+ '原创虚构曲目；Play状态与Dynamic Island联动，不包含Music音频。':'Fictional tracks; Dynamic Island reflects playback. No licensed audio is played.',
+ '逐hr预报 · Sample Data':'Hourly forecast · Sample data','Weather数据为Demo值，不代表实时情况。':'Illustrative weather data; not live.',
+ 'Safari Browse器':'Safari Browser','ZorixOS Browse器交互Preview':'ZorixOS Browser Preview','Enter网址并点击“Go”，将在Browse器新标签页中On。':'Enter a URL and tap Go to open it in another tab.',
+ 'iCloud Clouds盘':'iCloud Drive','Demo位置':'Demo location','在Me iPhone 上':'On My iPhone',
+ 'Local Demo目录':'Local Demo Folder','用户手册.pdf':'User Guide.pdf','设计规范.txt':'Design Guide.txt','Select本机Files':'Choose Local File','选取本机Files不会自动上传至任何服务器。':'Files you choose are not uploaded.',
+ '每周精选':'Weekly Picks','Discover精彩 App':'Explore Apps','App Store 界面Demo':'App Store Preview','你可能喜欢':'You Might Like',
+ '此页面不会下载、安装应用或要求 Apple 账户登录。':'This preview cannot install apps or access Apple accounts.',
+ '氛围感Home Screen':'Atmospheric Home Screen','周末灵感':'Weekend Inspiration','旅行备忘':'Travel Notes',
+ '原创视觉Demo第 1 则，不包含在线短视频。':'Original demo clip 1 · No live video','原创Preview内容 · HTML':'Original preview · HTML',
+ '生活服务':'Life Services','Demo服务':'Demo Services','不会发起真实付款':'No payments are processed','仅展示界面':'Display only','Local Demo，不包含交易记录':'Local demo · No transactions',
+ '附近位置':'Nearby Places','Cupertino, CA · Preview位置':'Cupertino, CA · Demo location',
+ '此Maps是内嵌绘制的Preview图，不提供真实导航与定位。':'The map is an illustration; it does not provide live navigation or location.',
+ '3 封Mail · Sample':'3 emails · Samples','Home ScreenSettings已准备好':'Home Screen is ready','仅本地MailSample，不Connect邮箱账户。':'Sample mail only · Not connected to an inbox',
+ '步 · Sample Data':'steps · Sample Data','7 时 20 分':'7 hr 20 min','BrowseHealth类别':'Explore Health Categories','不Connect Apple Health记录':'Not connected to Apple Health',
+ 'Connected · 模拟':'Connected · Demo','Bluetooth设备':'Bluetooth Devices','局域网设备':'Local Network Devices','显示Settings':'Display Settings',
+ '从右上角向下滑动，可On iOS 风格的Control Center。':'Swipe down from the top-right to open Control Center.',
+ 'Past 24 Hours的PreviewUsage':'Illustrative usage in the past 24 hours','应用和数据':'Apps & Data','Reduce Motion效果':'Reduce Motion Effects',
+ '跨设备共享':'Share Across Devices','今日使用Preview':'Sample Usage Today','1 hr 24 分':'1 hr 24 min','智能服务Preview':'Smart Services Preview',
+ '视频':'Video','喜欢':'Like','评论':'Comments','上一条':'Previous','下一条':'Next','切换内容':'Switch Content','摘要':'Summary','活动':'Activity','睡眠':'Sleep',
+ '此页面为原创网页仿真，不代表应用官方界面或实际服务数据。':'Original user interface simulation. No official app, account or live service is provided.',
+};
+
+const zxKeys=Object.keys(EN).sort((a,b)=>b.length-a.length);
+const zxRegex=new RegExp(zxKeys.map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
+const zxLiteral=(s)=>{const raw=String(s);if(/^\s*\d{1,2}\s*时\s*$/.test(raw)){let h=Number(raw.trim().replace(/时/g,''));return (h%12||12)+' '+(h<12?'AM':'PM')}if(/^\s*[一二三四五六日]\s*$/.test(raw))return {一:'M',二:'T',三:'W',四:'T',五:'F',六:'S',日:'S'}[raw.trim()];let x=raw.replace(zxRegex,k=>EN[k]||k).replace(/(\d{1,2})月(\d{1,2})日/g,(_m,a,b)=>new Date(2026,Number(a)-1,Number(b)).toLocaleDateString('en-US',{month:'short',day:'numeric'})).replace(/(\d{1,2})时/g,(_m,a)=>a+':00');for(const [from,to] of Object.entries(ZX_POST))x=x.replaceAll(from,to);return x.replace(/(\d{1,2})\s*时(?=\d+°)/g,'$1:00 ').replace(/^\s*时(?=\d+°)/,':00 ')};
+const zxNodeOriginal=new WeakMap();const zxAttrOriginal=new WeakMap();
+function zxExcluded(node){const el=node.parentElement;return !el||!!el.closest('script,style,textarea,[contenteditable="true"],#zxOnboarding,.zx-sheet-backdrop,.zx-island-expanded-content,.zx-island-small,.os-chat-bubble,#osChatBubbles,#osNoteBody,#osNoteTitle,#osMessageDraft');}
+function zxTranslate(root=document){if(!root)return;
+ if(!isEN()) { // The app is generated from the original Chinese templates. Restore any static elements.
+   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
+   while((n=w.nextNode())){const cached=zxNodeOriginal.get(n);if(cached&&n.nodeValue===cached.rendered){n.nodeValue=cached.source}}
+   root.querySelectorAll?.('[data-zx-source-placeholder],[data-zx-source-aria-label],[data-zx-source-title]').forEach(el=>{for(const attr of ['placeholder','aria-label','title']){const val=el.getAttribute('data-zx-source-'+attr);if(val!==null)el.setAttribute(attr,val)}});
+   return;
+ }
+ const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n, count=0;
+ while((n=w.nextNode())){
+   if(zxExcluded(n))continue;
+   const val=n.nodeValue;if(!val||(!/[\u3400-\u9fff]/.test(val)&&!zxNodeOriginal.has(n)))continue;
+   let original=zxNodeOriginal.get(n)?.source||val;
+   const cache=zxNodeOriginal.get(n);if(cache&&val!==cache.rendered&&val!==cache.source)original=val;
+   const translated=zxLiteral(original);if(translated!==val){n.nodeValue=translated;count++}zxNodeOriginal.set(n,{source:original,rendered:translated});
+ }
+ root.querySelectorAll?.('[placeholder],[aria-label],[title]').forEach(el=>{if(el.closest('#zxOnboarding,.zx-sheet-backdrop'))return;for(const attr of ['placeholder','aria-label','title']){
+   const current=el.getAttribute(attr);if(current===null)continue;
+   const key='data-zx-source-'+attr;const lastKey='data-zx-rendered-'+attr;
+   let base=el.getAttribute(key)||current;const last=el.getAttribute(lastKey);
+   if(last!==null&&current!==last&&current!==base)base=current;
+   if(/[\u3400-\u9fff]/.test(base)){const en=zxLiteral(base);el.setAttribute(key,base);el.setAttribute(lastKey,en);if(current!==en)el.setAttribute(attr,en)}
+ }});
+}
+let zxTranslatePending=false;
+const zxTranslateSoon=()=>{if(zxTranslatePending)return;zxTranslatePending=true;requestAnimationFrame(()=>{zxTranslatePending=false;zxTranslate(document.body)})};
+function zxLocaleSet(locale){boot.locale=locale==='zh'?'zh':'en';zxPut(ZX_STORE.lang,boot.locale);document.documentElement.lang=boot.locale==='zh'?'zh-CN':'en';document.documentElement.dataset.zxLocale=boot.locale;
+  // Full app re-render regenerates localized source strings before translation.
+  if(state.app)osRenderApp();zxTranslateSoon();zxTranslate(document.body);
+}
+function zxProgress(step){const steps=['welcome','language','region','privacy','appearance'];let i=steps.indexOf(step);return i<0?'':`<div class="zx-step-progress">${steps.map((_,k)=>`<i class="${k<=i?'active':''}"></i>`).join('')}</div>`;}
+function zxStepBase(step,body,primary,back=true,secondary=''){
+ const t=zxTxt;
+ return `<div class="zx-step-shell" key="${step}"><div class="zx-step-top"><span>ZORIXOS · SETUP</span>${back?`<button type="button" class="zx-back" data-zx-step="back" aria-label="${t('Back','返回')}">${zxIcon('back',18)}</button>`:'<span>2.0</span>'}</div>${zxProgress(step)}<div class="zx-screen-middle">${body}</div><div class="zx-step-footer"><button class="zx-primary" type="button" data-zx-step="next">${primary||t('Continue','继续')}</button>${secondary?`<button class="zx-secondary" data-zx-step="secondary" type="button">${secondary}</button>`:''}</div></div>`;
+}
+function zxWizardMarkup(){const t=zxTxt;
+ switch(boot.step){
+ case 'boot':return `<div class="zx-boot-logo" aria-label="ZorixOS logo"><span>Z</span></div><div class="zx-boot-word">ZorixOS</div><div class="zx-boot-line" aria-hidden="true"></div>`;
+ case 'welcome':return zxStepBase('welcome',`<div class="zx-hello-mark">${t('Hello.','你好。')}</div><h1 class="zx-step-title">ZorixOS</h1><p class="zx-step-detail">${t('A beautiful new way to interact. Your device, your language, your style.','以全新方式探索界面。由你选择语言、地区和外观风格。')}</p><p class="zx-step-fineprint">${t('iOS-inspired home and apps · HyperOS-inspired Settings. This is a UI simulator.','iOS 风格桌面与应用 · HyperOS 风格设置。本应用为界面模拟器。')}</p>`,t('Get Started','开始设置'),false);
+ case 'language':return zxStepBase('language',`<div class="zx-step-title">${t('Choose your language','选择你的语言')}</div><p class="zx-step-detail">${t('Your system interface will use this language. You can change it later in Settings.','系统界面将使用所选语言，之后可在设置中修改。')}</p><div class="zx-locale-list">${[['en','English','English · Default'],['zh','简体中文','Simplified Chinese · 简体中文']].map(([id,label,sub])=>`<button type="button" class="zx-locale-card ${boot.locale===id?'active':''}" data-zx-language="${id}"><span>${label}<small>${sub}</small></span>${boot.locale===id?zxIcon('check',21):zxIcon('globe',21)}</button>`).join('')}</div>`,t('Continue','继续'));
+ case 'region':return zxStepBase('region',`<div class="zx-step-title">${t('Select your region','选择国家或地区')}</div><p class="zx-step-detail">${t('This helps format dates and regional preferences. It does not access your location.','用于设置日期等格式，不会读取设备定位。')}</p><div class="zx-locale-list">${[['US',t('United States','美国'),'United States'],['CN',t('Mainland China','中国大陆'),'China'],['IT',t('Italy','意大利'),'Italy'],['GB',t('United Kingdom','英国'),'United Kingdom']].map(([id,label,sub])=>`<button class="zx-locale-card ${boot.region===id?'active':''}" data-zx-region="${id}"><span>${label}<small>${sub}</small></span>${boot.region===id?zxIcon('check',21):zxIcon('globe',21)}</button>`).join('')}</div>`,t('Continue','继续'));
+ case 'privacy':return zxStepBase('privacy',`<div class="zx-step-title">${t('Privacy & Performance','隐私与性能')}</div><p class="zx-step-detail">${t('ZorixOS stores your sample notes, preferences and messages on your device. It does not request an account.','ZorixOS 在本机保存演示备忘录、偏好和信息，无需登录账户。')}</p><div class="zx-privacy-row"><span>${t('Load genuine app artwork','加载真实应用图标')}<small>${t('Optional internet access to retrieve app icons. Other content is bundled offline.','可选联网获取应用图标，其余界面可离线使用。')}</small></span><button class="zx-privacy-switch ${boot.online?'on':''}" type="button" role="switch" aria-checked="${boot.online}" data-zx-online="toggle" aria-label="${t('Load app icon artwork','加载应用图标')}"></button></div><p class="zx-step-fineprint">${t('Camera and microphone ask for permission only when you open their functions. Device-level settings are demonstrations.','摄像头和麦克风仅在使用对应功能时申请权限。设备设置为模拟操作。')}</p>`,t('Continue','继续'));
+ case 'appearance':return zxStepBase('appearance',`<div class="zx-step-title">${t('Choose an appearance','选择外观')}</div><p class="zx-step-detail">${t('Soft light or deep dark. You can change this any time in Personalization.','浅色或深色外观，之后可在个性化设置中调整。')}</p><div class="zx-appearance-grid">${[['light',t('Light','浅色')],['dark',t('Dark','深色')]].map(([id,name])=>`<button type="button" data-zx-theme="${id}" class="zx-appearance-choice ${boot.appearance===id?'active':''}"><span class="zx-appearance-preview ${id==='dark'?'dark':''}"></span>${name} ${boot.appearance===id?zxIcon('check',15):''}</button>`).join('')}</div><p class="zx-step-fineprint">${t('The home screen, widgets and apps retain their iOS-inspired look. Settings uses a HyperOS-inspired layout.','桌面、组件和应用保持 iOS 风格，设置使用 HyperOS 风格。')}</p>`,t('Enter ZorixOS','进入 ZorixOS'));
+ default:return '';
+ }
+}
+let wizard=document.getElementById('zxOnboarding');
+if(!wizard){wizard=document.createElement('section');wizard.id='zxOnboarding';wizard.className='zx-wizard zx-stage-boot';wizard.setAttribute('role','dialog');wizard.setAttribute('aria-modal','true');wizard.setAttribute('aria-label','ZorixOS Setup');screen.appendChild(wizard)}
+function zxRenderWizard(){wizard.className='zx-wizard zx-stage-'+boot.step;wizard.innerHTML=zxWizardMarkup();wizard.hidden=false;wizard.classList.remove('hidden')}
+function zxShowBoot(replay=false){
+ clearTimeout(boot.timer);boot.step='boot';wizard.hidden=false;zxRenderWizard();
+ // Motion follows accessibility preferences. No continuous boot animation or network wait.
+ const duration=OS_PREF.reduceMotion||matchMedia('(prefers-reduced-motion: reduce)').matches?250:1150;
+ boot.timer=setTimeout(()=>{boot.step='welcome';zxRenderWizard()},duration);
+}
+function zxShowSetup(replay=false){if(replay){if(state.app)goHome();zxShowBoot(true)}else zxShowBoot()}
+function zxDone(){zxPut(ZX_STORE.complete,'yes');zxPut(ZX_STORE.lang,boot.locale);zxPut(ZX_STORE.region,boot.region);zxPut(ZX_STORE.onlineIcons,String(boot.online));
+ osSetPref('appearance',boot.appearance,false);if(typeof osApplyPreferences==='function')osApplyPreferences();
+ wizard.classList.add('hidden');wizard.hidden=true;wizard.innerHTML='';
+ zxLocaleSet(boot.locale);
+ if(state.locked)unlock();goHome();
+ zxIslandNotice(zxTxt('Welcome to ZorixOS','欢迎使用 ZorixOS'),zxTxt('Ready to explore','开始探索'),1700);
+ zxStartIcons();
+}
+function zxNextStep(){const steps=['welcome','language','region','privacy','appearance'];const i=steps.indexOf(boot.step);if(i>=0&&i<steps.length-1){boot.step=steps[i+1];zxRenderWizard()}else if(boot.step==='appearance')zxDone()}
+function zxPreviousStep(){const steps=['welcome','language','region','privacy','appearance'];const i=steps.indexOf(boot.step);if(i>0){boot.step=steps[i-1];zxRenderWizard()}}
+wizard.addEventListener('click',e=>{
+ const lang=e.target.closest('[data-zx-language]');if(lang){boot.locale=lang.dataset.zxLanguage;zxRenderWizard();return}
+ const region=e.target.closest('[data-zx-region]');if(region){boot.region=region.dataset.zxRegion;zxRenderWizard();return}
+ const theme=e.target.closest('[data-zx-theme]');if(theme){boot.appearance=theme.dataset.zxTheme;zxRenderWizard();return}
+ const online=e.target.closest('[data-zx-online]');if(online){boot.online=!boot.online;zxRenderWizard();return}
+ const step=e.target.closest('[data-zx-step]');if(step){switch(step.dataset.zxStep){case 'next':zxNextStep();return;case 'back':zxPreviousStep();return;case 'secondary':zxNextStep();return}}
+});
+// The onboarding is a real first-run flow; a short branded splash is retained on later launches.
+const urlOpts=new URLSearchParams(location.search);
+const zxSkip=urlOpts.get('zxSkip')==='1';
+if(zxSkip){wizard.hidden=true;wizard.classList.add('hidden');zxLocaleSet(boot.locale)}
+else if(zxGet(ZX_STORE.complete,'')!=='yes'||urlOpts.get('zxSetup')==='1')zxShowBoot();
+else{zxRenderWizard();boot.step='boot';wizard.className='zx-wizard zx-stage-boot';wizard.innerHTML=zxWizardMarkup();boot.timer=setTimeout(()=>{wizard.hidden=true;wizard.classList.add('hidden');zxLocaleSet(boot.locale);zxStartIcons()},OS_PREF.reduceMotion?160:530)}
+/* App artwork: draw embedded vector fallbacks immediately, ask the store later; cache vetted icon URLs. */
+let zxIconsStarted=false;
+const zxOldChangeIcon=changeIconArtwork;
+changeIconArtwork=function(id,url,origin){zxOldChangeIcon(id,url,origin);if(origin==='app-store-current'){
+  try{const data=JSON.parse(localStorage.getItem('zorix.iconIndex')||'{}');data[id]=url;localStorage.setItem('zorix.iconIndex',JSON.stringify(data));localStorage.setItem('zorix.iconIndexAt',String(Date.now()))}catch(e){}
+}};
+function zxStartIcons(){if(zxIconsStarted||!boot.online||!navigator.onLine)return;zxIconsStarted=true;
+ const load=()=>{
+  const saved=(()=>{try{return JSON.parse(localStorage.getItem('zorix.iconIndex')||'{}')}catch(e){return {}}})();
+  for(const [id,url] of Object.entries(saved)){if(/^https:\/\//.test(url)&&apps[id])changeIconArtwork(id,url,'stored-app-store-art');}
+  const updated=Number(zxGet('zorix.iconIndexAt','0'));
+  if(Date.now()-updated>14*86400000||Object.keys(saved).length<22)loadRealAppIcons().catch(()=>{});
+ };
+ if('requestIdleCallback' in window)requestIdleCallback(load,{timeout:1800});else setTimeout(load,1100);
+}
+/* Dynamic Island state machine, based on compact/expanded Live Activity presentations. */
+const island=document.getElementById('island');
+let zxIsland={type:null,title:'',detail:'',timer:null,auto:null,hold:null,holdFired:false,started:null,gestureY:0};
+island.setAttribute('aria-label','Dynamic Island');island.setAttribute('aria-expanded','false');
+island.innerHTML=`<div class="zx-island-ui zx-island-small"><div class="zx-island-mini-art" id="zxIslandSmallArt">${zxIcon('music',15)}</div><div class="zx-island-mini-copy"><strong id="zxIslandMiniTitle"></strong><small id="zxIslandMiniDetail"></small></div><div class="zx-island-bars" id="zxIslandBars"><i></i><i></i><i></i></div></div><div class="zx-island-expanded-content"><div class="zx-island-topline"><div class="zx-island-large-art" id="zxIslandLargeArt">${zxIcon('music',27)}</div><div class="zx-island-main"><strong id="zxIslandFullTitle"></strong><small id="zxIslandFullDetail"></small></div></div><div class="zx-island-progress"><i id="zxIslandProgress"></i></div><div class="zx-island-bottom" id="zxIslandControls"><button class="zx-island-btn" type="button" data-zx-island="previous" aria-label="Previous">${zxIcon('skip-back',20)}</button><button class="zx-island-btn" type="button" data-zx-island="toggle" aria-label="Play or pause">${zxIcon('pause',22)}</button><button class="zx-island-btn" type="button" data-zx-island="next" aria-label="Next">${zxIcon('skip-next',20)}</button></div></div>`;
+function zxCurrentIsland(){if(zxIsland.type==='notice')return {type:'notice',title:zxIsland.title,detail:zxIsland.detail};
+ if(OS.clockTimer&&!OS.stopwatchRunning)return {type:'timer',title:zxTxt('Timer','计时器'),detail:`${String(Math.floor(OS.clockSeconds/60)).padStart(2,'0')}:${String(OS.clockSeconds%60).padStart(2,'0')} ${zxTxt('remaining','剩余')}`};
+ if(state.playing){const [song,artist]=tracks[state.track]||['Now Playing','Music'];return {type:'music',title:song,detail:artist}}
+ if(state.focus)return {type:'focus',title:zxTxt('Focus','专注模式'),detail:zxTxt('On','已开启')};
+ return null;
+}
+function zxIslandRender(){const d=zxCurrentIsland();const expanded=island.classList.contains('zx-island-expanded');
+ if(!d){island.classList.remove('zx-island-compact','zx-island-expanded','expanded');island.setAttribute('aria-expanded','false');zxIsland.type=null;return}
+ island.classList.add('zx-island-compact');island.classList.remove('expanded');
+ island.classList.toggle('zx-island-expanded',expanded);
+ const glyph=d.type==='timer'?'timer':d.type==='notice'?'bell':d.type==='focus'?'moon':'music';
+ document.getElementById('zxIslandSmallArt').innerHTML=zxIcon(glyph,15);
+ document.getElementById('zxIslandLargeArt').innerHTML=zxIcon(glyph,27);
+ document.getElementById('zxIslandMiniTitle').textContent=d.title;
+ document.getElementById('zxIslandMiniDetail').textContent=d.detail;
+ document.getElementById('zxIslandFullTitle').textContent=d.title;
+ document.getElementById('zxIslandFullDetail').textContent=d.detail;
+ document.getElementById('zxIslandBars').classList.toggle('active',d.type==='music'&&state.playing);
+ const controls=document.getElementById('zxIslandControls');
+ if(d.type==='music'){controls.innerHTML=`<button class="zx-island-btn" type="button" data-zx-island="previous" aria-label="Previous">${zxIcon('skip-back',20)}</button><button class="zx-island-btn" type="button" data-zx-island="toggle" aria-label="Play or pause">${zxIcon(state.playing?'pause':'play',22)}</button><button class="zx-island-btn" type="button" data-zx-island="next" aria-label="Next">${zxIcon('skip-next',20)}</button>`}
+ else if(d.type==='timer'){controls.innerHTML=`<button class="zx-island-btn" type="button" data-zx-island="timer" aria-label="Open Timer">${zxIcon('clock',18)} <span style="font-size:12px;margin-left:5px">${zxTxt('Open Timer','打开计时器')}</span></button><button class="zx-island-btn" type="button" data-zx-island="dismiss" aria-label="Close">${zxIcon('close',18)}</button>`}
+ else controls.innerHTML=`<button class="zx-island-btn" type="button" data-zx-island="dismiss">${zxTxt('Dismiss','关闭')} ${zxIcon('check',18)}</button>`;
+ document.getElementById('zxIslandProgress').style.width=d.type==='timer'?Math.min(100,100*(OS.clockSeconds/(15*60)))+'%':d.type==='music'?'38%':'100%';
+ island.setAttribute('aria-label',d.title+' — '+d.detail);island.setAttribute('aria-expanded',expanded?'true':'false');
+}
+function zxIslandExpand(){if(!zxCurrentIsland()){
+ zxIsland.type='notice';zxIsland.title=zxTxt('ZorixOS','ZorixOS');zxIsland.detail=zxTxt('Everything is ready','一切准备就绪');clearTimeout(zxIsland.auto);zxIsland.auto=setTimeout(()=>{zxIsland.type=null;zxIslandClose()},2100)
+ }
+ island.classList.add('zx-island-compact','zx-island-expanded');island.setAttribute('aria-expanded','true');zxIslandRender();
+}
+function zxIslandClose(){island.classList.remove('zx-island-expanded','expanded');island.setAttribute('aria-expanded','false');zxIslandRender()}
+function zxIslandNotice(title,detail='',duration=2300){zxIsland.type='notice';zxIsland.title=title;zxIsland.detail=detail;clearTimeout(zxIsland.auto);island.classList.add('zx-island-compact','zx-island-expanded');zxIslandRender();
+ zxIsland.auto=setTimeout(()=>{zxIsland.type=null;zxIslandClose()},duration)}
+function zxIslandUpdate(){if(zxIsland.type!=='notice')zxIslandRender()}
+// Legacy player should not force an unrelated temporary modal.
+expandIsland=function(){zxIslandUpdate()};
+const zxSetPlaying=setPlaying;setPlaying=function(value){zxSetPlaying(value);zxIslandUpdate()};
+const zxNextTrack=nextTrack;nextTrack=function(delta){zxNextTrack(delta);zxIslandUpdate()};
+const zxOsAction=osAction;osAction=function(action,value,target){const result=zxOsAction(action,value,target);
+ if(action==='timer-start'||action==='timer-reset'||action==='stopwatch-toggle'||action==='stopwatch-reset')zxIslandUpdate();
+ if(action==='camera-capture'&&OS.cameraMode!=='video')zxIslandNotice(zxTxt('Photo captured','照片已拍摄'),zxTxt('Saved to Photos','已保存到照片'),1600);
+ if(action==='phone-call')zxIslandNotice(zxTxt('Call started','正在通话'),state.dial||zxTxt('Demo call','模拟通话'),2300);
+ if(action==='todo-add'||action==='calendar-add')zxIslandNotice(zxTxt('Saved','已保存'),zxTxt('Updated locally','已保存到本地'),1400);
+ return result;
+};
+setInterval(()=>{if(OS.clockTimer&&!OS.stopwatchRunning&&OS.clockSeconds===0&&zxIsland.type!=='notice')zxIslandNotice(zxTxt('Timer finished','计时结束'),zxTxt('Tap to dismiss','点击关闭'),2600);else if(OS.clockTimer)zxIslandUpdate()},1000);
+island.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();
+ const b=e.target.closest('[data-zx-island]');if(b){switch(b.dataset.zxIsland){case 'toggle':setPlaying(!state.playing);break;case 'previous':nextTrack(-1);break;case 'next':nextTrack(1);break;case 'timer':zxIslandClose();openApp('clock');break;case 'dismiss':if(zxIsland.type==='notice')zxIsland.type=null;zxIslandClose();break;}return}
+ if(zxIsland.holdFired){zxIsland.holdFired=false;return}
+ if(island.classList.contains('zx-island-expanded'))zxIslandClose();else zxIslandExpand();
+},true);
+island.addEventListener('pointerdown',e=>{zxIsland.gestureY=e.clientY;zxIsland.holdFired=false;clearTimeout(zxIsland.hold);
+ zxIsland.hold=setTimeout(()=>{zxIsland.holdFired=true;zxIslandExpand()},360)});
+island.addEventListener('pointermove',e=>{if(Math.abs(e.clientY-zxIsland.gestureY)>12)clearTimeout(zxIsland.hold)});
+island.addEventListener('pointerup',e=>{clearTimeout(zxIsland.hold);if(e.clientY-zxIsland.gestureY < -33){e.stopPropagation();zxIslandClose()}});
+island.addEventListener('pointercancel',()=>clearTimeout(zxIsland.hold));
+/* Settings remains HyperOS-inspired; add real language, onboarding, data and preview controls. */
+const zxPriorSettingsMarkup=osSettingsMarkup;
+osSettingsMarkup=function(section='root'){
+ const route=OS.settingsStack.at(-1)||section||'root';const t=zxTxt;
+ if(route==='language')return `<div class="ios-settings z-settings" data-os-settings-route="language"><h1 class="z-heading">${t('Language & Region','语言与地区')}</h1><p class="z-page-intro">${t('Choose your preferred language and region for the ZorixOS interface.','选择 ZorixOS 界面使用的语言和地区。')}</p><div class="z-section-title">${t('SYSTEM LANGUAGE','系统语言')}</div><div class="z-group">${[['en','English','English'],['zh','简体中文','Chinese (Simplified)']].map(([id,label,detail])=>`<button class="ios-row z-row" type="button" data-zx-setting-lang="${id}"><span class="z-symbol">${zxIcon('globe',18)}</span><span class="z-text"><b>${label}</b><small>${detail}</small></span><span class="z-next">${boot.locale===id?zxIcon('check',18):zxIcon('next',15)}</span></button>`).join('')}</div><div class="z-section-title">${t('REGION','地区')}</div><div class="z-group">${[['US','United States'],['CN','Mainland China'],['IT','Italy'],['GB','United Kingdom']].map(([id,name])=>`<button class="ios-row z-row" type="button" data-zx-setting-region="${id}"><span class="z-symbol">${zxIcon('globe',18)}</span><span class="z-text"><b>${name}</b></span><span class="z-next">${boot.region===id?zxIcon('check',18):zxIcon('next',15)}</span></button>`).join('')}</div><p class="z-inset-note">${t('Changes are saved locally. Your notes and app data are preserved.','更改保存在本机，不会删除备忘录与应用数据。')}</p></div>`;
+ let html=zxPriorSettingsMarkup(section);
+ if(route==='root'||route==='general'){
+ const extra=`<div class="z-section-title">${t('ZORIXOS EXPERIENCE','ZORIXOS 体验')}</div><div class="z-group"><button class="ios-row z-row" data-os-setting="language" type="button"><span class="z-symbol" style="--z-bg:#e6edff;--z-fg:#4a76d7">${zxIcon('globe',19)}</span><span class="z-text"><b>${t('Language & Region','语言与地区')}</b><small>${boot.locale==='zh'?'简体中文':'English'}</small></span><span class="z-next">${zxIcon('next',15)}</span></button><button class="ios-row z-row" type="button" data-zx-settings-action="preview-start"><span class="z-symbol" style="--z-bg:#e8f3ff;--z-fg:#5795d5">${zxIcon('repeat',19)}</span><span class="z-text"><b>${t('Replay First-Time Setup','重放首次开机引导')}</b><small>${t('Boot animation and language selection','开机动画与语言选择')}</small></span><span class="z-next">${zxIcon('next',15)}</span></button><button class="ios-row z-row" type="button" data-zx-settings-action="export-data"><span class="z-symbol" style="--z-bg:#eaf9f1;--z-fg:#45a780">${zxIcon('download',19)}</span><span class="z-text"><b>${t('Export Demo Data','导出演示数据')}</b><small>${t('Download local content as JSON','将本地内容下载为 JSON')}</small></span><span class="z-next">${zxIcon('next',15)}</span></button></div>`;
+ html=html.replace(/<\/div>\s*$/,extra+'</div>');
+ }
+ if(route==='about'){
+ const extra=`<div class="z-section-title">${t('DEVICE & PERFORMANCE','设备与性能')}</div><div class="z-group"><button class="ios-row z-row" type="button" data-zx-settings-action="performance"><span class="z-symbol">${zxIcon('flash',19)}</span><span class="z-text"><b>${t('Performance Mode','性能模式')}</b></span><span class="z-next">${zxIcon('next',15)}</span></button><button class="ios-row z-row" type="button" data-zx-settings-action="preview-start"><span class="z-symbol">${zxIcon('repeat',19)}</span><span class="z-text"><b>${t('Run Setup Again','重新运行开机引导')}</b></span><span class="z-next">${zxIcon('next',15)}</span></button></div>`;
+ html=html.replace(/<\/div>\s*$/,extra+'</div>');
+ }
+ return html;
+};
+const zxOldRender=osRenderApp;
+osRenderApp=function(){zxOldRender();zxTranslateSoon();screen.classList.toggle('zx-motion-off',!!OS_PREF.reduceMotion)};
+const zxOldPref=osSetPref;
+osSetPref=function(k,v,redraw=true){zxOldPref(k,v,redraw);if(k==='reduceMotion')screen.classList.toggle('zx-motion-off',!!v);if(k==='focus')zxIslandUpdate();if(k==='language')zxLocaleSet(v)};
+const zxOldClock=updateClock;
+updateClock=function(){zxOldClock();zxTranslateSoon()};
+// Explicit interactions only: never intercept system-level notifications or phone calls.
+let zxSheetEl=null;
+function zxCloseSheet(){if(zxSheetEl){zxSheetEl.remove();zxSheetEl=null}}
+function zxSheet(title,items){zxCloseSheet();let div=document.createElement('div');div.className='zx-sheet-backdrop';div.innerHTML=`<div class="zx-sheet" role="dialog" aria-modal="true" aria-label="${zy(title)}"><h3>${zy(title)}</h3>${items.map((a,i)=>`<button class="zx-sheet-row" data-zx-sheet-index="${i}" type="button">${zxIcon(a.icon||'control',20)}<span>${zy(a.label)}</span></button>`).join('')}<button class="zx-sheet-cancel" type="button" data-zx-sheet-close>${zxTxt('Cancel','取消')}</button></div>`;screen.appendChild(div);zxSheetEl=div;
+ div.addEventListener('click',ev=>{if(ev.target===div||ev.target.closest('[data-zx-sheet-close]')){zxCloseSheet();return}const b=ev.target.closest('[data-zx-sheet-index]');if(b){const item=items[Number(b.dataset.zxSheetIndex)];zxCloseSheet();try{item.run()}catch(err){toast(zxTxt('Action unavailable','暂时无法使用'))}}});
+}
+window.zxOpenAppSheet=(id)=>{
+ if(!state.app||state.app!==id)return;
+ const app=apps[id]||{name:id};
+ zxSheet(isEN()?zxLiteral(app.name):app.name,[
+  {label:zxTxt('About This App','关于应用'),icon:'more',run:()=>{OS.view={type:'generic-detail',id:'',name:zxTxt('About ','关于')+(isEN()?zxLiteral(app.name):app.name)};osRenderApp()}},
+  {label:zxTxt('Copy App Name','复制应用名称'),icon:'share',run:()=>{navigator.clipboard?.writeText(isEN()?zxLiteral(app.name):app.name).then(()=>toast(zxTxt('Copied','已复制'))).catch(()=>toast(zxTxt('Clipboard unavailable','无法访问剪贴板')))}},
+  {label:zxTxt('Open Settings','打开设置'),icon:'gear',run:()=>openApp('settings')},
+  {label:zxTxt('Return Home','返回主屏幕'),icon:'home',run:()=>goHome()}
+ ]);
+};
+function zxExportData(){const k=['ios27-demo-messages','ios27-demo-notes','ios27-demo-reminders','ios27-demo-events','ios27-demo-mails','ios27-demo-preferences',ZX_STORE.complete,ZX_STORE.lang,ZX_STORE.region];const out={app:'ZorixOS',version:'2.0',exported:new Date().toISOString(),data:{}};k.forEach(key=>{try{out.data[key]=localStorage.getItem(key)}catch(e){}});
+ const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ZorixOS-local-demo-data.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
+ toast(zxTxt('Exported locally','已导出到本地'));
+}
+function zxPerfSheet(){zxSheet(zxTxt('Performance & Comfort','性能与舒适度'),[
+ {label:zxTxt('Reduce Motion','减少动态效果')+' · '+(OS_PREF.reduceMotion?'On':'Off'),icon:'flash',run:()=>{osSetPref('reduceMotion',!OS_PREF.reduceMotion);zxPerfSheet()}},
+ {label:zxTxt('Reduce Transparency','降低透明度')+' · '+(OS_PREF.reduceTransparency?'On':'Off'),icon:'eye',run:()=>{osSetPref('reduceTransparency',!OS_PREF.reduceTransparency);zxPerfSheet()}},
+ {label:zxTxt('Lightweight Icons','轻量化图标')+' · '+(!boot.online?'On':'Off'),icon:'apps',run:()=>{boot.online=!boot.online;zxPut(ZX_STORE.onlineIcons,boot.online);if(boot.online)zxStartIcons();zxPerfSheet()}},
+ {label:zxTxt('Done','完成'),icon:'check',run:()=>{}}
+]);}
+// Native-style customization sheet, every exposed control responds to a user tap.
+document.addEventListener('click',e=>{
+ const change=e.target.closest('[data-zx-setting-lang]');if(change){e.preventDefault();e.stopImmediatePropagation();zxLocaleSet(change.dataset.zxSettingLang);zxPut(ZX_STORE.lang,boot.locale);osRenderApp();return}
+ const region=e.target.closest('[data-zx-setting-region]');if(region){e.preventDefault();e.stopImmediatePropagation();boot.region=region.dataset.zxSettingRegion;zxPut(ZX_STORE.region,boot.region);osRenderApp();return}
+ const setting=e.target.closest('[data-zx-settings-action]');if(setting){e.preventDefault();e.stopImmediatePropagation();if(setting.dataset.zxSettingsAction==='preview-start')zxShowSetup(true);else if(setting.dataset.zxSettingsAction==='export-data')zxExportData();else if(setting.dataset.zxSettingsAction==='performance')zxPerfSheet();return}
+ const customize=e.target.closest('#ccAdd');if(customize){e.preventDefault();e.stopImmediatePropagation();zxSheet(zxTxt('Customize Controls','自定义控制中心'),[
+ {label:zxTxt('Focus Mode','专注模式')+' · '+(state.focus?'On':'Off'),icon:'moon',run:()=>{state.focus=!state.focus;syncToggles();zxIslandUpdate()}},
+ {label:zxTxt('Silent Mode','静音模式')+' · '+(state.silent?'On':'Off'),icon:'sound',run:()=>{state.silent=!state.silent;syncToggles()}},
+ {label:zxTxt('Low Power Mode','省电模式')+' · '+(OS_PREF.lowPower?'On':'Off'),icon:'battery',run:()=>osSetPref('lowPower',!OS_PREF.lowPower)},
+ {label:zxTxt('Edit Glass Appearance','编辑玻璃外观'),icon:'appearance',run:()=>{closeControl();openApp('settings','liquid')}}
+ ]);return}
+},true);
+// Animate from a compact home state instead of instantly replacing the whole screen.
+const zxOldOpenApp=openApp;
+openApp=function(id,section){zxCloseSheet();zxOldOpenApp(id,section);zxTranslateSoon();};
+const zxOldGoHome=goHome;
+goHome=function(){zxCloseSheet();zxOldGoHome();zxTranslateSoon()};
+const zxOldControlOpen=openControl;
+openControl=function(){zxCloseSheet();zxOldControlOpen();zxTranslateSoon()};
+const zxOldSync=syncToggles;
+syncToggles=function(){zxOldSync();zxIslandUpdate()};
+// Keep the screen responsive while the app is backgrounded; OS decides actual interruption policy.
+document.addEventListener('visibilitychange',()=>{document.documentElement.classList.toggle('zx-suspended',document.hidden);if(!document.hidden)zxTranslateSoon()});
+window.addEventListener('focus',()=>zxTranslateSoon());
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)screen.classList.add('zx-motion-off');
+const zxObserver=new MutationObserver(()=>zxTranslateSoon());
+zxObserver.observe(document.getElementById('screen'),{subtree:true,childList:true,characterData:true});
+// Also translate static desktop simulator controls once.
+zxTranslate(document.body);
+if(!isEN())zxTranslate(document.body);
+window.ZorixV2={get setupStep(){return boot.step},get setupComplete(){return zxGet(ZX_STORE.complete,'')==='yes'},get lang(){return boot.locale},get region(){return boot.region},onboarding:zxShowSetup,setLanguage:zxLocaleSet,showIsland:zxIslandNotice,showSheet:zxOpenAppSheet,translate:zxTranslate,closeSheet:zxCloseSheet};
 })();
 
 </script>
